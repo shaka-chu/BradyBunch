@@ -24,3 +24,7 @@ git commit -m "<simple message describing update>"
 git pull
 git push origin master
 ```
+To unstage a commit
+```
+git reset
+```
