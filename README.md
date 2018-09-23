@@ -20,6 +20,7 @@ git pull
 6. To upload your updates, always pull before you push
 ```
 git pull
-git commit
+git add .
+git commit -m "<simple message describing update>"
 git push
 ```
