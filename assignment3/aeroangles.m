@@ -6,19 +6,19 @@
 % Converts body velocity vector into flight vector components 
 %
 % Inputs:
-%   Input: - vector of body velocities in the form [u;v;w]
+%   Input: - vectors of body velocity components u,v,w
 %
 % Outputs:
 %   Output: - total velocity magnitude (V)
 %           - angle of attack (alpha)
 %           - side slip angle (beta)
 
-function [V, alpha, beta] = aeroangles(bodyVec)
+function [V, alpha, beta] = aeroangles(u,v,w)
 
     % Unpack body vector
-    u(:) = bodyVec(1,:);
-    v(:) = bodyVec(2,:);
-    w(:) = bodyVec(3,:);
+    u(:) = u;
+    v(:) = v;
+    w(:) = w;
 
     % Calculate total velocity
     V(:) = sqrt(u.^2 + v.^2 + w.^2);
