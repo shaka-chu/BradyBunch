@@ -45,8 +45,9 @@ function [rho, Q] = flowproperties(h,V)
     else
         
         % Stop simulation and display error message
-        error('Altitude places aircraft in the upper stratosphere!',...
-            ' Re-evaluate calculation of z in Earth axes!');
+        string = ['Altitude places aircraft in the upper stratosphere!',...
+            ' Re-evaluate calculation of z in Earth axes!'];
+        error(string);
     end
 
     % Calculate density (kg/m^3)
@@ -54,5 +55,4 @@ function [rho, Q] = flowproperties(h,V)
     
     % Calculate dynamic pressure (Pa)
     Q = (1/2)*rho*V^2;
-
 end
