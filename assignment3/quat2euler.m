@@ -1,4 +1,4 @@
-% AERO3560 - Flight Mechanics 1 - Assignment 1 2018
+% AERO3560 - Flight Mechanics 1 - Assignment 3 2018
 % Author SID: 460369684
 % Function Name: quat2euler
 %
@@ -6,14 +6,14 @@
 % Returns the Euler angles for a given quaternion input matrix
 %
 % Inputs:
-%   eulAngles: matrix containing quaternions. They are stored in the order:
-%              [q0; q1; q2; q3]
+%   quaternion: matrix containing quaternions. They are stored in the 
+%               order: [q0; q1; q2; q3]
 %
 % Outputs:
-%   eulAngles: matrix of Euler angles (radians): [phi; theta; psi] =
-%              [roll; pitch; yaw]
+%   euler_angles: matrix of Euler angles (radians): [phi; theta; psi] =
+%                 [roll; pitch; yaw]
 
-function eulAngles = quat2euler(quaternion)
+function euler_angles = quat2euler(quaternion)
     
     % Unpack quaternion matrix
     q0 = quaternion(1,:);
@@ -37,5 +37,5 @@ function eulAngles = quat2euler(quaternion)
     psi     = atan2(num3,denom3);
      
     % Return euler angle vector (radians)
-    eulAngles = [phi; theta; psi];
+    euler_angles = [phi; theta; psi];
 end
