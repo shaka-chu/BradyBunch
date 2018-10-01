@@ -9,7 +9,8 @@
 %   Input: ----------------------------------------------
 %
 % Outputs:
-%   Output: - Aicraft parameters at two different centre of gravity
+%   nominal: 
+%   Aicraft parameters at two different centre of gravity
 %   location
 
 function [nominal, secondary] = initialisation()
