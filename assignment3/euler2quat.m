@@ -3,6 +3,8 @@
 % With Special Thanks To: 460306678
 % Function Name: euler2quat
 %
+% QUATERNION = EULER2QUAT(EULER_ANGLES)
+%
 % Function Description:
 % Returns the quaternion components for a given Euler angle input matrix
 %
