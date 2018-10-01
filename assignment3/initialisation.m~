@@ -12,11 +12,11 @@
 %   nominal: Aircraft parameters at nominal CG position
 %   secondary: Aircraft parameters at secondary CG position
 
-function [Nominal_params, Secondary_params] = initialisation
+function [nominal, secondary] = initialisation()
 
     % Load data at nominal location
-    Nominal_params = aero3560_LoadFlightDataPC9_nominalCG1();
+    nominal = aero3560_LoadFlightDataPC9_nominalCG1();
     
     % Load data at secondary location
-    Secondary_params = aero3560_LoadFlightDataPC9_CG2();
+    secondary = aero3560_LoadFlightDataPC9_CG2();
 end

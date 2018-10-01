@@ -44,8 +44,8 @@ function [ FlightData ] = aero3560_LoadFlightDataPC9_CG2()
     % Aerodynamic Data (Reference CG: 22 % mac)
     FlightData.Aero.alpha_o = -3.0/57.3; 
     % Drag Coefficients
-    FlightData.Aero.Cdo    =  0.020;
-    FlightData.Aero.k      =  0.050;
+    FlightData.Aero.Cdo  =  0.020;
+    FlightData.Aero.k    =  0.050;
     % Lift Coefficients
     FlightData.Aero.CLa  =  5.827;
     FlightData.Aero.CLq  =  7.960;
