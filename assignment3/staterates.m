@@ -11,7 +11,7 @@
 % Outputs:
 %   Xdot: Column vector of rates of changes of state variables
 
-function [Xdot] = staterates(X,Params, Ft, Fa_x, Fa_y, Fa_z, La, Ma, Na, Fgx, Fgy, Fgz)
+function [Xdot] = staterates(X, Params, Ft, F_body, M_body, Fgx, Fgy, Fgz)
 
     % Unpack state vector
     u = X(1,:);
@@ -27,6 +27,14 @@ function [Xdot] = staterates(X,Params, Ft, Fa_x, Fa_y, Fa_z, La, Ma, Na, Fgx, Fg
     x = X(11,:);
     y = X(12,:);
     z = X(13,:);
+    
+    % Unpack body forces and moments
+    Fa_x = F_body(1);
+    Fa_y = F_body(2);
+    Fa_z = F_body(3);
+    La = M_body(1);
+    Ma = M_body(2);
+    Na = M_body(3);
     
     % Extract parameters
     g = Params.Inertial.g;         
