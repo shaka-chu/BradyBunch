@@ -9,16 +9,17 @@
 % generated in the z and x directions (in the aerodynamic axes)
 %
 % Inputs:
-%   Params: Struct containing all aircraft parameters for a given CG case
-%   alpha: Aircraft angle of attack (radians)
-%   q_hat: Pitch rate (non-dimensional)
+%   Params:  Struct containing all aircraft parameters for a given CG case
+%   alpha:   Aircraft angle of attack (radians)
+%   q_hat:   Pitch rate (non-dimensional)
 %   delta_e: Elevator position (radians)
 %
 % Outputs:
-%   Cfa_z: Non-dimensional for z-direction aerodynamic force
-%   Cfa_x: Non-dimensional for x-direction aerodynamic force
+%   Cfa_z: Non-dimensional coefficient for z-direction aerodynamic force
+%   Cfa_x: Non-dimensional coefficient for x-direction aerodynamic force
+%   CL:    Lift coefficient
 
-function [Cfa_z, Cfa_x] = windforces(Params, alpha, q_hat, delta_e)
+function [Cfa_z, Cfa_x, CL] = windforces(Params, alpha, q_hat, delta_e)
 
     % Extract necessary aircraft parameters
     CLo     = Params.Aero.CLo;          % Non-dimensional
