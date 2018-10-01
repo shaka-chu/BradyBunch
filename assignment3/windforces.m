@@ -2,6 +2,8 @@
 % Author SID: 460369684
 % Function Name: windforces
 %
+% [CFA_Z, CFA_X] = WINDFORCES(PARAMS, ALPHA, Q_HAT, DELTA_E)
+%
 % Function Description:
 % Determines non-dimensional coefficients for the aerodynamic forces
 % generated in the z and x directions (in the aerodynamic axes)
