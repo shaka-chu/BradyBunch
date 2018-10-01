@@ -17,9 +17,7 @@
 
 function [thrust] = propforce(PmaxSL, rho, eta, u , deltat)
 
-    % Calculate sigma
-    rho_SL = 1.225;
-    sigma = rho/rho_SL;
+    % 
 
     % Calculate available thrust
     Pmax = PmaxSL*(1.324*sigma - 0.324);
