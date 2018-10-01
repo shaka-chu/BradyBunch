@@ -12,11 +12,14 @@
 % Outputs:
 %   Output: - body force components (Fgx,Fgy,Fgz)
 
-function [Fgx, Fgy, Fgz] = gravity(mass,q0,q1,q2,q3)
+function [Fgx, Fgy, Fgz] = gravity(Params,q0,q1,q2,q3)
 
+    % Extract parameters
+    g = Params.Inertial.g;
+    m = Params.Inertial.m;
+    
     % Calculate weight force
-    g = 9.81;
-    F = mass*g;
+    F = m*g;
     
     % Create transformation matrix from Earth to body
     Cbe = rotate321quat([q0,q1,q2,q3]);
