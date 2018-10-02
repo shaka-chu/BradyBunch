@@ -14,23 +14,18 @@
 function trim_input = trim(Params, V_trim, h, gamma, phi_0, theta_0, psi_0)
 
     % Extract aircraft parameters
-    m   = Params.Inertial.m;
-    g   = Params.Inertial.g;
-    S   = Params.Geo.S;
-    CLa = Params.Aero.CLa;
-    CLo = Params.Aero.CLo;
-    
-    % Get the flow properties
-    [~, Q] = flowproperties(h, V);
+    m = Params.Inertial.m;
+    g = Params.Inertial.g;
+    S = Params.Geo.S;
 
     % Set tolorence of numerical convergance
     tol = 1e-9;
     
     % Estimate the lift coefficient
-    CL = m*g/Q/S;
+    CL = m*g/0.5/rho/V_trim^2/S;
     
     % Make initial estimates of the inputs
-    alpha0 = (CL - CLo)/CLa;
+    alpha0 = deg2rad(2);
     delta_t0 = deg2rad(0.5);
     delta_e0 = 0;
     trim_input = [alpha0; delta_t0; delta_e0];
