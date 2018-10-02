@@ -59,7 +59,7 @@ function [Xdot] = staterates(X, Params, Ft, F_body, M_body, Fgx, Fgy, Fgz)
     % Calculate body accelerations
     udot = r.*v - q.*w - Fgx + (Fa_x + Ft)./m;
     vdot = -r.*u + p.*w + Fgy + Fa_y./m;
-    rdot = q.*u - p.*v + Fgz + Fa_z./m;
+    wdot = q.*u - p.*v + Fgz + Fa_z./m;
     
     % Calculate manoeuvring rates
     pdot = c3.*p.*q + c4.*q.*r + c1.*La + c2.*Na;
