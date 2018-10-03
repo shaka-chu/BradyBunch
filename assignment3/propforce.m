@@ -15,11 +15,17 @@
 % Outputs:
 %   Output: - Thrust 
 
-function [thrust] = propforce(Params, rho, u, deltat)
+function thrust = propforce(Params, X, U, rho)
 
     % Extract aircraft parameters
     PmaxSL = Params.Prop.P_max;
     eta = Params.Prop.eta;
+    
+    % Extract state
+    u = X(1);
+    
+    % Extract control
+    delta_t = U(1);
 
     % Calculate sigma
     rho_SL = 1.225;
@@ -29,6 +35,6 @@ function [thrust] = propforce(Params, rho, u, deltat)
     Pmax = PmaxSL*(1.324*sigma - 0.324);
 
     % Calculate thrust produced
-    thrust = (Pmax*eta*deltat)/u;
+    thrust = (Pmax*eta*delta_t)/u;
 
 end

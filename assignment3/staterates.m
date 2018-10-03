@@ -29,10 +29,11 @@ function [Xdot] = staterates(Params, X, U)
     z   = X(13);
 
     % Calculate forces
-    [BodyForces, gravForces] = calculateForces(Params, X, U);
+    [BodyForces, gravForces, thrust] = calculateForces(Params, X, U);
     F_body = BodyForces.Force;
     M_body = BodyForces.Moment;
     [Fgx, Fgy, Fgz] = gravForces{:};
+    Ft = thrust;
     
     % Unpack forces
     Fa_x = F_body(1);
