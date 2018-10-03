@@ -14,18 +14,23 @@
 function trim_input = trim(Params, V_trim, h, gamma, phi_0, theta_0, psi_0)
 
     % Extract aircraft parameters
-    m = Params.Inertial.m;
-    g = Params.Inertial.g;
-    S = Params.Geo.S;
+    m   = Params.Inertial.m;
+    g   = Params.Inertial.g;
+    S   = Params.Geo.S;
+    CLa = Params.Aero.CLa;
+    CLo = Params.Aero.CLo;
+    
+    % Get the flow properties
+    [~, Q] = flowproperties(h, V_trim);
 
     % Set tolorence of numerical convergance
     tol = 1e-9;
     
     % Estimate the lift coefficient
-    CL = m*g/0.5/rho/V_trim^2/S;
+    CL = m*g/Q/S;
     
     % Make initial estimates of the inputs
-    alpha0 = deg2rad(2);
+    alpha0 = (CL - CLo)/CLa;
     delta_t0 = deg2rad(0.5);
     delta_e0 = 0;
     trim_input = [alpha0; delta_t0; delta_e0];
@@ -43,8 +48,8 @@ function trim_input = trim(Params, V_trim, h, gamma, phi_0, theta_0, psi_0)
     while notConverged
         
         % Calculate the velocity components
-        X(1) = V_trim*cos(alpha);
-        X(3) = V_trim*sin(alpha);
+        X(1) = V_trim*cos(trim_input(1));
+        X(3) = V_trim*sin(trim_input(1));
         
         % Calculate quaternions from the initial Euler angles
         X(7:10) = euler2quat([phi_0; theta_0; psi_0]);

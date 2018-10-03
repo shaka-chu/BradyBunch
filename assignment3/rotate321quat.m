@@ -16,6 +16,8 @@
 
 function dcm_321 = rotate321quat(quaternion)
     
+    size(quaternion)
+
     % Unpack quaternion matrix
     q0 = quaternion(1,:);
     q1 = quaternion(2,:);

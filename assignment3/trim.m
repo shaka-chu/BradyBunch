@@ -21,7 +21,7 @@ function trim_input = trim(Params, V_trim, h, gamma, phi_0, theta_0, psi_0)
     CLo = Params.Aero.CLo;
     
     % Get the flow properties
-    [~, Q] = flowproperties(h, V);
+    [~, Q] = flowproperties(h, V_trim);
 
     % Set tolorence of numerical convergance
     tol = 1e-9;
@@ -48,8 +48,8 @@ function trim_input = trim(Params, V_trim, h, gamma, phi_0, theta_0, psi_0)
     while notConverged
         
         % Calculate the velocity components
-        X(1) = V_trim*cos(alpha);
-        X(3) = V_trim*sin(alpha);
+        X(1) = V_trim*cos(trim_input(1));
+        X(3) = V_trim*sin(trim_input(1));
         
         % Calculate quaternions from the initial Euler angles
         X(7:10) = euler2quat([phi_0; theta_0; psi_0]);
@@ -69,8 +69,8 @@ function trim_input = trim(Params, V_trim, h, gamma, phi_0, theta_0, psi_0)
                 Uk = U;
                 
                 % Change the u and w
-                Xk(1) = V_trim*cos(alpha + 0.001*alpha);
-                Xk(3) = V_trim*sin(alpha + 0.001*alpha);
+                Xk(1) = V_trim*cos(trim_input(1) + 0.001*trim_input(1));
+                Xk(3) = V_trim*sin(trim_input(1) + 0.001*trim_input(1));
                 
                 % Determine the state rate vector
                 [Xkdot] = getstaterates(Params, Xk, Uk);
