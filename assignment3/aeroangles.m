@@ -16,12 +16,12 @@
 function [V, alpha, beta] = aeroangles(X)
 
     % Unpack state vector
-    u   = X(1)
-    v   = X(2)
-    w   = X(3)
+    u   = X(1);
+    v   = X(2);
+    w   = X(3);
 
     % Calculate total velocity
-    V = sqrt(u.^2 + v.^2 + w.^2)
+    V = sqrt(u.^2 + v.^2 + w.^2);
 
     % Calculate angle of attack
     alpha = atan(w./u);

@@ -12,9 +12,9 @@ function [BodyForces, gravForces, thrust] = calculateForces(Params, X, U)
     % Calculate wind forces
     [Cfa_z, Cfa_x, CL] = windforces(Params, alpha, X, U, V);
     
-    alpha_dot = 0;
-    beta_dot = 0;
     % Calculate body forces
+    alpha_dot = 0;      % TODO - calculate this
+    beta_dot = 0;       % TODO - calculate this
     [F_body, M_body] = bodyforces(Params, X, U, Cfa_x, Cfa_z, CL, ...
                        Q, alpha, beta, alpha_dot, beta_dot,V);
 
