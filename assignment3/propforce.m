@@ -36,5 +36,4 @@ function thrust = propforce(Params, X, U, rho)
 
     % Calculate thrust produced
     thrust = (Pmax*eta*delta_t)/u;
-
 end

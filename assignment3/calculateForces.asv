@@ -30,7 +30,7 @@
 %
 % Outputs:
 %   BodyForces: Struct containing two fields, "Force" and "Moment", for 
-%               the aircraft's body forces and moments (N and Nm)
+%               the aircraft's body forces and moments
 %   gravForces: Cell array containing the cartesian components of the
 %               aircraft's weight when projected into the body frame (N)
 %   thrust:     Thrust of the aircraft (N)
@@ -44,9 +44,6 @@
 %   gravForces, propforce
 %
 % MAT-files required: none
-%
-% TODO:
-%   Calculate alpha_dot and beta_dot
 
 function [BodyForces, gravForces, thrust] = calculateForces(Params, X, U)
 
@@ -62,9 +59,9 @@ function [BodyForces, gravForces, thrust] = calculateForces(Params, X, U)
     % Calculate wind forces
     [Cfa_z, Cfa_x, CL] = windforces(Params, alpha, X, U, V);
     
+    alpha_dot = 0;
+    beta_dot = 0;
     % Calculate body forces
-    alpha_dot   = 0;    % TODO - calculate this!
-    beta_dot    = 0;    % TODO - calculate this!
     [F_body, M_body] = bodyforces(Params, X, U, Cfa_x, Cfa_z, CL, ...
                        Q, alpha, beta, alpha_dot, beta_dot,V);
 
