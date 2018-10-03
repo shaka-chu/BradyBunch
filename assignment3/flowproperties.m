@@ -2,19 +2,38 @@
 % Author SID: 460369684
 % Function Name: flowproperties
 %
-% [RHO, Q] = FLOWPROPERTIES(H,)
-%
 % Function Description:
-% Returns the air density and dynamic pressure, calculated as a function of
-% aircraft altitude and speed
+%   Returns the air density and dynamic pressure, calculated as a function 
+%   of aircraft altitude and speed
 %
 % Inputs:
-%   h:      Aircraft altitude (m)
-%   V:      Magnitude of aircraft velocity in the flight direction
+%   X:      Vector containing the aircraft state. The order is:
+%               - u   = X(1)    (m/s)
+%               - v   = X(2)    (m/s)
+%               - w   = X(3)    (m/s)
+%               - p   = X(4)    (rad/s)
+%               - q   = X(5)    (rad/s)
+%               - r   = X(6)    (rad/s)
+%               - q0  = X(7)    -
+%               - q1  = X(8)    -
+%               - q2  = X(9)    -
+%               - q3  = X(10)   -
+%               - x   = X(11)   (m)
+%               - y   = X(12)   (m)
+%               - z   = X(13)   (m)
+%   V:      Total velocity magnitude (m/s)
 %
 % Outputs:
 %   rho:    Density of air at aircraft altitude (kg/m^3)
 %   Q:      Dynamic pressure at aircraft altitude (Pa)
+%
+% Other m-files required: none
+%
+% Subfunctions: none
+%
+% MAT-files required: none
+%
+% TODO: none
 
 function [rho, Q] = flowproperties(X, V)
 

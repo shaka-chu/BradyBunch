@@ -32,7 +32,8 @@
 %   dt:     Timestep size (s)
 %
 % Outputs:
-%   X_new:  Aircraft state at 
+%   X_new:  Aircraft state at end of time step. Same order and units as 
+%           'X0', listed above
 %
 % Other m-files required:
 %   staterates, calculateForces.m, aeroangles.m, flowproperties.m, 

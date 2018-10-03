@@ -3,19 +3,26 @@
 % Function Name: rotatex
 %
 % Function Description:
-% Performs rotations about the x-axis through a specified angle
+%   Performs rotations about the x-axis through a specified angle
 %
 % Inputs:
-%   Input: - angle of rotation (in radians)
+%   angle: Angle of rotation (rad)
 %
 % Outputs:
-%   Output: - rotation matrix
+%   cx: Rotation matrix
+% 
+% Other m-files required: none
+% 
+% Subfunctions: none
+%
+% MAT-files required: none
+%
+% TODO: none
 
 function cx = rotatex(angle)
     
     % Create matrix
     cx = [ 1,           0,          0;
            0,  cos(angle), sin(angle);
-           0, -sin(angle), cos(angle)];
-       
+           0, -sin(angle), cos(angle)];     
 end

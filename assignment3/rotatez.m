@@ -3,13 +3,21 @@
 % Function Name: rotatez
 %
 % Function Description:
-% Performs rotations about the z-axis through a specified angle
+%   Performs rotations about the z-axis through a specified angle
 %
 % Inputs:
-%   Input: - angle of rotation (in radians)
+%   angle: Angle of rotation (in rad)
 %
 % Outputs:
-%   Output: - rotation matrix
+%   cz: Rotation matrix
+% 
+% Other m-files required: none
+% 
+% Subfunctions: none
+%
+% MAT-files required: none
+%
+% TODO: none
 
 function cz = rotatez(angle)
     

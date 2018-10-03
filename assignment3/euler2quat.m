@@ -3,10 +3,8 @@
 % With Special Thanks To: 460306678
 % Function Name: euler2quat
 %
-% QUATERNION = EULER2QUAT(EULER_ANGLES)
-%
 % Function Description:
-% Returns the quaternion components for a given Euler angle input matrix
+%   Returns the quaternion components for a given Euler angle input matrix
 %
 % Inputs:
 %   euler_angles: matrix containing Euler angles (radians). The angles are
@@ -14,6 +12,14 @@
 %
 % Outputs:
 %   quaternion: matrix of quaternion components [q0; q1; q2; q3]
+%
+% Other m-files required: none
+%
+% Subfunctions: none
+%
+% MAT-files required: none
+%
+% TODO: none
 
 function quaternion = euler2quat(euler_angles)
     

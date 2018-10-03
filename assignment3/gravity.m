@@ -3,14 +3,39 @@
 % Function Name: gravity
 %
 % Function Description:
-% Determines the force due to gravity and converts it to the body frame
+%   Determines the force due to gravity and converts it to the body frame
 %
 % Inputs:
-%   Input: - mass of aircraft (mass)
-%          - attitude in quaternions (q0,q1,q2,q3)
+%   Params: Struct containing all characteristics of the aircraft
+%   X:      Vector containing the aircraft state. The order is:
+%               - u   = X(1)    (m/s)
+%               - v   = X(2)    (m/s)
+%               - w   = X(3)    (m/s)
+%               - p   = X(4)    (rad/s)
+%               - q   = X(5)    (rad/s)
+%               - r   = X(6)    (rad/s)
+%               - q0  = X(7)    -
+%               - q1  = X(8)    -
+%               - q2  = X(9)    -
+%               - q3  = X(10)   -
+%               - x   = X(11)   (m)
+%               - y   = X(12)   (m)
+%               - z   = X(13)   (m)
 %
 % Outputs:
-%   Output: - body force components (Fgx,Fgy,Fgz)
+%   Fgx: Body x-component of weight (N)
+%   Fgy: Body y-component of weight (N)
+%   Fgz: Body z-component of weight (N)
+% 
+% Other m-files required:
+%   rotate321quat.m
+%
+% Subfunctions:
+%   rotate321quat
+%
+% MAT-files required: none
+%
+% TODO: none
 
 function [Fgx, Fgy, Fgz] = gravity(Params, X)
 
@@ -26,7 +51,6 @@ function [Fgx, Fgy, Fgz] = gravity(Params, X)
     
     % Calculate weight force
     F = [0; 0; m*g];
-    
     
     % Create transformation matrix from Earth to body
     Cbe = rotate321quat([q0;q1;q2;q3]);

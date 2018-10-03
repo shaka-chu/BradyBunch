@@ -3,19 +3,26 @@
 % Function Name: rotatey
 %
 % Function Description:
-% Performs rotations about the y-axis through a specified angle
+%   Performs rotations about the y-axis through a specified angle
 %
 % Inputs:
-%   Input: - angle of rotation (in radians)
+%   angle: Angle of rotation (in rad)
 %
 % Outputs:
-%   Output: - rotation matrix
+%   cy: Rotation matrix
+% 
+% Other m-files required: none
+% 
+% Subfunctions: none
+%
+% MAT-files required: none
+%
+% TODO: none
 
 function cy = rotatey(angle)
     
     % Create matrix
     cy = [ cos(angle),  0, -sin(angle);
                     0,  1,           0;
-           sin(angle),  0,  cos(angle)];
-       
+           sin(angle),  0,  cos(angle)];     
 end

@@ -28,11 +28,20 @@
 %               - delta_r = U(4)    (rad)
 %
 % Outputs:
-%   BodyForces: Struct containing two fields, "Force" and "Moment", for the
-%               aircraft's body forces and moments (N and Nm)
-%   gravForces: Cell array containing the cartesian components of the
-%               aircraft's weight when projected into the body frame (N)
-%   thrust:     Thrust of the aircraft (N)
+%   X:      Vector containing the aircraft state rates. The order is:
+%               - u_dot   = X(1)    (m/s^2)
+%               - v_dot   = X(2)    (m/s^2)
+%               - w_dot   = X(3)    (m/s^2)
+%               - p_dot   = X(4)    (rad/s^2)
+%               - q_dot   = X(5)    (rad/s^2)
+%               - r_dot   = X(6)    (rad/s^2)
+%               - q0_dot  = X(7)    -
+%               - q1_dot  = X(8)    -
+%               - q2_dot  = X(9)    -
+%               - q3_dot  = X(10)   -
+%               - x_dot   = X(11)   (m/s)
+%               - y_dot   = X(12)   (m/s)
+%               - z_dot   = X(13)   (m/s)
 %
 % Other m-files required:
 %   calculateForces.m, aeroangles.m, flowproperties.m, gravity.m,

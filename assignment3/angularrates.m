@@ -6,13 +6,23 @@
 % Determines rates of change of angle of attack and side slip
 %
 % Inputs:
-%   Input: - components of the flight vector (V,alpha,beta)
-%          - rates of change of body velocity vector (vdot,wdot)
+%   V:      total velocity magnitude (m/s)
+%   alpha:  angle of attack (rad)
+%   beta:   side slip angle (rad)
+%   vDot:   Rate of change of body y-velocity
+%   wDot:   Rate of change of body z-velocity
 %
 % Outputs:
-%   Output: - rate of change of angle of attack (alphaDot)
-%           - rate of change of side slip angle (betaDot)
-
+%   alphaDot:   Rate of change of angle of attack (rad/s)
+%   betaDot:    Rate of change of side slip angle (rad/s)
+% 
+% Other m-files required: none
+% 
+% Subfunctions: none
+%
+% MAT-files required: none
+%
+% TODO: none
 
 function [alphaDot, betaDot] = angularrates(V,alpha,beta,vDot,wDot)
 
@@ -21,5 +31,4 @@ function [alphaDot, betaDot] = angularrates(V,alpha,beta,vDot,wDot)
 
     % Calculate rate of change of side slip angle
     betaDot = (vDot./V).*sec(beta);
-
 end
