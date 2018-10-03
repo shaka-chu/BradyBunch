@@ -78,7 +78,5 @@ function [Xdot] = staterates(X, Params, Ft, F_body, M_body, Fgx, Fgy, Fgz)
     
     % Create output
     Xdot = [udot;vdot;wdot;pdot;qdot;rdot;q0dot;q1dot;q2dot;q3dot;...
-        position(1);position(2);position(3)];
-    
-     
+        position(1);position(2);position(3)];  
 end
