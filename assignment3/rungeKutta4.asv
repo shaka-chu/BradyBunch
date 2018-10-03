@@ -1,6 +1,6 @@
 % AERO3560 - Flight Mechanics 1 - Assignment 3 2018
 % Author SID: 460369684
-% Function Name: calculateForces
+% Function Name: rungeKutta4
 %
 % Function Description:
 %   Returns all forces acting on the aircraft given its physical
@@ -48,33 +48,42 @@
 % TODO:
 %   Calculate alpha_dot and beta_dot
 
-function [BodyForces, gravForces, thrust] = calculateForces(Params, X, U)
 
-    % Get aerodynamic angles
-    [V, alpha, beta] = aeroangles(X);
+function [X_new] = rungeKutta4(Params,X0,U,dt)
     
-    % Get flow properties
-    [rho, Q]  = flowproperties(X, V);
+    % State rate at start of step
+    X_dot_1 = staterates(Params, X0, U);
     
-    % Calculate gravity forces
-    [Fgx, Fgy, Fgz] = gravity(Params, X);
+    % Incriment 
+    An = X_dot_1*dt;
     
-    % Calculate wind forces
-    [Cfa_z, Cfa_x, CL] = windforces(Params, alpha, X, U, V);
+    % First state at middle of step
+    X_2 = X_0 + An/2;
     
-    % Calculate body forces
-    alpha_dot   = 0;        % TODO - calculate this!
-    beta_dot    = 0;        % TODO - calculate this!
-    [F_body, M_body] = bodyforces(Params, X, U, Cfa_x, Cfa_z, CL, ...
-                       Q, alpha, beta, alpha_dot, beta_dot,V);
-
-    % Concatenate gravity forces into cell array
-    gravForces = {Fgx, Fgy, Fgz};
+    % First state rate at middle of step
+    X_dot_2 = staterates(Params, X_2, U);
     
-    % Calculate thrust force
-    thrust = propforce(Params, X, U, rho);
-
-    % Save body forces to struct
-    BodyForces.Force    = F_body;
-    BodyForces.Moment   = M_body;
+    % Improved incriment 
+    Bn = X_dot_2*dt;
+    
+    % Second state at middle of step
+    X_3 = X_0 + Bn/2;
+    
+    % Second state rate at middle of step
+    X_dot_3 = staterates(Params, X_3, U);
+    
+    % Improved incriment
+    Cn = X_dot_3*dt;
+    
+    % State at end of step
+    X_4 = X_0 + Cn;
+    
+    % State rate at end of step
+    X_dot_4 = staterates(Params, X_4, U);
+    
+    % Improved incriment
+    Dn = X_dot_4*dt;
+    
+    % Evaluate new state
+    X_new = X_0 + (1/6)*(An + 2*Bn + 2*Cn + Dn);
 end
