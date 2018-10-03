@@ -1,15 +1,50 @@
 % AERO3560 - Flight Mechanics 1 - Assignment 3 2018
-% Author SID: 460306678
+% Author SID: 460306678, 460369684
 % Function Name: staterates
 %
 % Function Description:
 % Computes the rates of changes of all state variables
 %
 % Inputs:
-%   X: Column vector of state variables
+%   Params: Struct containing all characteristics of the aircraft
+%   X:      Vector containing the aircraft state. The order is:
+%               - u   = X(1)    (m/s)
+%               - v   = X(2)    (m/s)
+%               - w   = X(3)    (m/s)
+%               - p   = X(4)    (rad/s)
+%               - q   = X(5)    (rad/s)
+%               - r   = X(6)    (rad/s)
+%               - q0  = X(7)    -
+%               - q1  = X(8)    -
+%               - q2  = X(9)    -
+%               - q3  = X(10)   -
+%               - x   = X(11)   (m)
+%               - y   = X(12)   (m)
+%               - z   = X(13)   (m)
+%   U:      Vector containing all aircraft control settings. The order is:
+%               - delta_t = U(1)    -
+%               - delta_e = U(2)    (rad)
+%               - delta_a = U(3)    (rad)
+%               - delta_r = U(4)    (rad)
 %
 % Outputs:
-%   Xdot: Column vector of rates of changes of state variables
+%   BodyForces: Struct containing two fields, "Force" and "Moment", for the
+%               aircraft's body forces and moments (N and Nm)
+%   gravForces: Cell array containing the cartesian components of the
+%               aircraft's weight when projected into the body frame (N)
+%   thrust:     Thrust of the aircraft (N)
+%
+% Other m-files required:
+%   calculateForces.m, aeroangles.m, flowproperties.m, gravity.m,
+%   windforces.m, bodyforces.m, gravForces.m, propforce.m
+%
+% Subfunctions:
+%   calculateForces, aeroangles, flowproperties, gravity, windforces, 
+%   bodyforces, gravForces, propforce
+%
+% MAT-files required: none
+%
+% TODO: none
 
 function [Xdot] = staterates(Params, X, U)
 
@@ -24,9 +59,6 @@ function [Xdot] = staterates(Params, X, U)
     q1  = X(8);
     q2  = X(9);
     q3  = X(10);
-    x   = X(11);
-    y   = X(12);
-    z   = X(13);
 
     % Calculate forces
     [BodyForces, gravForces, thrust] = calculateForces(Params, X, U);
@@ -44,7 +76,6 @@ function [Xdot] = staterates(Params, X, U)
     Na = M_body(3);
     
     % Extract parameters
-    g = Params.Inertial.g;         
     m = Params.Inertial.m;          
     Ixx = Params.Inertial.Ixx;         
     Iyy = Params.Inertial.Iyy;      
@@ -64,9 +95,9 @@ function [Xdot] = staterates(Params, X, U)
     c9 = c8*(Ixx - Iyy) + c2*Ixz;
     
     % Calculate body accelerations
-    udot = r.*v - q.*w - Fgx + (Fa_x + Ft)./m;
-    vdot = -r.*u + p.*w + Fgy + Fa_y./m;
-    wdot = q.*u - p.*v + Fgz + Fa_z./m;
+    udot = r.*v - q.*w + Fgx/m + (Fa_x + Ft)./m;
+    vdot = -r.*u + p.*w + Fgy/m + Fa_y./m;
+    wdot = q.*u - p.*v + Fgz/m + Fa_z./m;
     
     % Calculate manoeuvring rates
     pdot = c3.*p.*q + c4.*q.*r + c1.*La + c2.*Na;
@@ -81,7 +112,7 @@ function [Xdot] = staterates(Params, X, U)
     
     % Calculate position rates
     Cbe = rotate321quat([q0;q1;q2;q3]);
-    position = inv(Cbe)*[u;v;w];
+    position = Cbe\[u;v;w];
     
     % Create output
     Xdot = [udot;vdot;wdot;pdot;qdot;rdot;q0dot;q1dot;q2dot;q3dot;...

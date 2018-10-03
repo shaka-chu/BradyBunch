@@ -25,7 +25,8 @@ function [Fgx, Fgy, Fgz] = gravity(Params, X)
     q3  = X(10);
     
     % Calculate weight force
-    F = m*g;
+    F = [0; 0; m*g];
+    
     
     % Create transformation matrix from Earth to body
     Cbe = rotate321quat([q0;q1;q2;q3]);
