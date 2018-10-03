@@ -3,7 +3,7 @@
 % Function Name: quat2euler
 %
 % Function Description:
-% Returns the Euler angles for a given quaternion input matrix
+%   Returns the Euler angles for a given quaternion input matrix
 %
 % Inputs:
 %   quaternion: matrix containing quaternions. They are stored in the 
@@ -12,6 +12,20 @@
 % Outputs:
 %   euler_angles: matrix of Euler angles (radians): [phi; theta; psi] =
 %                 [roll; pitch; yaw]
+%
+% Other m-files required:
+%   aeroangles.m, flowproperties.m, gravity.m, windforces.m, bodyforces.m,
+%   gravForces.m, propforce.m
+%
+% Subfunctions:
+%   aeroangles, flowproperties, gravity, windforces, bodyforces,
+%   gravForces, propforce
+%
+% MAT-files required: none
+%
+% TODO:
+%   Calculate alpha_dot and beta_dot
+
 
 function euler_angles = quat2euler(quaternion)
     
