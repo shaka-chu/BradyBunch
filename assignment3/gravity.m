@@ -12,11 +12,17 @@
 % Outputs:
 %   Output: - body force components (Fgx,Fgy,Fgz)
 
-function [Fgx, Fgy, Fgz] = gravity(Params,q0,q1,q2,q3)
+function [Fgx, Fgy, Fgz] = gravity(Params, X)
 
     % Extract parameters
     g = Params.Inertial.g;
     m = Params.Inertial.m;
+
+    % Unpack state vector
+    q0  = X(7);
+    q1  = X(8);
+    q2  = X(9);
+    q3  = X(10);
     
     % Calculate weight force
     F = m*g;
@@ -29,6 +35,4 @@ function [Fgx, Fgy, Fgz] = gravity(Params,q0,q1,q2,q3)
     Fgx = Fg(1);
     Fgy = Fg(2);
     Fgz = Fg(3);
-
-
 end

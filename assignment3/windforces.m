@@ -19,7 +19,7 @@
 %   Cfa_x: Non-dimensional coefficient for x-direction aerodynamic force
 %   CL:    Lift coefficient
 
-function [Cfa_z, Cfa_x, CL] = windforces(Params, alpha, q_hat, delta_e)
+function [Cfa_z, Cfa_x, CL] = windforces(Params, alpha, X, U, V)
 
     % Extract necessary aircraft parameters
     CLo     = Params.Aero.CLo;          % Non-dimensional
@@ -28,6 +28,16 @@ function [Cfa_z, Cfa_x, CL] = windforces(Params, alpha, q_hat, delta_e)
     CLde    = Params.Aero.CLde;         % /rad
     Cdo     = Params.Aero.Cdo;          % Non-dimensional
     k       = Params.Aero.k;            % Non-dimensional
+    c       = Params.Geo.c;             % m
+
+    % Unpack state vector
+    q   = X(5);
+
+    % Non-dimensionalise angular rate
+    q_hat = (q*c)/(2*V);
+
+    % Unpack control vector
+    delta_e = U(2);
     
     % Lift coefficient 
     CL = -CLo - CLa*alpha - CLq*q_hat - CLde*delta_e;

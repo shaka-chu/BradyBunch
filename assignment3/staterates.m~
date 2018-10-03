@@ -11,7 +11,7 @@
 % Outputs:
 %   Xdot: Column vector of rates of changes of state variables
 
-function [Xdot] = staterates(Params, X, U)
+function [Xdot] = staterates(X, U, Params)
 
     % Unpack state vector
     u   = X(1);
@@ -27,14 +27,30 @@ function [Xdot] = staterates(Params, X, U)
     x   = X(11);
     y   = X(12);
     z   = X(13);
+    
+    
+    
+%     % Unpack control vector
+%     delta_t = U(1);
+%     delta_e = U(2);
+%     delta_a = U(3);
+%     delta_r = U(4);   
 
-    % Calculate forces
-    [BodyForces, gravForces] = calculateForces(Params, X, U);
+
+[BodyForces, gravForces] = calculateForces(Params, X, U)
+
     F_body = BodyForces.Force;
     M_body = BodyForces.Moment;
+
     [Fgx, Fgy, Fgz] = gravForces{:};
+
+
     
-    % Unpack forces
+    
+    
+    
+    
+    % Unpack body forces and moments
     Fa_x = F_body(1);
     Fa_y = F_body(2);
     Fa_z = F_body(3);

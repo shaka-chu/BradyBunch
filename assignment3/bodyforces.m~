@@ -15,8 +15,9 @@
 %   F_body : matrix of the combined body forces [F_bx; F_by; F_bz] 
 %   M_body : matrix of the combined moments [M_bL; M_bM; M_bN]
 
-function [F_body, M_body] = bodyforces(Params, X, U, Cfa_x, Cfa_z, CL, ...
-    Q, alpha, beta, alpha_dot, beta_dot)
+function [F_body, M_body] = bodyforces(Params, Cfa_x, Cfa_z, CL, ...
+    Q, alpha, beta, alpha_dot, beta_dot, U,  ...
+    p_hat, q_hat, r_hat, phi)
 
     % Extract required aerodynamic parameters
     Clb     = Params.Aero.Clb;
@@ -42,35 +43,15 @@ function [F_body, M_body] = bodyforces(Params, X, U, Cfa_x, Cfa_z, CL, ...
     Cmq     = Params.Aero.Cmq;
     Cmad    = Params.Aero.Cmad;
     Cmde    = Params.Aero.Cmde;
-
-    % Unpack state vector
-    p   = X(4);
-    q   = X(5);
-    r   = X(6);
-    q0  = X(7);
-    q1  = X(8);
-    q2  = X(9);
-    q3  = X(10);
-    
-    % Determine euler angles from quaternion orientation
-    quaternion = [q0; q1; q2; q3];
-    euler_angles = quat2euler(quaternion);
-    phi = euler_angles(1);
     
     % Extract required geometric parameters
     S = Params.Geo.S;
     b = Params.Geo.b;
-    c = Params.Geo.c;
     
     % Extract control inputs
-    delta_e = U(2);
-    delta_a = U(3);
-    delta_r = U(4);
-
-    % Non-dimensionalise angular rates
-    p_hat = (p*c)/(2*V);
-    q_hat = (q*c)/(2*V);
-    r_hat = (r*c)/(2*V);
+    %     delta_e = U(2);
+    %     delta_a = U(3);
+    %     delta_r = U(4);   
     
     % Compute rotation from the aero angles into the body axes
     cz = rotatez(-beta);

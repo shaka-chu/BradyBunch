@@ -23,9 +23,7 @@ function [rho, Q] = flowproperties(X, V)
     P0  = 101.325;          % ISA SSL pressure (kPa)
     R   = 0.287058;         % Ideal gas constant for air (kJ/kg.K)
 
-    % Extract altitude (m) from state vector
-    z   = X(13);
-    h   = -z;
+    % Extract altitude (m) d
   
     % Calculate atmospheric conditions based on altitude
 
