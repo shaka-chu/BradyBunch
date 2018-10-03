@@ -41,10 +41,10 @@
 %   M_body: Matrix of the combined moments [M_bL; M_bM; M_bN]
 %
 % Other m-files required:
-%   quat2euler.m, rotatez.m, rotatey.m
+%   quat2euler, rotatez
 %
 % Subfunctions:
-%   quat2euler, rotatez, rotatey
+%   quat2euler.m, rotatez.m
 %
 % MAT-files required: none
 %

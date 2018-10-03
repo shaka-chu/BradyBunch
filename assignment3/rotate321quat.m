@@ -3,16 +3,24 @@
 % Function Name: rotate321quat
 %
 % Function Description:
-% Creates the DCM for a 3-2-1 series of axis rotations, using the
-% quaternion formulation. Requires the quaternion that represents the
-% rotation as an input.
+%   Creates the DCM for a 3-2-1 series of axis rotations, using the
+%   quaternion formulation. Requires the quaternion that represents the
+%   rotation as an input.
 %
 % Inputs:
 %   quaternion: column vector containing quaternions. They are stored in 
 %               the order: [q0; q1; q2; q3]
 %
 % Outputs:
-%   dcm_321:    DCM for a standard 3-2-1 series of axis rotations
+%   dcm_321: DCM for a standard 3-2-1 series of axis rotations
+% 
+% Other m-files required: none
+%
+% Subfunctions: none
+%
+% MAT-files required: none
+%
+% TODO: none
 
 function dcm_321 = rotate321quat(quaternion)
 

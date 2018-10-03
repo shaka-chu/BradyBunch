@@ -13,19 +13,13 @@
 %   euler_angles: matrix of Euler angles (radians): [phi; theta; psi] =
 %                 [roll; pitch; yaw]
 %
-% Other m-files required:
-%   aeroangles.m, flowproperties.m, gravity.m, windforces.m, bodyforces.m,
-%   gravForces.m, propforce.m
+% Other m-files required: none
 %
-% Subfunctions:
-%   aeroangles, flowproperties, gravity, windforces, bodyforces,
-%   gravForces, propforce
+% Subfunctions: none
 %
 % MAT-files required: none
 %
-% TODO:
-%   Calculate alpha_dot and beta_dot
-
+% TODO: none
 
 function euler_angles = quat2euler(quaternion)
     
