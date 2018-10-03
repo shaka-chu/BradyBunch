@@ -15,8 +15,6 @@
 %   dcm_321:    DCM for a standard 3-2-1 series of axis rotations
 
 function dcm_321 = rotate321quat(quaternion)
-    
-    size(quaternion)
 
     % Unpack quaternion matrix
     q0 = quaternion(1,:);

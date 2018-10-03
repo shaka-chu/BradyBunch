@@ -2,6 +2,12 @@
 % Author SID: 460369684
 % Main Script
 
+clear;
+clc;
+clf;
+clf reset;
+close all;
+
 % Initialise aircraft parameters
 [Nominal_params, Secondary_params] = initialisation;
 

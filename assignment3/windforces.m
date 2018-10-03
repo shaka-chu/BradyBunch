@@ -26,7 +26,7 @@ function [Cfa_z, Cfa_x, CL] = windforces(Params, alpha, q_hat, delta_e)
     CLa     = Params.Aero.CLa;          % /rad
     CLq     = Params.Aero.CLq;          % Non-dimensional
     CLde    = Params.Aero.CLde;         % /rad
-    Cdo     = Params.Aero.CDo;          % Non-dimensional
+    Cdo     = Params.Aero.Cdo;          % Non-dimensional
     k       = Params.Aero.k;            % Non-dimensional
     
     % Lift coefficient 
