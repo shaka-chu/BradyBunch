@@ -1,6 +1,6 @@
 % AERO3560 - Flight Mechanics 1 - Assignment 3 2018
 % Author SID: 460398189
-% Alphadot
+% Alphabeta_dot
 %
 %
 %
