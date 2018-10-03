@@ -7,6 +7,7 @@
 % Returns the forces acting on the aircraft in the body axes
 %
 % Inputs:
+%   Params: Struct containing all characteristics of the aircraft
 %
 % Outputs:
 %   trim_input : input control for trim [alpha; delta_t; delta_e]
