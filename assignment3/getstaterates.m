@@ -12,7 +12,7 @@
 % Outputs:
 %   Xdot : State rate vector
 
-function Xdot = getstaterates(Params, X, U)
+function Xdot = getstaterates(Params, X, U, phi_0)
 
     % Determine aero angles from aeroangles.m function
     [V, alpha, beta] = aeroangles(X(1), X(2), X(3));

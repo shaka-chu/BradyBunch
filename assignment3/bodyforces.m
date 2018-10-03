@@ -16,8 +16,8 @@
 %   M_body : matrix of the combined moments [M_bL; M_bM; M_bN]
 
 function [F_body, M_body] = bodyforces(Params, Cfa_x, Cfa_z, CL, ...
-    Q, alpha, beta, alpha_dot, beta_dot, delta_a, delta_e, ...
-    delta_r, p_hat, q_hat, r_hat, phi)
+    Q, alpha, beta, alpha_dot, beta_dot, delta_a, delta_e, delta_r,  ...
+    p_hat, q_hat, r_hat, phi)
 
     % Extract required aerodynamic parameters
     Clb     = Params.Aero.Clb;

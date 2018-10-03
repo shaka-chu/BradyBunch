@@ -55,7 +55,7 @@ function trim_input = trim(Params, V_trim, h, gamma, phi_0, theta_0, psi_0)
         X(7:10) = euler2quat([phi_0; theta_0; psi_0]);
         
         % Determine the state rate vector
-        [Xdot] = getstaterates(Params, X, U);
+        [Xdot] = getstaterates(Params, X, U, phi_0);
         Xk_barDot = Xdot(iTrim);
 
         % Perturb the variables to get the Jacobian matrix
