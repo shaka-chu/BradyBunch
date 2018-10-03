@@ -2,6 +2,8 @@
 % Author SID: 460369684
 % Function Name: flowproperties
 %
+% [RHO, Q] = FLOWPROPERTIES(H,)
+%
 % Function Description:
 % Returns the air density and dynamic pressure, calculated as a function of
 % aircraft altitude and speed
