@@ -35,6 +35,7 @@ function Xdot = getstaterates(Params, X, U, phi_0)
         Q, alpha, beta, 0, 0, U(1), U(2),...
         U(4), X(4), X(5), X(6), phi_0);
 
+
     % Determine the state rate vector
     [Xdot] = staterates(X, Params, thrust, F_body, M_body, ...
         Fgx, Fgy, Fgz);

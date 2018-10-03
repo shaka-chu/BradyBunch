@@ -13,12 +13,12 @@
 %           - angle of attack (alpha)
 %           - side slip angle (beta)
 
-function [V, alpha, beta] = aeroangles(u,v,w)
+function [V, alpha, beta] = aeroangles(X)
 
-    % Unpack body vector
-    u(:) = u;
-    v(:) = v;
-    w(:) = w;
+    % Unpack state vector
+    u   = X(1);
+    v   = X(2);
+    w   = X(3);
 
     % Calculate total velocity
     V(:) = sqrt(u.^2 + v.^2 + w.^2);

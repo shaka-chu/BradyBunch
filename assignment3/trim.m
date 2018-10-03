@@ -31,7 +31,7 @@ function trim_input = trim(Params, V_trim, h, gamma, phi_0, theta_0, psi_0)
     
     % Make initial estimates of the inputs
     alpha0 = (CL - CLo)/CLa;
-    delta_t0 = deg2rad(0.5);
+    delta_t0 = 0.5;
     delta_e0 = 0;
     trim_input = [alpha0; delta_t0; delta_e0];
     iTrim = [1 3 5];
