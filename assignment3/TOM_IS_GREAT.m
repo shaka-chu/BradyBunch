@@ -81,4 +81,4 @@ Xdot = getstaterates(Params, X, U);
 % isU0Right1 = trim(Params, CG2_100Kn_X);
 % isU0Right2 = trim(Params, CG2_180Kn_X);
 % isU0Right3 = trim(Params, CG1_100Kn_X);
-isU0Right4 = trim(Params, CG1_180Kn_X, U);
+% isU0Right4 = trim(Params, CG1_180Kn_X, U);
