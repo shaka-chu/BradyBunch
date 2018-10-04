@@ -51,7 +51,7 @@
 % TODO: none
 
 function [F_body, M_body] = bodyforces(Params, X, U, Cfa_x, Cfa_z, CL, ...
-    Q, alpha, beta, alpha_dot, beta_dot, V)
+    Q, alpha, beta, alpha_dot, beta_dot, V, k)
 
     % Extract required aerodynamic parameters
     Clb     = Params.Aero.Clb;
@@ -103,9 +103,11 @@ function [F_body, M_body] = bodyforces(Params, X, U, Cfa_x, Cfa_z, CL, ...
     delta_r = U(4);
 
     % Non-dimensionalise angular rates
-    p_hat = (p*c)/(2*V);
-    q_hat = (q*c)/(2*V);
-    r_hat = (r*c)/(2*V);
+    p_hat           = (p*c)/(2*V);
+    q_hat           = (q*c)/(2*V);
+    r_hat           = (r*c)/(2*V);
+    alpha_dot_hat   = (alpha_dot*c)/(2*V);
+    beta_dot_hat   = (beta_dot*c)/(2*V);
     
     % Compute rotation from the aero angles into the body axes
     cz = rotatez(-beta);
@@ -118,25 +120,25 @@ function [F_body, M_body] = bodyforces(Params, X, U, Cfa_x, Cfa_z, CL, ...
     Fa_x = Q*Cfa_x*S;
     
     % Calculate the side force coefficient
-    Cy = Cyb*beta + Cybd*beta_dot + Cyp*p_hat + Cyr*r_hat +...
+    Cy = Cyb*beta + Cybd*beta_dot_hat + Cyp*p_hat + Cyr*r_hat +...
         Cyda*delta_a + Cydr*delta_r + CL*phi;
     
     % Calculate side force
     Fa_y = Q*Cy*S;
     
     % Calculate moment coefficients
-    Cl = Clb*beta + Clp*p_hat + Clr*r_hat + Clbd*beta_dot ...
+    Cl = Clb*beta + Clp*p_hat + Clr*r_hat + Clbd*beta_dot_hat ...
         + Clda*delta_a + Cldr*delta_r;
-    Cm = Cmo + Cma*alpha + Cmq*q_hat + Cmad*alpha_dot + Cmde*delta_e;
-    Cn = Cnb*beta + Cnp*p_hat + Cnr*r_hat + Cnbd*beta_dot ... 
+    Cm = Cmo + Cma*alpha + Cmq*q_hat + Cmad*alpha_dot_hat + Cmde*delta_e;
+    Cn = Cnb*beta + Cnp*p_hat + Cnr*r_hat + Cnbd*beta_dot_hat ... 
         + Cnda*delta_a + Cndr*delta_r;
     
     % Calculate moments
     La = Q*Cl*S*b;
-    Ma = Q*Cm*S*b;
+    Ma = Q*Cm*S*c;
     Na = Q*Cn*S*b;
     
     % Sum the forces in the body axes
-    F_body = dcm_ba*[Fa_x; Fa_y; Fa_z];
+    F_body = dcm_ba*[-Fa_x; Fa_y; Fa_z];
     M_body = dcm_ba*[La; Ma; Na];
 end

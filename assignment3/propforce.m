@@ -52,11 +52,11 @@ function thrust = propforce(Params, X, U, rho)
     delta_t = U(1);
 
     % Calculate sigma
-    rho_SL = 1.225;
+    rho_SL = 1.2256;
     sigma = rho/rho_SL;
 
     % Calculate available thrust
-    Pmax = PmaxSL*(1.324*sigma - 0.324);
+    Pmax = PmaxSL*(1.1324*sigma - 0.1324);
 
     % Calculate thrust produced
     thrust = (Pmax*eta*delta_t)/u;

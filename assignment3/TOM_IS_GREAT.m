@@ -1,5 +1,8 @@
 % Test
 
+clear;
+clc;
+
 [Nominal_params, Secondary_params] = initialisation;
 Params = Nominal_params;
 
@@ -18,11 +21,15 @@ Params = Nominal_params;
 % 
 % CG1_100Kn_X = [X0(1:6); euler2quat(X0(7:9)); X0(10:end)];
 % CG1_100Kn_U = U0;
-
+% X = CG1_100Kn_X;
+% U = CG1_100Kn_U;
+% 
 load ICs_PC9_nominalCG1_180Kn_1000ft
 
 CG1_180Kn_X = [X0(1:6); euler2quat(X0(7:9)); X0(10:end)];
 CG1_180Kn_U = U0;
+X = CG1_180Kn_X;
+U = CG1_180Kn_U;
 
 % Initial guess
 alpha_dot_old = 0;
@@ -33,28 +40,29 @@ error = 1;
 tolerance = 1e-3;
 
 % Initial state
-X_old = CG1_180Kn_X;
+X_old = X;
 
 % Set iteration limit
 iterLim = 100;
 iterCount = 0;
 
+k = 1;
+
 while error > tolerance
     
     angle_rates = [alpha_dot_old beta_dot_old];
 
-    Xdot = staterates(Params, CG1_180Kn_X, CG1_180Kn_U, angle_rates);
+    Xdot = staterates(Params, X, U, angle_rates,k);
     
-    [alpha_dot, beta_dot] = alphabeta_dot(Xdot,CG1_180Kn_X);
+    [alpha_dot, beta_dot] = alphabeta_dot(Xdot,X);
     
     error_alpha_dot = abs((alpha_dot - alpha_dot_old)/alpha_dot_old);
     error_beta_dot = abs((beta_dot - beta_dot_old)/beta_dot_old);
     
     error = max([error_alpha_dot error_beta_dot]);
     
-    
-    alpha_dot_old = alpha_dot
-    beta_dot_old = beta_dot
+    alpha_dot_old = alpha_dot;
+    beta_dot_old = beta_dot;
     
     
     
@@ -65,6 +73,8 @@ while error > tolerance
     end
     
     iterCount = iterCount + 1;
+    
+    k = k + 1;
 end
 
 % isU0Right1 = trim(Params, CG2_100Kn_X);
