@@ -38,14 +38,14 @@ function trim_input = trim(Params, X)
     
     % Make initial estimates of the inputs
     alpha0 = (CL - CLo)/CLa;
-    delta_t0 = 0.5;
-    delta_e0 = 0;
+    delta_t0 = 0.0001;
+    delta_e0 = 0.0001;
     trim_input = [alpha0; delta_t0; delta_e0];
+    kPlus1 = trim_input;
     iTrim = [1 3 5];
     J = zeros(length(iTrim));
     
     % Initialise the state vectors
-    X = [0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; -h]; 
     U = [delta_t0; delta_e0; 0; 0];
     
     % Initialise converged boolean
@@ -53,10 +53,6 @@ function trim_input = trim(Params, X)
     
     % Numerical Newton-Ralphson method to solve for control inputs
     while notConverged
-        
-        % Calculate the velocity components
-        X(1) = V_trim*cos(trim_input(1));
-        X(3) = V_trim*sin(trim_input(1));
         
         % Determine the state rate vector
         [Xdot] = staterates(Params, X, U);
@@ -80,7 +76,7 @@ function trim_input = trim(Params, X)
                 [Xkdot] = staterates(Params, Xk, Uk);
                 
                 % Place in the first column of the Jacobian matrix
-                J(:, k) = (Xkdot(iTrim) - Xdot(iTrim))./(0.001*alpha);
+                J(:, k) = (Xkdot(iTrim) - Xdot(iTrim))./(0.001*kPlus1(1));
                
             % For the other perturbations
             else

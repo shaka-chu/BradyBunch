@@ -66,7 +66,7 @@ function [BodyForces, gravForces, thrust] = calculateForces(Params, X, U)
     alpha_dot   = 0;        % TODO - calculate this!
     beta_dot    = 0;        % TODO - calculate this!
     [F_body, M_body] = bodyforces(Params, X, U, Cfa_x, Cfa_z, CL, ...
-                       Q, alpha, beta, alpha_dot, beta_dot,V);
+                       Q, alpha, beta, alpha_dot, beta_dot, V);
 
     % Concatenate gravity forces into cell array
     gravForces = {Fgx, Fgy, Fgz};
