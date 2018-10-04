@@ -48,7 +48,7 @@
 % TODO:
 %   Calculate alpha_dot and beta_dot
 
-function [BodyForces, gravForces, thrust] = calculateForces(Params, X, U)
+function [BodyForces, gravForces, thrust] = calculateForces(Params, X, U, angle_rates)
 
     % Get aerodynamic angles
     [V, alpha, beta] = aeroangles(X);
@@ -63,10 +63,9 @@ function [BodyForces, gravForces, thrust] = calculateForces(Params, X, U)
     [Cfa_z, Cfa_x, CL] = windforces(Params, alpha, X, U, V);
     
     % Calculate body forces
-    alpha_dot   = 0;        % TODO - calculate this!
-    beta_dot    = 0;        % TODO - calculate this!
+    
     [F_body, M_body] = bodyforces(Params, X, U, Cfa_x, Cfa_z, CL, ...
-                       Q, alpha, beta, alpha_dot, beta_dot,V);
+                       Q, alpha, beta, angle_rates(1), angle_rates(2),V);
 
     % Concatenate gravity forces into cell array
     gravForces = {Fgx, Fgy, Fgz};
