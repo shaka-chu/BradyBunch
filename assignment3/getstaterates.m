@@ -90,8 +90,6 @@ function [Xdot] = getstaterates(Params, X, U)
         beta_dot_old = beta_dot;
     
     
-    
-    
     if iterCount > iterLim
         warning('Reached iteration limit');
         break

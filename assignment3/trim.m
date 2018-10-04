@@ -24,13 +24,13 @@ function trim_input = trim(Params, X, U0)
     control_max = Params.ControlLimits.Upper;
     
     % Get the velocity of the aircraft
-    [V_trim, alpha0] = aeroangles(X);
+    [V_trim, alpha00] = aeroangles(X);
     
     % Get the flow properties
     [~, Q] = flowproperties(X, V_trim);
     
     % Set tolorence of numerical convergance
-    tol = 1e-9;
+    tol = 1e-6;
     
     % Estimate the lift coefficient
     CL = m*g/Q/S;
@@ -43,7 +43,7 @@ function trim_input = trim(Params, X, U0)
     kPlus1 = trim_input;
     iTrim = [1 3 5];
     J = zeros(length(iTrim));
-    trim_input = [alpha0; U0(1); U0(2)];
+    trim_input = [alpha00; U0(1); U0(2)];
     
     CHANGE = 1e-5;
     
@@ -108,6 +108,7 @@ function trim_input = trim(Params, X, U0)
         
         % Determine error
         error = (kPlus1 - trim_input)'*(kPlus1 - trim_input);
+        error = sum(abs(kPlus1 - trim_input));
         
         % Check for convergance
         if error < tol
