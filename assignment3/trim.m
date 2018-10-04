@@ -12,17 +12,19 @@
 % Outputs:
 %   trim_input : input control for trim [alpha; delta_t; delta_e]
 
-function trim_input = trim(Params, X)
+function trim_input = trim(Params, X, U0)
 
     % Extract aircraft parameters
-    m   = Params.Inertial.m;
-    g   = Params.Inertial.g;
-    S   = Params.Geo.S;
-    CLa = Params.Aero.CLa;
-    CLo = Params.Aero.CLo;
+    m           = Params.Inertial.m;
+    g           = Params.Inertial.g;
+    S           = Params.Geo.S;
+    CLa         = Params.Aero.CLa;
+    CLo         = Params.Aero.CLo;
+    control_min = Params.ControlLimits.Lower;
+    control_max = Params.ControlLimits.Upper;
     
     % Get the velocity of the aircraft
-    V_trim = aeroangles(X);
+    [V_trim, alpha0] = aeroangles(X);
     
     % Get the flow properties
     [~, Q] = flowproperties(X, V_trim);
@@ -41,18 +43,26 @@ function trim_input = trim(Params, X)
     kPlus1 = trim_input;
     iTrim = [1 3 5];
     J = zeros(length(iTrim));
+    trim_input = [alpha0; U0(1); U0(2)];
+    
+    CHANGE = 1e-5;
+    
     
     % Initialise the state vectors
     U = [delta_t0; delta_e0; 0; 0];
+    U = [U0(1); U0(2); 0; 0];
     
     % Initialise converged boolean
     notConverged = true;
     
     % Numerical Newton-Ralphson method to solve for control inputs
     while notConverged
+        
+        % Normalise the quaternions
+        
           
         % Determine the state rate vector
-        [Xdot] = staterates(Params, X, U, [0 0]);
+        [Xdot] = getstaterates(Params, X, U);
         Xk_barDot = Xdot(iTrim);
 
         % Perturb the variables to get the Jacobian matrix
@@ -66,14 +76,14 @@ function trim_input = trim(Params, X)
                 Uk = U;
                 
                 % Change the u and w
-                Xk(1) = V_trim*cos(trim_input(1) + 0.001*trim_input(1));
-                Xk(3) = V_trim*sin(trim_input(1) + 0.001*trim_input(1));
+                Xk(1) = V_trim*cos(trim_input(1) + CHANGE);
+                Xk(3) = V_trim*sin(trim_input(1) + CHANGE);
                 
                 % Determine the state rate vector
-                [Xkdot] = staterates(Params, Xk, Uk, [0 0]);
+                [Xkdot] = getstaterates(Params, Xk, Uk);
                 
                 % Place in the first column of the Jacobian matrix
-                J(:, k) = (Xkdot(iTrim) - Xdot(iTrim))./(0.001*kPlus1(1));
+                J(:, k) = (Xkdot(iTrim) - Xdot(iTrim))./CHANGE;
                
             % For the other perturbations
             else
@@ -83,13 +93,13 @@ function trim_input = trim(Params, X)
                 Uk = U;
                 
                 % Change the inputs
-                Uk(k-1) = U(k-1) + 0.001*U(k-1);
+                Uk(k-1) = U(k-1) + CHANGE;
                 
                 % Determine the state rate vector
-                [Xkdot] = staterates(Params, Xk, Uk, [0 0]);
+                [Xkdot] = getstaterates(Params, Xk, Uk);
                 
                 % Place in the first column of the Jacobian matrix
-                J(:, k) = (Xkdot(iTrim) - Xdot(iTrim))./(0.001*U(k-1));
+                J(:, k) = (Xkdot(iTrim) - Xdot(iTrim))./CHANGE;
             end
         end
         
