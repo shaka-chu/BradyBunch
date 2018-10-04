@@ -42,6 +42,7 @@
 %               - x_dot   = X(11)   (m/s)
 %               - y_dot   = X(12)   (m/s)
 %               - z_dot   = X(13)   (m/s)
+%   angle_rates:    Rates of change of angle attack and sideslip (rad/s)
 %
 % Other m-files required:
 %   calculateForces.m, aeroangles.m, flowproperties.m, gravity.m,
@@ -70,7 +71,8 @@ function [Xdot] = staterates(Params, X, U, angle_rates)
     q3  = X(10);
 
     % Calculate forces
-    [BodyForces, gravForces, thrust] = calculateForces(Params, X, U, angle_rates);
+    [BodyForces, gravForces, thrust] = calculateForces(Params, X, U, ...
+        angle_rates);
     F_body = BodyForces.Force;
     M_body = BodyForces.Moment;
     [Fgx, Fgy, Fgz] = gravForces{:};
