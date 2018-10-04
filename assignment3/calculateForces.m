@@ -48,7 +48,7 @@
 % TODO:
 %   Calculate alpha_dot and beta_dot
 
-function [BodyForces, gravForces, thrust] = calculateForces(Params, X, U)
+function [BodyForces, gravForces, thrust] = calculateForces(Params, X, U, Xdot)
 
     % Get aerodynamic angles
     [V, alpha, beta] = aeroangles(X);
@@ -62,9 +62,12 @@ function [BodyForces, gravForces, thrust] = calculateForces(Params, X, U)
     % Calculate wind forces
     [Cfa_z, Cfa_x, CL] = windforces(Params, alpha, X, U, V);
     
+    % Calculate angle of attack and side slip rates (rad/s)
+    [alpha_dot, beta_dot] = alphabeta_dot(Xdot,X);
+    
     % Calculate body forces
-    alpha_dot   = 0;        % TODO - calculate this!
-    beta_dot    = 0;        % TODO - calculate this!
+%     alpha_dot   = 0;        % TODO - calculate this!
+%     beta_dot    = 0;        % TODO - calculate this!
     [F_body, M_body] = bodyforces(Params, X, U, Cfa_x, Cfa_z, CL, ...
                        Q, alpha, beta, alpha_dot, beta_dot,V);
 
