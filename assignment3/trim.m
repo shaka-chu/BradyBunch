@@ -21,9 +21,6 @@ function trim_input = trim(Params, X)
     CLa = Params.Aero.CLa;
     CLo = Params.Aero.CLo;
     
-    % Get the aircraft's altitude
-    h = -X(end);
-    
     % Get the velocity of the aircraft
     V_trim = aeroangles(X);
     
@@ -53,9 +50,9 @@ function trim_input = trim(Params, X)
     
     % Numerical Newton-Ralphson method to solve for control inputs
     while notConverged
-        
+          
         % Determine the state rate vector
-        [Xdot] = staterates(Params, X, U);
+        [Xdot] = staterates(Params, X, U, [0 0]);
         Xk_barDot = Xdot(iTrim);
 
         % Perturb the variables to get the Jacobian matrix
@@ -73,7 +70,7 @@ function trim_input = trim(Params, X)
                 Xk(3) = V_trim*sin(trim_input(1) + 0.001*trim_input(1));
                 
                 % Determine the state rate vector
-                [Xkdot] = staterates(Params, Xk, Uk);
+                [Xkdot] = staterates(Params, Xk, Uk, [0 0]);
                 
                 % Place in the first column of the Jacobian matrix
                 J(:, k) = (Xkdot(iTrim) - Xdot(iTrim))./(0.001*kPlus1(1));
@@ -89,7 +86,7 @@ function trim_input = trim(Params, X)
                 Uk(k-1) = U(k-1) + 0.001*U(k-1);
                 
                 % Determine the state rate vector
-                [Xkdot] = staterates(Params, Xk, Uk);
+                [Xkdot] = staterates(Params, Xk, Uk, [0 0]);
                 
                 % Place in the first column of the Jacobian matrix
                 J(:, k) = (Xkdot(iTrim) - Xdot(iTrim))./(0.001*U(k-1));
