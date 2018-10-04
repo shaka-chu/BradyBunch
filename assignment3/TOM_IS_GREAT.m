@@ -1,5 +1,7 @@
 % Test
 
+Params = initialisation;
+
 % load a bunch of shit
 load ICs_PC9_CG2_100Kn_1000ft
 
