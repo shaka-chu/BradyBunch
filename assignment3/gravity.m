@@ -56,7 +56,7 @@ function [Fgx, Fgy, Fgz] = gravity(Params, X)
     Cbe = rotate321quat([q0;q1;q2;q3]);
 
     % Transform force
-    Fg = Cbe*F;
+    Fg  = Cbe'*F;
     Fgx = Fg(1);
     Fgy = Fg(2);
     Fgz = Fg(3);

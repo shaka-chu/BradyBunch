@@ -28,7 +28,7 @@
 %               - delta_r = U(4)    (rad)
 %
 % Outputs:
-%   X:      Vector containing the aircraft state rates. The order is:
+%   Xdot:   Vector containing the aircraft state rates. The order is:
 %               - u_dot   = X(1)    (m/s^2)
 %               - v_dot   = X(2)    (m/s^2)
 %               - w_dot   = X(3)    (m/s^2)

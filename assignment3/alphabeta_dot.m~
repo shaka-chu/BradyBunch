@@ -43,7 +43,8 @@
 %
 % MAT-files required: none
 %
-% TODO: none
+% TODO:
+%   FIX SHIT
 
 function [alpha_dot, beta_dot] = alphabeta_dot(Xdot,X)
 
@@ -54,13 +55,12 @@ function [alpha_dot, beta_dot] = alphabeta_dot(Xdot,X)
     
     % Unpack state rate vector
     u_dot = Xdot(1);
-    v_dot = Xdot(2);
-    w_dot = Xdot(3);
     
-    % Calcualte alpha_dot 
-    alpha_dot = (w_dot*u - w*u_dot)/(u^2);
 
-    % Calculate beta_dot
-    beta_dot = (v_dot*u - v*u_dot)/(u^2);
+    % Calcualte alpha_dot 
+    alpha_dot = (Xdot(3)*X(1) - X(3)*Xdot(1))/X(1);
+
+    % Calculate beta_dot MUST CHANGE ------------
+    beta_dot = (Xdot(3)*X(2) - X(2)*Xdot(2))/X(3);
 end
 
