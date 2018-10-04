@@ -43,7 +43,7 @@
 %
 % TODO: none
 
-function [Cfa_z, Cfa_x, CL] = windforces(Params, alpha, X, U, V, angle_rates, L)
+function [Cfa_z, Cfa_x, CL] = windforces(Params, alpha, X, U, V, angle_rates)
 
     % Extract necessary aircraft parameters
     CLo     = Params.Aero.CLo;          % Non-dimensional

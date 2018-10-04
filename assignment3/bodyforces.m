@@ -51,7 +51,7 @@
 % TODO: none
 
 function [F_body, M_body] = bodyforces(Params, X, U, Cfa_x, Cfa_z, CL, ...
-    Q, alpha, beta, alpha_dot, beta_dot, V, k)
+    Q, alpha, beta, alpha_dot, beta_dot, V)
 
     % Extract required aerodynamic parameters
     Clb     = Params.Aero.Clb;

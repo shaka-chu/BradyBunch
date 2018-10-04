@@ -23,7 +23,7 @@ Params = Nominal_params;
 % CG1_100Kn_U = U0;
 % X = CG1_100Kn_X;
 % U = CG1_100Kn_U;
-% 
+
 load ICs_PC9_nominalCG1_180Kn_1000ft
 
 CG1_180Kn_X = [X0(1:6); euler2quat(X0(7:9)); X0(10:end)];
@@ -46,36 +46,35 @@ X_old = X;
 iterLim = 100;
 iterCount = 0;
 
-k = 1;
+% while error > tolerance
+%     
+%     angle_rates = [alpha_dot_old beta_dot_old];
 
-while error > tolerance
-    
-    angle_rates = [alpha_dot_old beta_dot_old];
+[alpha_dot, beta_dot] = alphabeta_dot(Params, X, U);
+angle_rates = [alpha_dot, beta_dot];
 
-    Xdot = staterates(Params, X, U, angle_rates,k);
+    Xdot = staterates(Params, X, U, angle_rates);
     
-    [alpha_dot, beta_dot] = alphabeta_dot(Xdot,X);
-    
-    error_alpha_dot = abs((alpha_dot - alpha_dot_old)/alpha_dot_old);
-    error_beta_dot = abs((beta_dot - beta_dot_old)/beta_dot_old);
-    
-    error = max([error_alpha_dot error_beta_dot]);
-    
-    alpha_dot_old = alpha_dot;
-    beta_dot_old = beta_dot;
-    
-    
-    
-    
-    if iterCount > iterLim
-        warning('Reached iteration limit');
-        break
-    end
-    
-    iterCount = iterCount + 1;
-    
-    k = k + 1;
-end
+%     [alpha_dot, beta_dot] = alphabeta_dot(Xdot,X);
+%     
+%     error_alpha_dot = abs((alpha_dot - alpha_dot_old)/alpha_dot_old);
+%     error_beta_dot = abs((beta_dot - beta_dot_old)/beta_dot_old);
+%     
+%     error = max([error_alpha_dot error_beta_dot]);
+%     
+%     alpha_dot_old = alpha_dot;
+%     beta_dot_old = beta_dot;
+%     
+%     
+%     
+%     
+%     if iterCount > iterLim
+%         warning('Reached iteration limit');
+%         break
+%     end
+%     
+%     iterCount = iterCount + 1;
+% end
 
 % isU0Right1 = trim(Params, CG2_100Kn_X);
 % isU0Right2 = trim(Params, CG2_180Kn_X);
