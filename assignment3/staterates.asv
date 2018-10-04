@@ -51,7 +51,7 @@
 %   calculateForces, aeroangles, flowproperties, gravity, windforces, 
 %   bodyforces, gravForces, propforce
 %
-% MAT-files required: none
+% MAT-files required: nonex
 %
 % TODO: none
 
@@ -122,7 +122,7 @@ function [Xdot] = staterates(Params, X, U, angle_rates)
     % Calculate position rates
     Cbe = rotate321quat([q0;q1;q2;q3]);
     Ceb = Cbe';
-    position = Ceb*[u;v;w];
+    position = Ceb\[u;v;w];
     
     % Create output
     Xdot = [udot;vdot;wdot;pdot;qdot;rdot;q0dot;q1dot;q2dot;q3dot;...

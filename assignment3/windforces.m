@@ -43,33 +43,40 @@
 %
 % TODO: none
 
-function [Cfa_z, Cfa_x, CL] = windforces(Params, alpha, X, U, V)
+function [Cfa_z, Cfa_x, CL] = windforces(Params, alpha, X, U, V, angle_rates)
 
     % Extract necessary aircraft parameters
     CLo     = Params.Aero.CLo;          % Non-dimensional
     CLa     = Params.Aero.CLa;          % /rad
     CLq     = Params.Aero.CLq;          % Non-dimensional
     CLde    = Params.Aero.CLde;         % /rad
+    CLad    = Params.Aero.CLad;         % /rad
     Cdo     = Params.Aero.Cdo;          % Non-dimensional
     k       = Params.Aero.k;            % Non-dimensional
     c       = Params.Geo.c;             % m
+    
+    % Unpack angle rates of change (rad/s)
+    alpha_dot = angle_rates(1);
 
     % Unpack state vector
     q   = X(5);
 
-    % Non-dimensionalise angular rate
-    q_hat = (q*c)/(2*V);
+    % Non-dimensionalise angular rates
+    q_hat           = (q*c)/(2*V);
+    alpha_dot_hat   = (alpha_dot*c)/(2*V);
 
     % Unpack control vector
     delta_e = U(2);
     
     % Lift coefficient 
-    CL = -CLo - CLa*alpha - CLq*q_hat - CLde*delta_e;
+    CL = - CLo - CLa*alpha - CLq*q_hat - CLde*delta_e - CLad*alpha_dot_hat;
     
     % Drag coefficient (simple drag model)
     Cd = Cdo + k*CL^2;
     
     % Aerodynamic force coefficients in x and z directions
-    Cfa_z = CL - Cd*alpha;
-    Cfa_x = CL*alpha - Cd; 
+%     Cfa_z = CL - Cd*alpha;
+%     Cfa_x = CL*alpha - Cd; 
+    Cfa_z = CL;
+    Cfa_x = Cd;
 end

@@ -52,28 +52,14 @@ function [Fgx, Fgy, Fgz] = gravity(Params, X)
     % Calculate weight force
     F = [0; 0; m*g];
     
-    % Create transformation matrix from body to Earth
+    % Create transformation matrix from to body to Earth
     Cbe = rotate321quat([q0;q1;q2;q3]);
     
     % Transformation matrix from Earth to body
-    Ceb = Cbe';
-    
-%     quaternion = [q0;q1;q2;q3];
-%     
-%     euler_angles = quat2euler(quaternion);
-%     
-%     phi = euler_angles(1);
-%     theta = euler_angles(2);
-%     psi = euler_angles(3);
-%     
-%     Ceb = [cos(psi)*cos(theta), (cos(psi)*sin(theta)*sin(phi)-sin(psi)*cos(phi)), (cos(phi)*sin(theta)*cos(phi)+sin(psi)*sin(phi));
-%            sin(psi)*cos(theta), (sin(psi)*sin(theta)*sin(phi)+cos(psi)*cos(phi)), (sin(psi)*sin(theta)*cos(phi)-cos(psi)*sin(phi));
-%            -sin(theta), cos(theta)*sin(phi), cos(theta)*cos(phi)];
-    
+    Ceb = Cbe;
 
     % Transform force
-    Fg = Ceb*F;
-%     Fg = Cbe'*F;
+    Fg  = Ceb*F;
     Fgx = Fg(1);
     Fgy = Fg(2);
     Fgz = Fg(3);
