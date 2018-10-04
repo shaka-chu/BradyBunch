@@ -51,7 +51,7 @@
 %   calculateForces, aeroangles, flowproperties, gravity, windforces, 
 %   bodyforces, gravForces, propforce
 %
-% MAT-files required: none
+% MAT-files required: nonex
 %
 % TODO: none
 

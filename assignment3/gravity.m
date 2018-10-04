@@ -37,7 +37,7 @@
 %
 % TODO: none
 
-function [Fgx, Fgy, Fgz] = gravity(Params, X,k)
+function [Fgx, Fgy, Fgz] = gravity(Params, X)
 
     % Extract parameters
     g = Params.Inertial.g;
