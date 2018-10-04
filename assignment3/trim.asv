@@ -21,15 +21,14 @@ function trim_input = trim(Params, X)
     CLa = Params.Aero.CLa;
     CLo = Params.Aero.CLo;
     
-    % Get the aircraft's altitude
-    h = -X(end);
-    
     % Get the velocity of the aircraft
     V_trim = aeroangles(X);
     
-    % Get the flow properties
-    [~, Q] = flowproperties(X, V_trim);
+    % Get the initiaial at
     
+    % Get the flow properties
+    [~, Q] = flowproperties(h, V_trim);
+
     % Set tolorence of numerical convergance
     tol = 1e-9;
     
@@ -57,6 +56,9 @@ function trim_input = trim(Params, X)
         % Calculate the velocity components
         X(1) = V_trim*cos(trim_input(1));
         X(3) = V_trim*sin(trim_input(1));
+        
+        % Calculate quaternions from the initial Euler angles
+        X(7:10) = euler2quat([phi_0; theta_0; psi_0]);
         
         % Determine the state rate vector
         [Xdot] = staterates(Params, X, U);
