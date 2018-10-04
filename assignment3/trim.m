@@ -44,8 +44,7 @@ function trim_input = trim(Params, X)
     iTrim = [1 3 5];
     J = zeros(length(iTrim));
     
-    % Initialise the state vectors
-    X = [0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; -h]; 
+ 
     U = [delta_t0; delta_e0; 0; 0];
     
     % Initialise converged boolean
@@ -54,9 +53,7 @@ function trim_input = trim(Params, X)
     % Numerical Newton-Ralphson method to solve for control inputs
     while notConverged
         
-        % Calculate the velocity components
-        X(1) = V_trim*cos(trim_input(1));
-        X(3) = V_trim*sin(trim_input(1));
+
         
         % Determine the state rate vector
         [Xdot] = staterates(Params, X, U);
