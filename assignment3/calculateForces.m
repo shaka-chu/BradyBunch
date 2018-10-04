@@ -63,7 +63,6 @@ function [BodyForces, gravForces, thrust] = calculateForces(Params, X, U, angle_
     [Cfa_z, Cfa_x, CL] = windforces(Params, alpha, X, U, V, angle_rates, k);
     
     % Calculate body forces
-    
     [F_body, M_body] = bodyforces(Params, X, U, Cfa_x, Cfa_z, CL, ...
                        Q, alpha, beta, angle_rates(1), angle_rates(2),V, k);
 
