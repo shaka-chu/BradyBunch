@@ -121,7 +121,8 @@ function [Xdot] = staterates(Params, X, U)
     
     % Calculate position rates
     Cbe = rotate321quat([q0;q1;q2;q3]);
-    position = Cbe\[u;v;w];
+    Ceb = Cbe';
+    position = Ceb\[u;v;w];
     
     % Create output
     Xdot = [udot;vdot;wdot;pdot;qdot;rdot;q0dot;q1dot;q2dot;q3dot;...
