@@ -33,7 +33,7 @@ X0 = [V; 0; 0; 0 ; 0; 0; quaternion_0; 0; 0; -h];
 [X_trimmed, U_trimmed] = trim(Params, X0);
 
 % Create time vector
-timeEnd = 5;
+timeEnd = 30;
 dt = 0.01;
 time = 0:dt:timeEnd;
 
@@ -74,7 +74,4 @@ for i = 2:length(time)
 end
 
 % Plot results
-for j = 1:length(X(:,1))
-    figure(j)
-    plot(time,X(j,:));
-end
+plotData(X,U,time)

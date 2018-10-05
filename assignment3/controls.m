@@ -33,4 +33,9 @@ function U_manoeurve = controls(U_trimmed, time, currentTime)
 
     % Set new vector
     U_manoeurve = U_trimmed;
+        
+    if currentTime > 1 && currentTime < 6
+        % Change elevator deflection
+        U_manoeurve(2) = deg2rad(5);
+    end
 end
