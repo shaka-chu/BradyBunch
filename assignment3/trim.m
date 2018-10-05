@@ -48,7 +48,7 @@ function [X_trimmed, U_trimmed] = trim(Params, X0, U0)
     J = zeros(length(iTrim));
     
     % Define perturbation increment
-    delta = 1e-6;
+    delta = [1e-6; 1e-6; 1e-6];
     
     % Define the xbar vector, i.e. the values to be perturbed
     x_bar = [alpha; U0(1); U0(2)];
@@ -57,6 +57,7 @@ function [X_trimmed, U_trimmed] = trim(Params, X0, U0)
     converged = false;
     tol = 1e-9;
     j = 0;
+    iterLim = 500;
     
     % Numerical Newton-Ralphson method to solve for control inputs
     while ~converged        
@@ -77,15 +78,15 @@ function [X_trimmed, U_trimmed] = trim(Params, X0, U0)
                 
                 % Perturbation of alpha, which affects u and w in the
                 % state vector
-                X_new(1) = V*cos(x_bar(k) + delta*x_bar(k));
-                X_new(3) = V*sin(x_bar(k) + delta*x_bar(k));
+                X_new(1) = V*cos(x_bar(k) + delta(k));
+                X_new(3) = V*sin(x_bar(k) + delta(k));
                
             % For the perturbations of inputs
             else
                 
                 % Perturbation of the input vector, delta_t and
                 % delta_e
-                U_new(k-1) = x_bar(k) + delta*x_bar(k);
+                U_new(k-1) = x_bar(k) + delta(k);
             end
             
             % Determine the state rate vector for the perturbed state
@@ -93,18 +94,24 @@ function [X_trimmed, U_trimmed] = trim(Params, X0, U0)
             [Xdot_new] = getstaterates(Params, X_new, U_new);
 
             % Place in the 'k' column of the Jacobian matrix
-            J(:, k) = (Xdot_new(iTrim) - Xdot(iTrim))./(delta*x_bar(k));
+            J(:, k) = (Xdot_new(iTrim) - Xdot(iTrim))./(delta(k));
         end
         
         % Update the x_bar vector
         x_bar_new = x_bar - J\fx_bar;
         
         % Determine error
-        error = abs((x_bar_new - x_bar)./x_bar);
+        error = abs((x_bar_new - x_bar)./delta);
         
         % Check if convergance condition is satisfied
         if max(error) < tol
             converged = true;
+        end
+        
+        % Check if iteration limit is reached
+        if iterCount > iterLim
+            warning('Trim iteration limit reached')
+            break
         end
         
         % Update the x_bar vector
@@ -122,6 +129,9 @@ function [X_trimmed, U_trimmed] = trim(Params, X0, U0)
             % Return error for exceeding control limit
             error('Exceeding control limits')
         end
+        
+        % Incriment iteration count
+        iterCount = iterCount + 1;
     end
     
     % Save the final state and input vectors as trimmed vectors
