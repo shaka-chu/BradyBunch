@@ -47,10 +47,10 @@
 %
 % TODO: none
 
-function [X_new] = rungeKutta4(Params,X0,U,dt)
+function [X_new] = rungeKutta4(Params,X_0,U,dt)
     
     % State rate at start of step
-    X_dot_1 = getstaterates(Params, X0, U);
+    X_dot_1 = getstaterates(Params, X_0, U);
     
     % Incriment 
     An = X_dot_1*dt;
@@ -59,7 +59,7 @@ function [X_new] = rungeKutta4(Params,X0,U,dt)
     X_2 = X_0 + An/2;
     
     % First state rate at middle of step
-    X_dot_2 = staterates(Params, X_2, U);
+    X_dot_2 = getstaterates(Params, X_2, U);
     
     % Improved incriment 
     Bn = X_dot_2*dt;
@@ -68,7 +68,7 @@ function [X_new] = rungeKutta4(Params,X0,U,dt)
     X_3 = X_0 + Bn/2;
     
     % Second state rate at middle of step
-    X_dot_3 = staterates(Params, X_3, U);
+    X_dot_3 = getstaterates(Params, X_3, U);
     
     % Improved incriment
     Cn = X_dot_3*dt;
@@ -77,7 +77,7 @@ function [X_new] = rungeKutta4(Params,X0,U,dt)
     X_4 = X_0 + Cn;
     
     % State rate at end of step
-    X_dot_4 = staterates(Params, X_4, U);
+    X_dot_4 = getstaterates(Params, X_4, U);
     
     % Improved incriment
     Dn = X_dot_4*dt;
