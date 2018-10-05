@@ -53,8 +53,8 @@ while error > tolerance
     error = max([error_alpha_dot error_beta_dot]);
     
     
-    alpha_dot_old = alpha_dot
-    beta_dot_old = beta_dot
+    alpha_dot_old = alpha_dot;
+    beta_dot_old = beta_dot;
     
     
     
@@ -65,6 +65,7 @@ while error > tolerance
     end
     
     iterCount = iterCount + 1;
+ 
 end
 
 % isU0Right1 = trim(Params, CG2_100Kn_X);
