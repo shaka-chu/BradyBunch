@@ -27,10 +27,10 @@ h = convlength(5000, 'ft','m');
 
 % Create initial state
 X0 = [V; 0; 0; 0 ; 0; 0; quaternion_0; 0; 0; -h];
-U0 = [0.5;deg2rad(2);0;0];
+
 
 % Trim aircraft
-[~, U_trimmed] = trim(Params, X0, U0);
+[X_trimmed, U_trimmed] = trim(Params, X0);
 
 % Create time vector
 timeEnd = 5;
@@ -38,7 +38,7 @@ dt = 0.01;
 time = 0:dt:timeEnd;
 
 % Set initial state
-X(:,1) = X0;
+X(:,1) = X_trimmed;
 U(:,1) = U_trimmed;
 
 % Loop through time vector

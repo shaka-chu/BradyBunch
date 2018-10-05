@@ -12,32 +12,33 @@
 % Outputs:
 %   trim_input : input control for trim [alpha; delta_t; delta_e]
 
-function [X_trimmed, U_trimmed] = trim(Params, X0, U0)
+function [X_trimmed, U_trimmed] = trim(Params, X0)
 
     % Extract aircraft parameters
-%     m           = Params.Inertial.m;
-%     g           = Params.Inertial.g;
-%     S           = Params.Geo.S;
-%     CLa         = Params.Aero.CLa;
-%     CLo         = Params.Aero.CLo;
+    m           = Params.Inertial.m;
+    g           = Params.Inertial.g;
+    S           = Params.Geo.S;
+    CLa         = Params.Aero.CLa;
+    CLo         = Params.Aero.CLo;
     control_min = Params.ControlLimits.Lower;
     control_max = Params.ControlLimits.Upper;
     
-    % Determine aircraft aerodynamic angles and airspeed
-    [V, alpha] = aeroangles(X0);
+%     % Determine aircraft aerodynamic angles and airspeed
+%     [V, alpha] = aeroangles(X0);
     
-%     % Determine the flow properties of the aircraft
-%     [~, Q] = flowproperties(X0, V);
+    % Determine the flow properties of the aircraft
+    [~, Q] = flowproperties(X0, V);
     
-%     % Estimate the lift coefficient
-%     CL = m*g/Q/S;
+    % Estimate the lift coefficient
+    CL = m*g/(Q*S);
     
-%     % Make initial estimates of the inputs
-%     alpha0 = (CL - CLo)/CLa;
-%     delta_t0 = 0.0001;
-%     delta_e0 = 0.0001;
-%     trim_input = [alpha0; delta_t0; delta_e0];
-%     kPlus1 = trim_input;
+    % Make initial estimates of the inputs
+    alpha0 = (CL - CLo)/CLa;
+    delta_t0 = 0.5;
+    delta_e0 = 0;
+    delta_a0 = 0;
+    delta_r0 = 0;
+    U0 = [delta_t0; delta_e0; delta_a0; delta_r0];
 
     % Define indices in the state and state rate vector, to be
     % trimmed, u, w, and q. The rate of change of which should be zero
@@ -51,7 +52,7 @@ function [X_trimmed, U_trimmed] = trim(Params, X0, U0)
     delta = 1e-6;
     
     % Define the xbar vector, i.e. the values to be perturbed
-    x_bar = [alpha; U0(1); U0(2)];
+    x_bar = [alpha0; U0(1); U0(2)];
     
     % Initialise convergance boolean and tolerance
     converged = false;
