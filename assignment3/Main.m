@@ -41,6 +41,9 @@ time = 0:dt:timeEnd;
 X(:,1) = X_trimmed;
 U(:,1) = U_trimmed;
 
+Xdot_trimmed = getstaterates(Params, X_trimmed, U_trimmed);
+disp(Xdot_trimmed)
+
 % % Loop through time vector
 % for i = 2:length(time)
 %     
