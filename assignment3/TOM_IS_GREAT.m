@@ -25,7 +25,7 @@ CG1_100Kn_U = U0;
 % X = CG1_100Kn_X;
 % U = CG1_100Kn_U;
 
-load ICs_PC9_nominalCG1_180Kn_1000ft
+
 
 CG1_180Kn_X = [X0(1:6); euler2quat(X0(7:9)); X0(10:end)];
 CG1_180Kn_U = U0;

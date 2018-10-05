@@ -75,8 +75,10 @@ function [Cfa_z, Cfa_x, CL] = windforces(Params, alpha, X, U, V, angle_rates)
     Cd = Cdo + k*CL^2;
     
     % Aerodynamic force coefficients in x and z directions
+
 %     Cfa_z = CL - Cd*alpha;
 %     Cfa_x = CL*alpha - Cd; 
     Cfa_z = CL;
     Cfa_x = Cd;
+
 end

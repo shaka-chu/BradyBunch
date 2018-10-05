@@ -50,7 +50,7 @@
 function [X_new] = rungeKutta4(Params,X0,U,dt)
     
     % State rate at start of step
-    X_dot_1 = staterates(Params, X0, U);
+    X_dot_1 = getstaterates(Params, X0, U);
     
     % Incriment 
     An = X_dot_1*dt;
