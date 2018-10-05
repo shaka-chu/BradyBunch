@@ -114,7 +114,7 @@ function plotData(X,U,time)
     xlabel('Time (s)')
     ylabel('Position (m)')
     grid on
-    h = legend('X-position', 'Y-position','- Z-position');
+    h = legend('X-position', 'Y-position','Height');
     set(h,'Interpreter','latex');
     set(h,'location','best');
     
