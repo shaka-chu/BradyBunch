@@ -23,8 +23,8 @@ function [X_trimmed, U_trimmed] = trim(Params, X0)
     control_min = Params.ControlLimits.Lower;
     control_max = Params.ControlLimits.Upper;
     
-%     % Determine aircraft aerodynamic angles and airspeed
-%     [V, alpha] = aeroangles(X0);
+    % Determine aircraft aerodynamic angles and airspeed
+    [V, ~] = aeroangles(X0);
     
     % Determine the flow properties of the aircraft
     [~, Q] = flowproperties(X0, V);
@@ -59,6 +59,7 @@ function [X_trimmed, U_trimmed] = trim(Params, X0)
     tol = 1e-9;
     j = 0;
     iterLim = 500;
+    iterCount = 1;
     
     % Numerical Newton-Ralphson method to solve for control inputs
     while ~converged        
