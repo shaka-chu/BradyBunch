@@ -39,7 +39,7 @@
 %
 % MAT-files required:
 %   staterates.m, calculateForces.m, aeroangles.m, flowproperties.m, 
-%   gravity.m, windforces.m, bodyforces.m, gravForces.m, propforce.m
+%   gravity.m, windforces, bodyforces, gravForces, propforce
 %
 % TODO:
 %   CHECK THE HEADER
@@ -84,7 +84,8 @@ function [Xdot] = getstaterates(Params, X, U)
         % Calculate sideslip rate (rad/s)
         beta_dot = (v_dot*u - v*u_dot)/(u^2);
         
-        % Calculate errors in angle of attack and sideslip rates
+        % Calculate and concatenate errors in angle of attack and sideslip
+        % rates
         error_alpha_dot = abs((alpha_dot - alpha_dot_old)/alpha_dot_old);
         error_beta_dot = abs((beta_dot - beta_dot_old)/beta_dot_old);
         error = max([error_alpha_dot error_beta_dot]);
@@ -95,7 +96,7 @@ function [Xdot] = getstaterates(Params, X, U)
     
         % Break with warning if iteration limit is reached
         if iterCount > iterLim
-            warning('Reached iteration limit for alpha and beta rates!');
+            warning('Reached iteration limit');
             break
         end
     
