@@ -48,7 +48,7 @@ function [X_trimmed, U_trimmed] = trim(Params, X0, U0)
     J = zeros(length(iTrim));
     
     % Define perturbation increment
-    CHANGE = 1e-5;
+    delta = 1e-3;
     
     % Define the xbar vector, i.e. the values to be perturbed
     x_bar = [alpha; U0(1); U0(2)];
@@ -76,15 +76,15 @@ function [X_trimmed, U_trimmed] = trim(Params, X0, U0)
                 
                 % Perturbation of alpha, which affects u and w in the
                 % state vector
-                X_new(1) = V*cos(x_bar(1) + CHANGE);
-                X_new(3) = V*sin(x_bar(1) + CHANGE);
+                X_new(1) = V*cos(x_bar(k) + delta*x_bar(k));
+                X_new(3) = V*sin(x_bar(k) + delta*x_bar(k));
                
             % For the perturbations of inputs
             else
                 
                 % Perturbation of the input vector, delta_t and
                 % delta_e
-                U_new(k-1) = U_new(k-1) + CHANGE;
+                U_new(k-1) = x_bar(k) + delta*x_bar(k);
             end
             
             % Determine the state rate vector for the perturbed state
@@ -92,7 +92,7 @@ function [X_trimmed, U_trimmed] = trim(Params, X0, U0)
             [Xdot_new] = getstaterates(Params, X_new, U_new);
 
             % Place in the first column of the Jacobian matrix
-            J(:, k) = (Xdot_new(iTrim) - Xdot(iTrim))./CHANGE;
+            J(:, k) = (Xdot_new(iTrim) - Xdot(iTrim))./(delta*x_bar(k));
         end
         
         % Update the x_bar vector
