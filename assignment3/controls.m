@@ -26,7 +26,8 @@
 %
 % MAT-files required: none
 %
-% TODO: none
+% TODO: 
+%   FINISH THIS FUNCTION
 
 function U_manoeurve = controls(U_trimmed, time, currentTime)
 
