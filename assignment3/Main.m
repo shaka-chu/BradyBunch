@@ -18,14 +18,19 @@ Params = Nominal_params;
 phi_0 = 0;
 psi_0 = 0;
 theta_0 = 0;
-gamma = 0;
+euler = [phi_0; theta_0; psi_0];
+quaternion_0 = euler2quat(euler);
 
-% Set trim conditions
+% Set flight conditions
 V = 120;
 h = convlength(5000, 'ft','m');
 
+% Create initial state
+X0 = [V; 0; 0; 0 ; 0; 0; quaternion_0; 0; 0; -h];
+U0 = [0.5;deg2rad(2);0;0];
+
 % Trim aircraft
-[X_trimmed, U_trimmed] = trim(Params, X0, U0);
+[~, U_trimmed] = trim(Params, X0, U0);
 
 % Create time vector
 timeEnd = 5;
@@ -33,7 +38,7 @@ dt = 0.01;
 time = 0:dt:timeEnd;
 
 % Set initial state
-X(:,1) = X_trimmed;
+X(:,1) = X0;
 U(:,1) = U_trimmed;
 
 % Loop through time vector
@@ -47,7 +52,7 @@ for i = 2:length(time)
         [X_new] = rungeKutta4(Params,X(:,i-1),U_trimmed,dt);
         
         % Save result
-        X(:,i = X_new;
+        X(:,i) = X_new;
         U(:,i) = U_trimmed;
     
     else
