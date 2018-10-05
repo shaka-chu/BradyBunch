@@ -61,6 +61,15 @@ function plotData(X,U,time)
     set(gca, 'Color', [1 1 1]);
     
     subplot(4,1,2)
+    plot(time, X(1,:), 'LineWidth',2)
+    title('u')
+    xlabel('Time (s)')
+    ylabel('Velocity (m/s)')
+    grid on
+    set(gcf, 'Color', [1 1 1]);
+    set(gca, 'Color', [1 1 1]);
+    
+    subplot(4,1,3)
     plot(time, X(2,:), 'LineWidth',2)
     title('v')
     xlabel('Time (s)')
@@ -69,18 +78,9 @@ function plotData(X,U,time)
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     
-    subplot(4,1,3)
+    subplot(4,1,4)
     plot(time, X(3,:), 'LineWidth',2)
     title('w')
-    xlabel('Time (s)')
-    ylabel('Velocity (m/s)')
-    grid on
-    set(gcf, 'Color', [1 1 1]);
-    set(gca, 'Color', [1 1 1]);
-    
-    subplot(4,1,4)
-    plot(time, X(1,:), 'LineWidth',2)
-    title('u')
     xlabel('Time (s)')
     ylabel('Velocity (m/s)')
     grid on
