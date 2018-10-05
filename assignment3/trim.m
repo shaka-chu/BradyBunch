@@ -12,102 +12,119 @@
 % Outputs:
 %   trim_input : input control for trim [alpha; delta_t; delta_e]
 
-function trim_input = trim(Params, X)
+function [X_trimmed, U_trimmed] = trim(Params, X0, U0)
 
     % Extract aircraft parameters
-    m   = Params.Inertial.m;
-    g   = Params.Inertial.g;
-    S   = Params.Geo.S;
-    CLa = Params.Aero.CLa;
-    CLo = Params.Aero.CLo;
+%     m           = Params.Inertial.m;
+%     g           = Params.Inertial.g;
+%     S           = Params.Geo.S;
+%     CLa         = Params.Aero.CLa;
+%     CLo         = Params.Aero.CLo;
+    control_min = Params.ControlLimits.Lower;
+    control_max = Params.ControlLimits.Upper;
     
-    % Get the aircraft's altitude
-    h = -X(end);
+    % Determine aircraft aerodynamic angles and airspeed
+    [V, alpha] = aeroangles(X0);
     
-    % Get the velocity of the aircraft
-    V_trim = aeroangles(X);
+%     % Determine the flow properties of the aircraft
+%     [~, Q] = flowproperties(X0, V);
     
-    % Get the flow properties
-    [~, Q] = flowproperties(X, V_trim);
+%     % Estimate the lift coefficient
+%     CL = m*g/Q/S;
     
-    % Set tolorence of numerical convergance
-    tol = 1e-9;
-    
-    % Estimate the lift coefficient
-    CL = m*g/Q/S;
-    
-    % Make initial estimates of the inputs
-    alpha0 = (CL - CLo)/CLa;
-    delta_t0 = 0.0001;
-    delta_e0 = 0.0001;
-    trim_input = [alpha0; delta_t0; delta_e0];
-    kPlus1 = trim_input;
+%     % Make initial estimates of the inputs
+%     alpha0 = (CL - CLo)/CLa;
+%     delta_t0 = 0.0001;
+%     delta_e0 = 0.0001;
+%     trim_input = [alpha0; delta_t0; delta_e0];
+%     kPlus1 = trim_input;
+
+    % Define indices in the state and state rate vector, to be
+    % trimmed, u, w, and q. The rate of change of which should be zero
+    % after trimming
     iTrim = [1 3 5];
+    
+    % Preallocate memory
     J = zeros(length(iTrim));
     
-    % Initialise the state vectors
-    U = [delta_t0; delta_e0; 0; 0];
+    % Define perturbation increment
+    delta = 1e-6;
     
-    % Initialise converged boolean
-    notConverged = true;
+    % Define the xbar vector, i.e. the values to be perturbed
+    x_bar = [alpha; U0(1); U0(2)];
+    
+    % Initialise convergance boolean and tolerance
+    converged = false;
+    tol = 1e-9;
+    j = 0;
     
     % Numerical Newton-Ralphson method to solve for control inputs
-    while notConverged
-        
+    while ~converged        
+          
         % Determine the state rate vector
-        [Xdot] = staterates(Params, X, U);
-        Xk_barDot = Xdot(iTrim);
+        [Xdot] = getstaterates(Params, X0, U0);
+        fx_bar = Xdot(iTrim);
 
         % Perturb the variables to get the Jacobian matrix
-        for k = 1:length(trim_input)
+        for k = 1:length(x_bar)
+            
+            % Initialise the state and input vector to be trimmed
+            X_new = X0;
+            U_new = U0;
             
             % For the perturbation of alpha
             if k == 1
                 
-                % Initilise state vector for peturbation
-                Xk = X;
-                Uk = U;
-                
-                % Change the u and w
-                Xk(1) = V_trim*cos(trim_input(1) + 0.001*trim_input(1));
-                Xk(3) = V_trim*sin(trim_input(1) + 0.001*trim_input(1));
-                
-                % Determine the state rate vector
-                [Xkdot] = staterates(Params, Xk, Uk);
-                
-                % Place in the first column of the Jacobian matrix
-                J(:, k) = (Xkdot(iTrim) - Xdot(iTrim))./(0.001*kPlus1(1));
+                % Perturbation of alpha, which affects u and w in the
+                % state vector
+                X_new(1) = V*cos(x_bar(k) + delta*x_bar(k));
+                X_new(3) = V*sin(x_bar(k) + delta*x_bar(k));
                
-            % For the other perturbations
+            % For the perturbations of inputs
             else
                 
-                % Initilise state vector for peturbation
-                Xk = X;
-                Uk = U;
-                
-                % Change the inputs
-                Uk(k-1) = U(k-1) + 0.001*U(k-1);
-                
-                % Determine the state rate vector
-                [Xkdot] = staterates(Params, Xk, Uk);
-                
-                % Place in the first column of the Jacobian matrix
-                J(:, k) = (Xkdot(iTrim) - Xdot(iTrim))./(0.001*U(k-1));
+                % Perturbation of the input vector, delta_t and
+                % delta_e
+                U_new(k-1) = x_bar(k) + delta*x_bar(k);
             end
+            
+            % Determine the state rate vector for the perturbed state
+            % and input vectors
+            [Xdot_new] = getstaterates(Params, X_new, U_new);
+
+            % Place in the 'k' column of the Jacobian matrix
+            J(:, k) = (Xdot_new(iTrim) - Xdot(iTrim))./(delta*x_bar(k));
         end
         
-        % Evaluate the new inputs
-        kPlus1 = trim_input - J\Xk_barDot;
+        % Update the x_bar vector
+        x_bar_new = x_bar - J\fx_bar;
         
         % Determine error
-        error = (kPlus1 - trim_input)'*(kPlus1 - trim_input);
+        error = abs((x_bar_new - x_bar)./x_bar);
         
-        % Check for convergance
-        if error < tol
-            notConverged = false;
+        % Check if convergance condition is satisfied
+        if max(error) < tol
+            converged = true;
         end
         
-        % Update the input
-        trim_input = kPlus1;
+        % Update the x_bar vector
+        x_bar = x_bar_new;
+        
+        % Update the state and input vectors
+        X0(1) = V*cos(x_bar(1));
+        X0(3) = V*sin(x_bar(1));
+        U0(1) = x_bar(2);
+        U0(2) = x_bar(3);
+        
+        % Check if exceeding control limits
+        if any(U0 > control_max) || any(U0 < control_min)
+            
+            % Return error for exceeding control limit
+            error('Exceeding control limits')
+        end
     end
+    
+    % Save the final state and input vectors as trimmed vectors
+    X_trimmed = X0;
+    U_trimmed = U0;    
 end

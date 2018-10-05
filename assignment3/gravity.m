@@ -56,7 +56,7 @@ function [Fgx, Fgy, Fgz] = gravity(Params, X)
     Cbe = rotate321quat([q0;q1;q2;q3]);
     
     % Transformation matrix from Earth to body
-    Ceb = Cbe';
+    Ceb = Cbe;
 
     % Transform force
     Fg  = Ceb*F;
