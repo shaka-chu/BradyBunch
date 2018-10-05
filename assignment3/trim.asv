@@ -12,14 +12,14 @@
 % Outputs:
 %   trim_input : input control for trim [alpha; delta_t; delta_e]
 
-function U_trim = trim(Params, X0, U0)
+function [X_trimmed, U_trimmed] = trim(Params, X0, U0)
 
     % Extract aircraft parameters
-    m           = Params.Inertial.m;
-    g           = Params.Inertial.g;
-    S           = Params.Geo.S;
-    CLa         = Params.Aero.CLa;
-    CLo         = Params.Aero.CLo;
+%     m           = Params.Inertial.m;
+%     g           = Params.Inertial.g;
+%     S           = Params.Geo.S;
+%     CLa         = Params.Aero.CLa;
+%     CLo         = Params.Aero.CLo;
     control_min = Params.ControlLimits.Lower;
     control_max = Params.ControlLimits.Upper;
     
@@ -48,7 +48,7 @@ function U_trim = trim(Params, X0, U0)
     J = zeros(length(iTrim));
     
     % Define perturbation increment
-    CHANGE = 1e-5;
+    delta = 1e-3;
     
     % Define the xbar vector, i.e. the values to be perturbed
     x_bar = [alpha; U0(1); U0(2)];
@@ -67,17 +67,17 @@ function U_trim = trim(Params, X0, U0)
         % Perturb the variables to get the Jacobian matrix
         for k = 1:length(x_bar)
             
+            % Initialise the state and input vector to be trimmed
+            X_new = X0;
+            U_new = U0;
+            
             % For the perturbation of alpha
             if k == 1
                 
-                % Initialise the state and input vector to be trimmed
-                X_new = X0;
-                U_new = U0;
-                
                 % Perturbation of alpha, which affects u and w in the
                 % state vector
-                X_new(1) = V*cos(x_bar(1) + CHANGE);
-                X_new(3) = V*sin(x_bar(1) + CHANGE);
+                X_new(1) = V*cos(x_bar(k) + delta*x_bar(k));
+                X_new(3) = V*sin(x_bar(k) + delta*x_bar(k));
                
             % For the perturbations of inputs
             else
@@ -109,5 +109,21 @@ function U_trim = trim(Params, X0, U0)
         % Update the x_bar vector
         x_bar = x_bar_new;
         
+        % Update the state and input vectors
+        X0(1) = V*cos(x_bar(1));
+        X0(3) = V*sin(x_bar(1));
+        U0(1) = x_bar(2);
+        U0(2) = x_bar(3);
+        
+        % Check if exceeding control limits
+        if any(U0 > control_max) || any(U0 < control_min)
+            
+            % Return error for exceeding control limit
+            error('Exceeding control limits')
+        end
     end
+    
+    % Save the final state and input vectors as trimmed vectors
+    X_trimmed = X0;
+    U_trimmed = U0;
 end

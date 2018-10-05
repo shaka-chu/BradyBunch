@@ -83,3 +83,4 @@ Xdot = getstaterates(Params, X, U);
 % isU0Right3 = trim(Params, CG1_100Kn_X);
 [X_trimmed, U_trimmed] = trim(Params, CG1_180Kn_X, U);
 Xdot_trimmed = getstaterates(Params, X_trimmed, U_trimmed);
+disp(Xdot_trimmed)

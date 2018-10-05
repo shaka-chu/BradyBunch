@@ -48,7 +48,7 @@ function [X_trimmed, U_trimmed] = trim(Params, X0, U0)
     J = zeros(length(iTrim));
     
     % Define perturbation increment
-    CHANGE = 1e-5;
+    delta = 1e-6;
     
     % Define the xbar vector, i.e. the values to be perturbed
     x_bar = [alpha; U0(1); U0(2)];
@@ -56,6 +56,7 @@ function [X_trimmed, U_trimmed] = trim(Params, X0, U0)
     % Initialise convergance boolean and tolerance
     converged = false;
     tol = 1e-9;
+    j = 0;
     
     % Numerical Newton-Ralphson method to solve for control inputs
     while ~converged        
@@ -76,23 +77,23 @@ function [X_trimmed, U_trimmed] = trim(Params, X0, U0)
                 
                 % Perturbation of alpha, which affects u and w in the
                 % state vector
-                X_new(1) = V*cos(x_bar(1) + CHANGE);
-                X_new(3) = V*sin(x_bar(1) + CHANGE);
+                X_new(1) = V*cos(x_bar(k) + delta*x_bar(k));
+                X_new(3) = V*sin(x_bar(k) + delta*x_bar(k));
                
             % For the perturbations of inputs
             else
                 
                 % Perturbation of the input vector, delta_t and
                 % delta_e
-                U_new(k-1) = U_new(k-1) + CHANGE;
+                U_new(k-1) = x_bar(k) + delta*x_bar(k);
             end
             
             % Determine the state rate vector for the perturbed state
             % and input vectors
             [Xdot_new] = getstaterates(Params, X_new, U_new);
 
-            % Place in the first column of the Jacobian matrix
-            J(:, k) = (Xdot_new(iTrim) - Xdot(iTrim))./CHANGE;
+            % Place in the 'k' column of the Jacobian matrix
+            J(:, k) = (Xdot_new(iTrim) - Xdot(iTrim))./(delta*x_bar(k));
         end
         
         % Update the x_bar vector
@@ -125,5 +126,5 @@ function [X_trimmed, U_trimmed] = trim(Params, X0, U0)
     
     % Save the final state and input vectors as trimmed vectors
     X_trimmed = X0;
-    U_trimmed = U0;
+    U_trimmed = U0;    
 end
