@@ -93,6 +93,6 @@ for i = 2:length(time)
 end
 
 % Plot results
+simulate(X)
 plotData(X,U,time)
 
-simulate(X)

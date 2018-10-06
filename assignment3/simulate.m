@@ -82,7 +82,7 @@ for k = 1:length(x)
     if mod(k,10) == 0
                
         % Add aircraft        
-        plane = c130(x(k),y(k),z(k), 'color', 'b', 'scale', 5, 'roll', euler(1,k), 'pitch', euler(2,k), 'yaw', euler(3,k));
+        plane = c130(x(k),y(k),z(k), 'color', 'b', 'scale', 10, 'roll', euler(1,k), 'pitch', euler(2,k), 'yaw', euler(3,k));
                       
         % Pause 
         pause(0.0001)
