@@ -94,3 +94,5 @@ end
 
 % Plot results
 plotData(X,U,time)
+
+simulate(X)
