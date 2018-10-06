@@ -37,5 +37,6 @@ function U_manoeurve = controls(U_trimmed, time, currentTime)
     if currentTime > 1 && currentTime < 6
         % Change elevator deflection
         U_manoeurve(2) = deg2rad(5);
+
     end
 end

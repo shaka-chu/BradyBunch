@@ -62,7 +62,9 @@ axis equal
 axis off
 hold on
 
-x = X(12,:);
+view(155,22)
+
+x = X(12,:) + 2500;
 y = X(11,:);
 z = -X(13,:);
 euler = rad2deg(quat2euler(X(7:10,:)));
@@ -72,6 +74,7 @@ euler = rad2deg(quat2euler(X(7:10,:)));
 figure(6)
 flightpath = animatedline('LineWidth',1.5,'Color','r');
 
+plotFreq = 100;
 % Loop through time vector
 for k = 1:length(x)
     
@@ -79,7 +82,7 @@ for k = 1:length(x)
     addpoints(flightpath,x(k),y(k),z(k));
     
     
-    if mod(k,10) == 0
+    if mod(k,plotFreq) == 0
                
         % Add aircraft        
         plane = c130(x(k),y(k),z(k), 'color', 'b', 'scale', 10, 'roll', euler(1,k), 'pitch', euler(2,k), 'yaw', euler(3,k));
@@ -87,7 +90,7 @@ for k = 1:length(x)
         % Pause 
         pause(0.0001)
         
-        if k < length(x) - 10
+        if k < length(x) - plotFreq
             % Remove plane
             delete(plane)
         end
