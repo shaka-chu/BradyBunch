@@ -74,7 +74,7 @@ euler = rad2deg(quat2euler(X(7:10,:)));
 figure(6)
 flightpath = animatedline('LineWidth',1.5,'Color','r');
 
-plotFreq = 100;
+plotFreq = 50;
 % Loop through time vector
 for k = 1:length(x)
     
@@ -85,7 +85,7 @@ for k = 1:length(x)
     if mod(k,plotFreq) == 0
                
         % Add aircraft        
-        plane = c130(x(k),y(k),z(k), 'color', 'b', 'scale', 10, 'roll', euler(1,k), 'pitch', euler(2,k), 'yaw', euler(3,k));
+        plane = c130(x(k),y(k),z(k), 'color', 'r', 'scale', 10, 'roll', euler(1,k), 'pitch', euler(2,k), 'yaw', euler(3,k));
                       
         % Pause 
         pause(0.0001)
