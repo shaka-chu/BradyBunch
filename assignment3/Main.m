@@ -52,7 +52,7 @@ X0 = [V; 0; 0; 0 ; 0; 0; quaternion_0; 0; 0; -h];
 [X_trimmed, U_trimmed] = trim(Params, X0);
 
 % Create time vector
-timeEnd = 60;
+timeEnd = 120;
 dt = 0.01;
 time = 0:dt:timeEnd;
 
@@ -63,36 +63,36 @@ U(:,1) = U_trimmed;
 Xdot_trimmed = getstaterates(Params, X_trimmed, U_trimmed);
 disp(Xdot_trimmed)
 
-% Loop through time vector
-for i = 2:length(time)
-    
-    % Run aircraft at trimmed settings for 1 second and then begin
-    % simulation
-    if time(i) <= 1
-        
-        % Determine new state
-        [X_new] = rungeKutta4(Params,X(:,i-1),U_trimmed,dt);
-        
-        % Save result
-        X(:,i) = X_new;
-        U(:,i) = U_trimmed;
-    
-    else
-        
-        % Determine control setting for manoeurve
-        U_manoeurve = controls(U_trimmed, time, time(i));
-        
-        % Determine new state
-        [X_new] = rungeKutta4(Params,X(:,i-1),U_manoeurve,dt);
-        
-        % Save result
-        X(:,i) = X_new;
-        U(:,i) = U_manoeurve;
-    end
-    
-end
-
-% Plot results
-simulate(X)
-plotData(X,U,time)
-
+% % Loop through time vector
+% for i = 2:length(time)
+%     
+%     % Run aircraft at trimmed settings for 1 second and then begin
+%     % simulation
+%     if time(i) <= 1
+%         
+%         % Determine new state
+%         [X_new] = rungeKutta4(Params,X(:,i-1),U_trimmed,dt);
+%         
+%         % Save result
+%         X(:,i) = X_new;
+%         U(:,i) = U_trimmed;
+%     
+%     else
+%         
+%         % Determine control setting for manoeurve
+%         U_manoeurve = controls(U_trimmed, time, time(i));
+%         
+%         % Determine new state
+%         [X_new] = rungeKutta4(Params,X(:,i-1),U_manoeurve,dt);
+%         
+%         % Save result
+%         X(:,i) = X_new;
+%         U(:,i) = U_manoeurve;
+%     end
+%     
+% end
+% 
+% % Plot results
+% simulate(X)
+% plotData(X,U,time)
+% 
