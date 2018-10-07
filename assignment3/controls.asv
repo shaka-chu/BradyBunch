@@ -35,13 +35,13 @@ function U_manoeurve = controls(U_trimmed, currentTime)
     U_manoeurve = U_trimmed;
      
 %     % Change throttle
-    if currentTime > 1 && currentTime < 28       
-        U_manoeurve(1) = 1;
-    end
+%     if currentTime > 1 && currentTime < 18       
+%         U_manoeurve(1) = 1;
+%     end
     
     % Change elevator deflection
-    if currentTime > 1 && currentTime < 28       
-        U_manoeurve(2) = U_trimmed(2) - deg2rad(2.5);
+    if currentTime > 1 && currentTime < 18       
+        U_manoeurve(2) = deg2rad(1);
     end
      
 %     % Change aileron deflection

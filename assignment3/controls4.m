@@ -29,13 +29,13 @@
 % TODO: 
 %   FINISH THIS FUNCTION
 
-function U_manoeurve = controls(U_trimmed, currentTime)
+function U_manoeurve = controls4(U_trimmed, currentTime)
 
     % Set new vector
     U_manoeurve = U_trimmed;
      
 %     % Change throttle
-    if currentTime > 1 && currentTime < 28       
+    if currentTime > 1 && currentTime < 45       
         U_manoeurve(1) = 1;
     end
     
