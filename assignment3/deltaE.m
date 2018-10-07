@@ -34,12 +34,10 @@ V = sqrt(X(1)^2 + X(2)^2 + X(3)^2);
 % Static parameters
 Cm_q = -7.8179;
 dCmcg_dCl_x = - 0.0752;
-Cbar_me_de = -0.8405;
+Cbar_m_de = -0.8405;
 
 % Calculate necessary deflections
 de = U_trimmed(2) - ((mass*g/S)./qbar).*(1/Cbar_m_de)* ...
-        ((dCmcg_dCl_x)*n + Cm_q * (cbar*rho*g)*(n-1)/(4*(mass*g/S)));
-
-
+        ((dCmcg_dCl_x)*n + Cm_q * (c*rho*g)*(n-1)/(4*(mass*g/S)));
 
 end
