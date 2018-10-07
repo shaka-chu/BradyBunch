@@ -48,6 +48,9 @@
 % TODO: none
 
 function [X_new] = rungeKutta4(Params,X_0,U,dt)
+
+    % Normalise the quaternion
+    X_0(7:10) = X_0(7:10)/norm(X_0(7:10));
     
     % State rate at start of step
     X_dot_1 = getstaterates(Params, X_0, U);
@@ -58,6 +61,9 @@ function [X_new] = rungeKutta4(Params,X_0,U,dt)
     % First state at middle of step
     X_2 = X_0 + An/2;
     
+    % Normalise the quaternion
+    X_2(7:10) = X_2(7:10)/norm(X_2(7:10));
+    
     % First state rate at middle of step
     X_dot_2 = getstaterates(Params, X_2, U);
     
@@ -66,6 +72,9 @@ function [X_new] = rungeKutta4(Params,X_0,U,dt)
     
     % Second state at middle of step
     X_3 = X_0 + Bn/2;
+    
+    % Normalise the quaternion
+    X_3(7:10) = X_3(7:10)/norm(X_3(7:10));
     
     % Second state rate at middle of step
     X_dot_3 = getstaterates(Params, X_3, U);
@@ -76,6 +85,9 @@ function [X_new] = rungeKutta4(Params,X_0,U,dt)
     % State at end of step
     X_4 = X_0 + Cn;
     
+    % Normalise the quaternion
+    X_4(7:10) = X_4(7:10)/norm(X_4(7:10));
+    
     % State rate at end of step
     X_dot_4 = getstaterates(Params, X_4, U);
     
@@ -84,4 +96,7 @@ function [X_new] = rungeKutta4(Params,X_0,U,dt)
     
     % Evaluate new state
     X_new = X_0 + (1/6)*(An + 2*Bn + 2*Cn + Dn);
+    
+    % Normalise the quaternion
+    X_new(7:10) = X_new(7:10)/norm(X_new(7:10));
 end
