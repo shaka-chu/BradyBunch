@@ -29,14 +29,28 @@
 % TODO: 
 %   FINISH THIS FUNCTION
 
-function U_manoeurve = controls(U_trimmed, time, currentTime)
+function U_manoeurve = controls(U_trimmed, currentTime)
 
     % Set new vector
     U_manoeurve = U_trimmed;
-        
-    if currentTime > 1 && currentTime < 6
-        % Change elevator deflection
-        U_manoeurve(2) = deg2rad(5);
-
+     
+    % Change throttle
+    if currentTime > 1 && currentTime < 18       
+        U_manoeurve(1) = deg2rad(0);
     end
+    
+%     % Change elevator deflection
+%     if currentTime > 1 && currentTime < 18       
+%         U_manoeurve(2) = deg2rad(0);
+%     end
+%     
+%     % Change aileron deflection
+%     if currentTime > 1 && currentTime < 18       
+%         U_manoeurve(3) = deg2rad(0);
+%     end
+%     
+%     % Change rudder deflection
+%     if currentTime > 1 && currentTime < 18       
+%         U_manoeurve(4) = deg2rad(0);
+%     end
 end

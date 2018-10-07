@@ -80,7 +80,7 @@ for i = 2:length(time)
     else
         
         % Determine control setting for manoeurve
-        U_manoeurve = controls(U_trimmed, time, time(i));
+        U_manoeurve = controls(U_trimmed, time(i));
         
         % Determine new state
         [X_new] = rungeKutta4(Params,X(:,i-1),U_manoeurve,dt);
