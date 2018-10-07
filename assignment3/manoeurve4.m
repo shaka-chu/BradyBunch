@@ -40,6 +40,12 @@ X0 = [V; 0; 0; 0 ; 0; 0; quaternion_0; 0; 0; -h];
 EAS = V*sqrt(rho/1.2256);
 KEAS = convvel(EAS, 'm/s','kts');
 
+% Calculate g loading
+V = sqrt(X(1,:).^2 + X(2,:).^2 + X(3,:).^2);
+nz = V.*X(5,:)/g + 1;
+
+figure(7)
+plot(time,nz)
 
 
 end

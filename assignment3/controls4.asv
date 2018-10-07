@@ -29,10 +29,7 @@
 % TODO: 
 %   FINISH THIS FUNCTION
 
-function U_manoeurve = controls4(Params, X, U_trimmed, currentTime)
-    
-    % Set load factor
-    n = 3.5;
+function U_manoeurve = controls4(U_trimmed, currentTime)
 
     % Set new vector
     U_manoeurve = U_trimmed;
@@ -43,9 +40,8 @@ function U_manoeurve = controls4(Params, X, U_trimmed, currentTime)
 %     end
     
     % Change elevator deflection
-    if currentTime > 1 && currentTime < 33.3 
-        de = deltaE(Params,X, U_trimmed, n);
-        U_manoeurve(2) = de;
+    if currentTime > 1 && currentTime < 33.3      
+        U_manoeurve(2) = deltaE;
     end
      
 

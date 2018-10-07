@@ -95,12 +95,7 @@ end
 % Plot results
 simulate(X)
 plotData(X,U,time)
-% Calculate g loading
-V = sqrt(X(1,:).^2 + X(2,:).^2 + X(3,:).^2);
-nz = V.*X(5,:)/g + 1;
 
-figure(7)
-plot(time,nz)
 
 
 

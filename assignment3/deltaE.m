@@ -19,7 +19,7 @@
 % TODO: 
 %   None
 
-function de = deltaE(Params,X_trimmed, U_trimmed, V, n)
+function de = deltaE(Params,X, U_trimmed, n)
 
 % Extract necessary components
 g = Params.Inertial.g;
@@ -28,7 +28,8 @@ S = Params.Geo.S;
 c = Params.Geo.c;
 
 % Calculate atmospheric conditions
-[rho, qbar] = flowproperties(X_trimmed, V);
+V = sqrt(X(1)^2 + X(2)^2 + X(3)^2);
+[rho, qbar] = flowproperties(X, V);
 
 % Static parameters
 Cm_q = -7.8179;
