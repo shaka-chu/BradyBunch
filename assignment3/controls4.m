@@ -29,28 +29,24 @@
 % TODO: 
 %   FINISH THIS FUNCTION
 
-function U_manoeurve = controls(U_trimmed, currentTime)
+function U_manoeurve = controls4(Params, X, U_trimmed, currentTime)
+    
+    % Set load factor
+    n = 3.5;
 
     % Set new vector
     U_manoeurve = U_trimmed;
      
-%     % Change throttle
-    if currentTime > 1 && currentTime < 28       
-        U_manoeurve(1) = 1;
-    end
+% %     % Change throttle
+%     if currentTime > 1 && currentTime < 45       
+%         U_manoeurve(1) = 1;
+%     end
     
     % Change elevator deflection
-    if currentTime > 1 && currentTime < 28       
-        U_manoeurve(2) = U_trimmed(2) - deg2rad(2.5);
+    if currentTime > 1 && currentTime < 33.3 
+        de = deltaE(Params,X, U_trimmed, n);
+        U_manoeurve(2) = de;
     end
      
-%     % Change aileron deflection
-%     if currentTime > 1 && currentTime < 18       
-%         U_manoeurve(3) = deg2rad(0);
-%     end
-    
-%     % Change rudder deflection
-%     if currentTime > 1 && currentTime < 18       
-%         U_manoeurve(4) = deg2rad(0);
-%     end
+
 end

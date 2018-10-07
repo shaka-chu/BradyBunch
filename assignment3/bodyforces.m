@@ -121,7 +121,7 @@ function [F_body, M_body] = bodyforces(Params, X, U, Cfa_x, Cfa_z, CL, ...
     
     % Calculate the side force coefficient
     Cy = Cyb*beta + Cybd*beta_dot_hat + Cyp*p_hat + Cyr*r_hat +...
-        Cyda*delta_a + Cydr*delta_r + CL*phi;
+        Cyda*delta_a + Cydr*delta_r + CL*sin(phi);
     
     % Calculate side force
     Fa_y = Q*Cy*S;
