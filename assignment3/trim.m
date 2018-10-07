@@ -24,7 +24,7 @@ function [X_trimmed, U_trimmed] = trim(Params, X0)
     control_max = Params.ControlLimits.Upper;
     
     % Determine aircraft aerodynamic angles and airspeed
-    [V, ~] = aeroangles(X0);
+    V = aeroangles(X0);
     
     % Determine the flow properties of the aircraft
     [~, Q] = flowproperties(X0, V);
@@ -41,7 +41,7 @@ function [X_trimmed, U_trimmed] = trim(Params, X0)
     U0 = [delta_t0; delta_e0; delta_a0; delta_r0];
 
     % Define indices in the state and state rate vector, to be
-    % trimmed, u, w, and q. The rate of change of which should be zero
+    % trimmed, udot, wdot, qdot, and w. The rate of change of which should be zero
     % after trimming
     iTrim = [1 3 5];
     
@@ -57,12 +57,20 @@ function [X_trimmed, U_trimmed] = trim(Params, X0)
     % Initialise convergance boolean and tolerance
     converged = false;
     tol = 1e-9;
-    j = 0;
+    %j = 0;
     iterLim = 500;
     iterCount = 1;
     
     % Numerical Newton-Ralphson method to solve for control inputs
-    while ~converged        
+    while ~converged      
+        
+        % Determine the aircraft pitch
+        euler_att = quat2euler(X0(7:10));
+        euler_att(2) = x_bar(1);
+        X0(7:10) = euler2quat(euler_att);
+        
+        % Normalise the quaternion
+        X0(7:10) = X0(7:10)/norm(X0(7:10));
           
         % Determine the state rate vector
         [Xdot] = getstaterates(Params, X0, U0);
