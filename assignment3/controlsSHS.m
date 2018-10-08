@@ -29,24 +29,35 @@
 % TODO: 
 %   FINISH THIS FUNCTION
 
-function U_manoeurve = controls4(Params, X, U_trimmed, currentTime)
+function U_manoeurve = controlsSHS(Params, U_trimmed, CL, time, i)
     
-    % Set load factor
-    n = 3.5;
-
     % Set new vector
     U_manoeurve = U_trimmed;
-     
-% %     % Change throttle
-%     if currentTime > 1 && currentTime < 45       
-%         U_manoeurve(1) = 1;
-%     end
     
-    % Change elevator deflection
-    if currentTime > 1 && currentTime < 33.3 
-        de = deltaE(Params,X, U_trimmed, n);
-        U_manoeurve(2) = de;
+    % Extract aircraft aero parameters
+    Clda = Params.Aero.Clda;
+    Cldr = Params.Aero.Cldr;
+    Cnda = Params.Aero.Cnda;
+    Cndr = Params.Aero.Cndr;
+    Cydr = Params.Aero.Cydr;
+    Cyb = Params.Aero.Cyb;
+    Clb = Params.Aero.Clb;
+    Cnb = Params.Aero.Cnb;
+    
+    % Solve for the control for a sideslip of 5 degrees
+    if time < 15
+        beta = deg2rad(5);
+    else
+        beta = 0;
     end
-     
-
+    A = [CL 0 0
+        0 Clda Cldr
+        0 Cnda Cndr];
+    y = [-Cyb
+        -Clb
+        -Cnb]*beta;
+    x = A\y;
+    
+    % Control inputs required for a sideslip of 5 degrees
+    U_manoeurve(3:end) = x(2:end);
 end

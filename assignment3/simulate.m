@@ -72,11 +72,18 @@ euler = rad2deg(quat2euler(X(7:10,:)));
 
 % Create orbit
 figure(6)
-flightpath = animatedline('LineWidth',1.5,'Color','r');
+flightpath = animatedline('LineWidth',1.5,'Color','b');
 
 plotFreq = 300;
 % Loop through time vector
 for k = 1:length(x)
+    
+    % Break if crash
+    if z(k) <= 0
+        plot3(x(k),y(k),z(k), 'or', 'MarkerSize', 10, 'MarkerFaceColor', 'r');
+        delete(plane);
+        return
+    end
     
     % Add point to the curve
     addpoints(flightpath,x(k),y(k),z(k));
