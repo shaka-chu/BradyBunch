@@ -36,14 +36,7 @@ function U_manoeurve = controls4(Params, X, U_trimmed, currentTime, U_linear, t_
     
     % Loop through t of inputs
    if currentTime <= t_linear(end)
-        
-        % Determine current position
-        for i = 1:length(t_linear)
-            if currentTime < 1.05*t_linear(i) && currentTime > 0.95*t_linear(i)
-                break
-            end
-        end
-       
+            
         % Set input vector
         U_manoeurve(1) = U_linear(1,i);
         U_manoeurve(2) = U_linear(2,i);
