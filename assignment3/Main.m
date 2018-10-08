@@ -2,8 +2,9 @@
 % Author SID: 460369684
 % Main Script
 
-clear;
-clc;
+
+
+
 clf;
 clf reset;
 close all;
@@ -50,6 +51,7 @@ X0 = [V; 0; 0; 0 ; 0; 0; quaternion_0; 0; 0; -h];
 % Trim aircraft
 [X_trimmed, U_trimmed] = trim(Params, X0);
 
+%%
 % Create time vector
 <<<<<<< HEAD
 timeEnd = 120;
@@ -83,7 +85,7 @@ for i = 2:length(time)
     else
         
         % Determine control setting for manoeurve
-        U_manoeurve = controls4(Params, X(:,i-1), U_trimmed, time(i));
+        U_manoeurve = controls4(Params, X(:,i-1), U_trimmed, time(i), U_linear, T_linear);
         
         % Determine new state
         [X_new] = rungeKutta4(Params,X(:,i-1),U_manoeurve,dt);
