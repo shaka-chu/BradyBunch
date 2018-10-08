@@ -51,7 +51,11 @@ X0 = [V; 0; 0; 0 ; 0; 0; quaternion_0; 0; 0; -h];
 [X_trimmed, U_trimmed] = trim(Params, X0);
 
 % Create time vector
+<<<<<<< HEAD
 timeEnd = 120;
+=======
+timeEnd = 30;
+>>>>>>> 747d66a63170e76df6bbb937dd00bbd5d8551da5
 dt = 0.01;
 time = 0:dt:timeEnd;
 
@@ -79,7 +83,7 @@ for i = 2:length(time)
     else
         
         % Determine control setting for manoeurve
-        U_manoeurve = controls5(Params, U_trimmed, V, time(i));
+        U_manoeurve = controls4(Params, X(:,i-1), U_trimmed, time(i));
         
         % Determine new state
         [X_new] = rungeKutta4(Params,X(:,i-1),U_manoeurve,dt);
