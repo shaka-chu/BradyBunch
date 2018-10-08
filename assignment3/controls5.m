@@ -39,21 +39,25 @@ function U_manoeurve = controls5(Params, U_trimmed, V, currentTime)
      
     % Change throttle
     if currentTime > 1      
-        U_manoeurve(1) = U_turn(1);
+        U_manoeurve(1) = U_trimmed(1);
     end
     
     % Change elevator deflection
     if currentTime > 1      
-        U_manoeurve(2) = U_turn(2) - deg2rad(0.3);
+        U_manoeurve(2) = U_trimmed(2);
     end
      
     % Change aileron deflection
-    if currentTime > 1
-        U_manoeurve(3) = U_turn(3);
+    if currentTime > 1 && currentTime < 18
+        U_manoeurve(3) = U_trimmed(3) - deg2rad(0.03);
+    elseif currentTime > 1
+        U_manoeurve(3) = U_trimmed(3) - deg2rad(0.005);
     end
     
     % Change rudder deflection
-    if currentTime > 1   
-        U_manoeurve(4) = U_turn(4);
+    if currentTime > 1 && currentTime < 18
+        U_manoeurve(4) = U_trimmed(4) - deg2rad(0.03);
+    elseif currentTime > 1
+        U_manoeurve(4) = U_trimmed(4) - deg2rad(0.01);
     end
 end
