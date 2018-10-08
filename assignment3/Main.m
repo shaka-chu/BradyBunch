@@ -47,12 +47,11 @@ h = convlength(5000, 'ft','m');
 % Create initial state
 X0 = [V; 0; 0; 0 ; 0; 0; quaternion_0; 0; 0; -h];
 
-
 % Trim aircraft
 [X_trimmed, U_trimmed] = trim(Params, X0);
 
 % Create time vector
-timeEnd = 120;
+timeEnd = 600;
 dt = 0.01;
 time = 0:dt:timeEnd;
 
@@ -80,7 +79,7 @@ for i = 2:length(time)
     else
         
         % Determine control setting for manoeurve
-        U_manoeurve = controls4(U_trimmed, time(i));
+        U_manoeurve = controls5(Params, U_trimmed, V, time(i));
         
         % Determine new state
         [X_new] = rungeKutta4(Params,X(:,i-1),U_manoeurve,dt);
@@ -92,6 +91,6 @@ for i = 2:length(time)
     
 end
 
-% Plot results
-simulate(X)
+% % Plot results
+% simulate(X)
 plotData(X,U,time)
