@@ -46,6 +46,7 @@ nz = V.*X(5,:)/g + 1;
 
 figure(7)
 plot(time,nz)
+grid on
 
 
 end

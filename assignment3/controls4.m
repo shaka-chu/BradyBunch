@@ -43,10 +43,27 @@ function U_manoeurve = controls4(Params, X, U_trimmed, currentTime)
 %     end
     
     % Change elevator deflection
-    if currentTime > 1 && currentTime < 33.3 
+    t1 = 8;
+    expo = fit([1 1.4 1.5 4 4.5 5.6 8]',[0.032 0.015 0.01 0.008 0.007 0.005 0]','exp1');
+
+    
+    if currentTime > 1 && currentTime <= t1 
+        
+%         if mod(currentTime,1) == 0
+%         figure(8)
+%         plot(currentTime, deflection,'+')
+%         hold on 
+%         end
+        
         de = deltaE(Params,X, U_trimmed, n);
-        U_manoeurve(2) = de;
+        U_manoeurve(2) = 0.45*de + feval(expo,currentTime);
     end
+        
+    if currentTime > t1 && currentTime < 20 
+        de = deltaE(Params,X, U_trimmed, n);
+        U_manoeurve(2) = 0.45*de;
+    end
+     
      
 
 end
