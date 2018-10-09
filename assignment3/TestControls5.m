@@ -61,6 +61,9 @@ U(:,1) = U_trimmed;
 Xdot_trimmed = getstaterates(Params, X_trimmed, U_trimmed);
 disp(Xdot_trimmed)
 
+beta = zeros(1,length(time));
+[~, ~, beta(1)] = aeroangles(X(:,1));
+
 % Loop through time vector
 for i = 2:length(time)
     
@@ -78,9 +81,7 @@ for i = 2:length(time)
     else
         
         % Determine control setting for manoeurve
-
-        U_manoeurve = controls4(Params, X(:,i-1), U_trimmed, time(i), U_filter, T_linear);
-
+        U_manoeurve = controls5(U_trimmed, time(i), U_filter, T_filter);
         
         % Determine new state
         [X_new] = rungeKutta4(Params,X(:,i-1),U_manoeurve,dt);
@@ -90,13 +91,17 @@ for i = 2:length(time)
         U(:,i) = U_manoeurve;
     end
     
+    % Get sideslip
+    [~, ~, beta(i)] = aeroangles(X(:,i));
+    
 end
 
 % % Plot results
 % simulate(X)
+testPlotControls5(X,U,time);
 
-plotData(X,U,time)
-manoeurve4(X,time)
-
-
-
+figure;
+plot(time,rad2deg(beta));
+grid on
+xlabel('Time (s)');
+ylabel('Sideslip Angle (deg)');

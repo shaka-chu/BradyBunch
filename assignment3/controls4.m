@@ -29,17 +29,21 @@
 % TODO: 
 %   FINISH THIS FUNCTION
 
+<<<<<<< HEAD
 function U_manoeurve = controls4(Params, X, U_trimmed, currentTime, U_filter, t_linear )
+=======
+function U_manoeurve = controls4(Params, X, U_trimmed, currentTime, U_filter, T_filter )
+>>>>>>> ca6770b76bda21057b727c6ddb931a1070f0af71
     
     % Set load factor
     n = 3.5;
     
     % Loop through t of inputs
-   if currentTime <= t_linear(end)
+   if currentTime <= T_filter(end)
         
         % Determine current position
-        for i = 1:length(t_linear)
-            if currentTime < 1.05*t_linear(i) && currentTime > 0.95*t_linear(i)
+        for i = 1:length(T_filter)
+            if currentTime < 1.05*T_filter(i) && currentTime > 0.95*T_filter(i)
                 break
             end
         end
