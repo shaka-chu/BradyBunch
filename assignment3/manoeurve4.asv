@@ -48,9 +48,7 @@ x = 0:30;
 y = 3.5*ones(1,length(x));
 
 figure(7)
-plot(time,nz)
-hold on
-plot(x,y,'lineWidth',3)
+plot(time,nz,x,y)
 xticks([0:1:30])
 grid on
 
@@ -58,8 +56,7 @@ grid on
 quaternion = X(7:10,end);
 euler = rad2deg(quat2euler(quaternion));
 disp(euler(2));
-height = abs(X(13,end)) - abs(X(13,1));
-disp(height)
+
 
 
 end

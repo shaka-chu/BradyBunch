@@ -83,7 +83,7 @@ for i = 2:length(time)
     else
         
         % Determine control setting for manoeurve
-        U_manoeurve = controls4(Params, X(:,i-1), U_trimmed, time(i), U_linear, T_linear);
+        U_manoeurve = controls4(Params, X(:,i-1), U_trimmed, time(i), U_filter, T_linear);
         
         % Determine new state
         [X_new] = rungeKutta4(Params,X(:,i-1),U_manoeurve,dt);
@@ -98,5 +98,6 @@ end
 % % Plot results
 % simulate(X)
 plotData(X,U,time)
+manoeurve4(X,time)
 
 
