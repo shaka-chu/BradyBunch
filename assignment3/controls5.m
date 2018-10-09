@@ -44,7 +44,7 @@ function U_manoeurve = controls5(U_trimmed, currentTime, U_filter, ...
        
         % Set input vector
         U_manoeurve(1) = U_trimmed(1);
-        U_manoeurve(2) = U_trimmed(2);
+        U_manoeurve(2) = U_filter(2,i);
         U_manoeurve(3) = U_filter(3,i);
         U_manoeurve(4) = U_filter(4,i);
         return
