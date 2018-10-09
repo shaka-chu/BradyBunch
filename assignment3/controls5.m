@@ -29,35 +29,28 @@
 % TODO: 
 %   FINISH THIS FUNCTION
 
-function U_manoeurve = controls5(Params, U_trimmed, V, currentTime)
+function U_manoeurve = controls5(U_trimmed, currentTime, U_filter, ...
+    T_filter)
 
-    % Set new vector
-    U_manoeurve = U_trimmed;
-    
-    % Estimate steady turn controls
-    U_turn = steadyTurnEstimate(Params, U_trimmed, V);
-     
-    % Change throttle
-    if currentTime > 1      
+    % Loop through t of inputs
+   if currentTime <= T_filter(end)
+        
+        % Determine current position
+        for i = 1:length(T_filter)
+            if currentTime < 1.05*T_filter(i) && currentTime > 0.95*T_filter(i)
+                break
+            end
+        end
+       
+        % Set input vector
         U_manoeurve(1) = U_trimmed(1);
-    end
-    
-    % Change elevator deflection
-    if currentTime > 1      
         U_manoeurve(2) = U_trimmed(2);
-    end
-     
-    % Change aileron deflection
-    if currentTime > 1 && currentTime < 18
-        U_manoeurve(3) = U_trimmed(3) - deg2rad(0.03);
-    elseif currentTime > 1
-        U_manoeurve(3) = U_trimmed(3) - deg2rad(0.005);
-    end
-    
-    % Change rudder deflection
-    if currentTime > 1 && currentTime < 18
-        U_manoeurve(4) = U_trimmed(4) - deg2rad(0.03);
-    elseif currentTime > 1
-        U_manoeurve(4) = U_trimmed(4) - deg2rad(0.01);
-    end
+        U_manoeurve(3) = U_filter(3,i);
+        U_manoeurve(4) = U_filter(4,i);
+        return
+
+    else
+        % Set trim vector
+        U_manoeurve = U_trimmed;
+   end
 end
