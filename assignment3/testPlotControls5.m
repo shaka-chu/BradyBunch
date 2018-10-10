@@ -166,6 +166,18 @@ function testPlotControls5(X,U,time)
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     
+    figure;
+    plot(time, -X(13,:), 'LineWidth',2)
+    xlabel('Time (s)')
+    ylabel('Position (m)')
+    grid on
+    h = legend('Height');
+    set(h,'Interpreter','latex');
+    set(h,'location','best');
+    set(gcf, 'Color', [1 1 1]);
+    set(gca, 'Color', [1 1 1]);
+    
+    
     % Create attitude figure
     euler = rad2deg(quat2euler(X(7:10,:)));
     figure;
