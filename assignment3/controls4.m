@@ -29,11 +29,9 @@
 % TODO: 
 %   FINISH THIS FUNCTION
 
-<<<<<<< HEAD
-function U_manoeurve = controls4(Params, X, U_trimmed, currentTime, U_filter, t_linear )
-=======
+
 function U_manoeurve = controls4(Params, X, U_trimmed, currentTime, U_filter, T_filter )
->>>>>>> ca6770b76bda21057b727c6ddb931a1070f0af71
+
     
     % Set load factor
     n = 3.5;

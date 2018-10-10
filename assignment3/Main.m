@@ -50,7 +50,7 @@ X0 = [V; 0; 0; 0 ; 0; 0; quaternion_0; 0; 0; -h];
 
 %%
 % Create time vector
-timeEnd = 45;
+timeEnd = 10;
 dt = 0.01;
 time = 0:dt:timeEnd;
 
@@ -93,7 +93,7 @@ for i = 2:length(time)
 end
 
 % % Plot results
-% simulate(X)
+simulate(X)
 
 plotData(X,U,time)
 manoeurve4(X,time)
