@@ -104,7 +104,7 @@ end
 
 %% Run simulation
 % Create time vector
-timeEnd = 30;
+timeEnd = 70;
 dt = 0.01;
 time = 0:dt:timeEnd;
 
@@ -145,13 +145,16 @@ for i = 2:length(time)
         U(:,i) = U_manoeurve;
     end
     
-    % Get sideslip
-    [~, ~, beta(i)] = aeroangles(X(:,i));
+    % Get sideslip and airspeed
+    [V, ~, beta(i)] = aeroangles(X(:,i));
+    
+%     % Analytical estimate of controls required for steady coordinated turn
+%     U_turn(:,i) = steadyTurnEstimate(Params, U_manoeurve, V);
     
 end
 
 % % Plot results
-% simulate(X)
+simulate(X)
 testPlotControls5(X,U,time);
 
 figure;
