@@ -31,7 +31,7 @@ set(0,'defaultLineLineWidth',lw);
 cgPos = 'CG1';
 
 % Choose initial flight condition (3 or 4)
-flightCond = 'COND100';
+flightCond = 'COND180';
 
 % Switch expression
 situation = [cgPos, flightCond];
@@ -104,7 +104,7 @@ end
 
 %% Run simulation
 % Create time vector
-timeEnd = 72;
+timeEnd = 30;
 dt = 0.01;
 time = 0:dt:timeEnd;
 
@@ -163,8 +163,8 @@ plot(time,rad2deg(beta));
 grid on
 xlabel('Time (s)');
 ylabel('Sideslip Angle (deg)');
-figure;
-plot(time,rad2deg(alpha));
-grid on
-xlabel('Time (s)');
-ylabel('Angle of Attack (deg)');
+% figure;
+% plot(time,rad2deg(alpha));
+% grid on
+% xlabel('Time (s)');
+% ylabel('Angle of Attack (deg)');
