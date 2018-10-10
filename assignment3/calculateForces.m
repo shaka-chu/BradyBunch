@@ -48,7 +48,7 @@
 % TODO:
 %   Calculate alpha_dot and beta_dot
 
-function [BodyForces, gravForces, thrust] = calculateForces(Params, X, U, angle_rates)
+function [BodyForces, gravForces, thrust, CL] = calculateForces(Params, X, U, angle_rates)
 
     % Get aerodynamic angles
     [V, alpha, beta] = aeroangles(X);
