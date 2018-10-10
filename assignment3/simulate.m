@@ -75,6 +75,7 @@ figure(6)
 flightpath = animatedline('LineWidth',1.5,'Color','b');
 
 plotFreq = 50;
+
 % Loop through time vector
 for k = 1:length(x)
     

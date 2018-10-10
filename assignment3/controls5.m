@@ -29,13 +29,9 @@
 % TODO: 
 %   FINISH THIS FUNCTION
 
+function U_manoeurve = controls5(U_trimmed, currentTime, U_filter, ...
+    T_filter)
 
-function U_manoeurve = controls4(Params, X, U_trimmed, currentTime, U_filter, T_filter )
-
-    
-    % Set load factor
-    n = 3.5;
-    
     % Loop through t of inputs
    if currentTime <= T_filter(end)
         
@@ -47,7 +43,7 @@ function U_manoeurve = controls4(Params, X, U_trimmed, currentTime, U_filter, T_
         end
        
         % Set input vector
-        U_manoeurve(1) = U_filter(1,i);
+        U_manoeurve(1) = U_trimmed(1);
         U_manoeurve(2) = U_filter(2,i);
         U_manoeurve(3) = U_filter(3,i);
         U_manoeurve(4) = U_filter(4,i);
@@ -56,11 +52,5 @@ function U_manoeurve = controls4(Params, X, U_trimmed, currentTime, U_filter, T_
     else
         % Set trim vector
         U_manoeurve = U_trimmed;
-    end
-
-     
-
-     
-     
-
+   end
 end

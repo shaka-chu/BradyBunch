@@ -42,10 +42,10 @@
 % TODO: 
 %   None
 
-function plotData(X,U,time)
+function testPlotControls5(X,U,time)
 
     % Create velocity figure
-    figure(1)
+    figure;
     x0=100;
     y0=100;
     width=550;
@@ -87,62 +87,8 @@ function plotData(X,U,time)
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     
-    % Create body rates figure
-    figure(2)
-    subplot(3,1,1)
-    plot(time, rad2deg(X(4,:)), 'LineWidth',2)
-    title('p')
-    xlabel('Time (s)')
-    ylabel('Rate (\circ/s)')
-    grid on
-    set(gcf, 'Color', [1 1 1]);
-    set(gca, 'Color', [1 1 1]);
-    
-    subplot(3,1,2)
-    plot(time, rad2deg(X(5,:)), 'LineWidth',2)
-    title('q')
-    xlabel('Time (s)')
-    ylabel('Rate (\circ/s)')
-    grid on
-    set(gcf, 'Color', [1 1 1]);
-    set(gca, 'Color', [1 1 1]);
-    
-    subplot(3,1,3)
-    plot(time, rad2deg(X(6,:)), 'LineWidth',2)
-    title('r')
-    xlabel('Time (s)')
-    ylabel('Rate (\circ/s)')
-    grid on
-    set(gcf, 'Color', [1 1 1]);
-    set(gca, 'Color', [1 1 1]);
-    
-    % Create attitude figure
-    euler = rad2deg(quat2euler(X(7:10,:)));
-    figure(3)
-    plot(time, euler(1,:), time, euler(2,:), time, euler(3,:), 'LineWidth',2)
-    xlabel('Time (s)')
-    ylabel('Attitude (\circ)')
-    grid on
-    h = legend('Bank angle, $\theta$','Pitch angle, $\phi$','Yaw angle, $\psi$');
-    set(h,'Interpreter','latex');
-    set(h,'location','best');
-    set(gcf, 'Color', [1 1 1]);
-    set(gca, 'Color', [1 1 1]);
-    
-    % Create position figure
-    figure(4)
-    plot(time, X(11,:), time, X(12,:), time, -X(13,:), 'LineWidth',2)
-    xlabel('Time (s)')
-    ylabel('Position (m)')
-    grid on
-    h = legend('X-position', 'Y-position','Height');
-    set(h,'Interpreter','latex');
-    set(h,'location','best');
-    set(gcf, 'Color', [1 1 1]);
-    set(gca, 'Color', [1 1 1]);
-    
     % Create control figure
-    figure(5);
+    figure;
     subplot(2,2,1)
     plot(time, U(1,:), 'LineWidth',2)
     title('Throttle')
@@ -176,6 +122,75 @@ function plotData(X,U,time)
     xlabel('Time (s)')
     ylabel('Deflection (\circ)')
     grid on
+    set(gcf, 'Color', [1 1 1]);
+    set(gca, 'Color', [1 1 1]);
+    
+    % Create body rates figure
+    figure;
+    subplot(3,1,1)
+    plot(time, rad2deg(X(4,:)), 'LineWidth',2)
+    title('p')
+    xlabel('Time (s)')
+    ylabel('Rate (\circ/s)')
+    grid on
+    set(gcf, 'Color', [1 1 1]);
+    set(gca, 'Color', [1 1 1]);
+    
+    subplot(3,1,2)
+    plot(time, rad2deg(X(5,:)), 'LineWidth',2)
+    title('q')
+    xlabel('Time (s)')
+    ylabel('Rate (\circ/s)')
+    grid on
+    set(gcf, 'Color', [1 1 1]);
+    set(gca, 'Color', [1 1 1]);
+    
+    subplot(3,1,3)
+    plot(time, rad2deg(X(6,:)), 'LineWidth',2)
+    title('r')
+    xlabel('Time (s)')
+    ylabel('Rate (\circ/s)')
+    grid on
+    set(gcf, 'Color', [1 1 1]);
+    set(gca, 'Color', [1 1 1]);
+    
+    % Create position figure
+    figure;
+    plot(time, X(11,:), time, X(12,:), time, -X(13,:), 'LineWidth',2)
+    xlabel('Time (s)')
+    ylabel('Position (m)')
+    grid on
+    h = legend('X-position', 'Y-position','Height');
+    set(h,'Interpreter','latex');
+    set(h,'location','best');
+    set(gcf, 'Color', [1 1 1]);
+    set(gca, 'Color', [1 1 1]);
+    
+    figure;
+    plot(time, -X(13,:), 'LineWidth',2)
+    xlabel('Time (s)')
+    ylabel('Position (m)')
+    grid on
+    h = legend('Height');
+    set(h,'Interpreter','latex');
+    set(h,'location','best');
+    set(gcf, 'Color', [1 1 1]);
+    set(gca, 'Color', [1 1 1]);
+    
+    
+    % Create attitude figure
+    euler = rad2deg(quat2euler(X(7:10,:)));
+    figure;
+    bankGoal = 45*ones(1,length(time));
+    plot(time, euler(1,:), time, euler(2,:), time, euler(3,:), 'LineWidth',2)
+    hold on
+    plot(time,bankGoal, 'LineWidth',1.2);
+    xlabel('Time (s)')
+    ylabel('Attitude (\circ)')
+    grid on
+    h = legend('Bank angle, $\theta$','Pitch angle, $\phi$','Yaw angle, $\psi$');
+    set(h,'Interpreter','latex');
+    set(h,'location','best');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
 
