@@ -56,7 +56,7 @@
 %
 % TODO: none
 
-function [Xdot] = staterates(Params, X, U, angle_rates)
+function [Xdot, CL] = staterates(Params, X, U, angle_rates)
 
     % Unpack state vector
     u   = X(1);
@@ -71,7 +71,7 @@ function [Xdot] = staterates(Params, X, U, angle_rates)
     q3  = X(10);
 
     % Calculate forces
-    [BodyForces, gravForces, thrust] = calculateForces(Params, X, U, ...
+    [BodyForces, gravForces, thrust, CL] = calculateForces(Params, X, U, ...
         angle_rates);
     F_body = BodyForces.Force;
     M_body = BodyForces.Moment;
