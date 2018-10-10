@@ -56,6 +56,9 @@ switch situation
         % Set aircraft parameters
         Params = Nominal_params;
         
+        % Trim time (s)
+        trimTime = 74.3;
+        
     % CG 1, 180 kN 1000 ft
     case 'CG1COND180'
         
@@ -104,7 +107,7 @@ end
 
 %% Run simulation
 % Create time vector
-timeEnd = 72;
+timeEnd = 90;
 dt = 0.01;
 time = 0:dt:timeEnd;
 
@@ -116,11 +119,15 @@ Xdot_trimmed = getstaterates(Params, X_trimmed, U_trimmed);
 disp(Xdot_trimmed)
 
 beta = zeros(1,length(time));
-alpha = zeros(1,length(time));
-[~, alpha(1), beta(1)] = aeroangles(X(:,1));
+[~, ~, beta(1)] = aeroangles(X(:,1));
+
+% Boolean for if trim time has been reached
+reachedTrimTime = false;
 
 % Loop through time vector
 for i = 2:length(time)
+    
+    % If 
     
     % Run aircraft at trimmed settings for 1 second and then begin
     % simulation
@@ -133,7 +140,7 @@ for i = 2:length(time)
         X(:,i) = X_new;
         U(:,i) = U_trimmed;
     
-    else
+    elseif ~reachedTrimTime && time(i) > trim
         
         % Determine control setting for manoeurve
         U_manoeurve = controls5(U_trimmed, time(i), U_filter, T_filter);
@@ -147,7 +154,7 @@ for i = 2:length(time)
     end
     
     % Get sideslip and airspeed
-    [V, alpha(i), beta(i)] = aeroangles(X(:,i));
+    [V, ~, beta(i)] = aeroangles(X(:,i));
     
 %     % Analytical estimate of controls required for steady coordinated turn
 %     U_turn(:,i) = steadyTurnEstimate(Params, U_manoeurve, V);
@@ -163,8 +170,3 @@ plot(time,rad2deg(beta));
 grid on
 xlabel('Time (s)');
 ylabel('Sideslip Angle (deg)');
-figure;
-plot(time,rad2deg(alpha));
-grid on
-xlabel('Time (s)');
-ylabel('Angle of Attack (deg)');
