@@ -29,7 +29,7 @@
 % TODO: 
 %   FINISH THIS FUNCTION
 
-function [U_manoeurve, phi] = controlsSHS(Params, X, U_trimmed, CL, Y, Z, time)
+function [U_manoeurve, phi] = steadyHeadingSideslipEst(Params, U_trimmed, CL, beta)
     
     % Set new vector
     U_manoeurve = U_trimmed;
@@ -49,15 +49,6 @@ function [U_manoeurve, phi] = controlsSHS(Params, X, U_trimmed, CL, Y, Z, time)
     m = Params.Inertial.m;
     control_min = Params.ControlLimits.Lower;
     control_max = Params.ControlLimits.Upper;
-    
-    euler_att = quat2euler(X(7:10));
-    
-    % Solve for the control for a sideslip of 5 degrees
-    if time < 15
-        beta = deg2rad(5);
-    else
-        beta = 0;
-    end
 
     A = [CL Cyda Cydr
         0 Clda Cldr

@@ -6,6 +6,10 @@ clf;
 clf reset;
 close all;
 
+% Add every subfolder to path
+folder = fileparts(which('Main.m')); 
+addpath(genpath(folder));
+
 % Plotting colors
 red     = [0.8471 0.1176 0.1922];
 blue    = [0.1059 0.3882 0.6157];

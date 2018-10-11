@@ -2,9 +2,14 @@
 % Author SID: 460369684
 % Main Script
 
+%% File setup
 clf;
 clf reset;
 close all;
+
+% Add every subfolder to path
+folder = fileparts(which('Main.m')); 
+addpath(genpath(folder));
 
 % Plotting colors
 red     = [0.8471 0.1176 0.1922];
@@ -25,32 +30,85 @@ set(groot,'defaultAxesColorOrder',[black;blue;red;green;yellow;cyan;...
     purple;orange]);
 set(0,'defaultLineLineWidth',lw);
 
+%% Simulation setup
+% Choose CG positionn(1 or 2)
+cgPos = 'CG1';
+
+% Choose initial flight condition (3 or 4)
+flightCond = 'COND180';
+
+% Switch expression
+situation = [cgPos, flightCond];
+
 % Initialise aircraft parameters
 [Nominal_params, Secondary_params] = initialisation;
 
-% Select CG position
-Params = Nominal_params;
+% Load 
+switch situation
+    
+    % CG 1, 100 kN 1000 ft
+    case 'CG1COND100'
+        
+        % Load flight condition .mat file
+        load ICs_PC9_nominalCG1_100Kn_1000ft
+        
+        % Obtain state and control vectors (after converting Euler angles
+        % to quaternions!)
+        X_initial = [X0(1:6); euler2quat(X0(7:9)); X0(10:end)];
+        U_initial = U0;
+        
+        % Set aircraft parameters
+        Params = Nominal_params;
+        
+    % CG 1, 180 kN 1000 ft
+    case 'CG1COND180'
+        
+        % Load flight condition .mat file
+        load ICs_PC9_nominalCG1_180Kn_1000ft
+        
+        % Obtain state and control vectors (after converting Euler angles
+        % to quaternions!)
+        X_initial = [X0(1:6); euler2quat(X0(7:9)); X0(10:end)];
+        U_initial = U0;
+        
+        % Set aircraft parameters
+        Params = Nominal_params;
+    
+    % CG 2, 100 kN 1000 ft
+    case 'CG2COND100'
+        
+        % Load flight condition .mat file
+        load ICs_PC9_CG2_100Kn_1000ft
+        
+        % Obtain state and control vectors (after converting Euler angles
+        % to quaternions!)
+        X_initial = [X0(1:6); euler2quat(X0(7:9)); X0(10:end)];
+        U_initial = U0;
+        
+        % Set aircraft parameters
+        Params = Secondary_params;
+        
+    case 'CG2COND180'
+        
+        % Load flight condition .mat file
+        load ICs_PC9_CG2_180Kn_1000ft
+        
+        % Obtain state and control vectors (after converting Euler angles
+        % to quaternions!)
+        X_initial = [X0(1:6); euler2quat(X0(7:9)); X0(10:end)];
+        U_initial = U0;
+        
+        % Set aircraft parameters
+        Params = Secondary_params;
+end
 
-% Set initial heading
-phi_0 = 0;
-psi_0 = 0;
-theta_0 = 0;
-euler = [phi_0; theta_0; psi_0];
-quaternion_0 = euler2quat(euler);
+%% Trim aircraft
+% Run trim function
+[X_trimmed, U_trimmed] = trim(Params, X_initial);
 
-% Set flight conditions
-V = 120;
-h = convlength(5000, 'ft','m');
-
-% Create initial state
-X0 = [V; 0; 0; 0 ; 0; 0; quaternion_0; 0; 0; -h];
-
-% Trim aircraft
-[X_trimmed, U_trimmed] = trim(Params, X0);
-
-%%
+%% Run simulation
 % Create time vector
-timeEnd = 90;
+timeEnd = 30;
 dt = 0.01;
 time = 0:dt:timeEnd;
 
@@ -62,7 +120,8 @@ Xdot_trimmed = getstaterates(Params, X_trimmed, U_trimmed);
 disp(Xdot_trimmed)
 
 beta = zeros(1,length(time));
-[~, ~, beta(1)] = aeroangles(X(:,1));
+alpha = zeros(1,length(time));
+[~, alpha(1), beta(1)] = aeroangles(X(:,1));
 
 % Loop through time vector
 for i = 2:length(time)
@@ -91,13 +150,16 @@ for i = 2:length(time)
         U(:,i) = U_manoeurve;
     end
     
-    % Get sideslip
-    [~, ~, beta(i)] = aeroangles(X(:,i));
+    % Get sideslip and airspeed
+    [V, alpha(i), beta(i)] = aeroangles(X(:,i));
+    
+%     % Analytical estimate of controls required for steady coordinated turn
+%     U_turn(:,i) = steadyTurnEstimate(Params, U_manoeurve, V);
     
 end
 
 % % Plot results
-simulate(X)
+% simulate(X)
 testPlotControls5(X,U,time);
 
 figure;
@@ -105,3 +167,8 @@ plot(time,rad2deg(beta));
 grid on
 xlabel('Time (s)');
 ylabel('Sideslip Angle (deg)');
+% figure;
+% plot(time,rad2deg(alpha));
+% grid on
+% xlabel('Time (s)');
+% ylabel('Angle of Attack (deg)');

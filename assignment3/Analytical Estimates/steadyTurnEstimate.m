@@ -5,7 +5,7 @@
 %               - delta_a = U(3)    (rad)
 %               - delta_r = U(4)    (rad)
 
-function U_turn = steadyTurnEstimate(Params, U_trim, V)
+function U_turn = steadyTurnEstimate(Params, U_trim, V, phi)
 
     % Unpack aircraft characteristics
     g       = Params.Inertial.g;
@@ -17,11 +17,11 @@ function U_turn = steadyTurnEstimate(Params, U_trim, V)
     Cldr    = Params.Aero.Cldr;
     Clda    = Params.Aero.Clda;
 
-    % Acceleration (g's) - defined by assignment
-    nz = sqrt(2);
-    
-    % Calculate bank angle
-    phi = acos(1/nz);
+%     % Acceleration (g's) - defined by assignment
+%     nz = sqrt(2);
+%     
+%     % Calculate bank angle
+%     phi = acos(1/nz);
     
     % Calculate steady heading rate (rad/s)
     psi_dot = (g/V)*tan(phi);
