@@ -44,7 +44,7 @@
 % TODO:
 %   CHECK THE HEADER
 
-function [Xdot, CL] = getstaterates(Params, X, U)
+function [Xdot, CL, Y] = getstaterates(Params, X, U)
 
     % Unpack state vector
     u = X(1);
@@ -71,7 +71,7 @@ function [Xdot, CL] = getstaterates(Params, X, U)
         angle_rates = [alpha_dot_old beta_dot_old];
 
         % Estimate state rates using angle of attack and sideslip rates
-        [Xdot, CL] = staterates(Params, X, U, angle_rates);
+        [Xdot, CL, Y] = staterates(Params, X, U, angle_rates);
         
         % Unpack state rate vector
         u_dot = Xdot(1);

@@ -89,12 +89,19 @@ disp(Xdot_trimmed)
 [~, CL] = getstaterates(Params, X_trimmed, U_trimmed);
 [U_manoeurve2, phi] = steadyHeadingSideslipEst(Params, U_trimmed, CL, deg2rad(5));
 
+U_turn = steadyTurnEstimate(Params, U_trimmed, aeroangles(X_trimmed), deg2rad(8.59522));
+
 disp('------------------------------------------------------------')
 fprintf('Controls for steady heading sideslip\n')
 disp('------------------------------------------------------------')
 fprintf('Required Aileron Deflection [rad]:\t %6.5e\n', U_manoeurve2(3));
 fprintf('Required Rudder Deflection [rad]:\t %6.5e\n', U_manoeurve2(4));
 fprintf('Required Bank Angle [deg]:\t\t\t %6.6f\n', rad2deg(phi));
+disp('------------------------------------------------------------')
+fprintf('Controls for bank angle\n')
+disp('------------------------------------------------------------')
+fprintf('Required Aileron Deflection [rad]:\t %6.5e\n', U_turn(3));
+fprintf('Required Rudder Deflection [rad]:\t %6.5e\n', U_turn(4));
 disp('------------------------------------------------------------')
 
 fprintf('Load the control input from "control6_fc1" into workspace, \nthen press any key to continue\n')

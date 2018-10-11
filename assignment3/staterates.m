@@ -56,7 +56,7 @@
 %
 % TODO: none
 
-function [Xdot, CL] = staterates(Params, X, U, angle_rates)
+function [Xdot, CL, Fa_y] = staterates(Params, X, U, angle_rates)
 
     % Unpack state vector
     u   = X(1);
