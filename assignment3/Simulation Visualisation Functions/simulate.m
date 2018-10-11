@@ -74,7 +74,7 @@ euler = rad2deg(quat2euler(X(7:10,:)));
 figure(6)
 flightpath = animatedline('LineWidth',1.5,'Color','b');
 
-plotFreq = 50;
+plotFreq = 100;
 
 % Loop through time vector
 for k = 1:length(x)
