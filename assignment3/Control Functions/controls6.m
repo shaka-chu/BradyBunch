@@ -33,25 +33,30 @@
 function U_manoeurve = controls6(U_trimmed, currentTime, U_filter, ...
     T_filter)
 
+    % Initialise the input vector
+    U_manoeurve = U_trimmed;
+
     % Loop through t of inputs
-   if currentTime <= T_filter(end)
-        
+    if currentTime <= T_filter(end)
+
         % Determine current position
         for i = 1:length(T_filter)
             if currentTime < 1.05*T_filter(i) && currentTime > 0.95*T_filter(i)
                 break
             end
         end
-       
-        % Set input vector
-        U_manoeurve(1) = U_trimmed(1);
-        U_manoeurve(2) = U_trimmed(2);
-        U_manoeurve(3) = U_filter(3,i);
-        U_manoeurve(4) = U_filter(4,i);
-        return
+        
+        % Check which inputs have been altered from the trim function
+        updateBool = (any(U_filter(1:4, :), 2) ~= 0);
+        
+        % Change the length of the input
+        U_filter = U_filter(1:4, i);
 
+        % Set input vector
+        U_manoeurve(updateBool) = U_filter(updateBool);
+        return
     else
         % Set trim vector
         U_manoeurve = U_trimmed;
-   end
+    end
 end

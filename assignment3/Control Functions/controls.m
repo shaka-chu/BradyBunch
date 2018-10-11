@@ -29,28 +29,33 @@
 % TODO: 
 %   FINISH THIS FUNCTION
 
-function U_manoeurve = controls(U_trimmed, currentTime)
+function U_manoeurve = controls(U_trimmed, currentTime, U_filter, ...
+    T_filter)
 
-    % Set new vector
+    % Initialise the input vector
     U_manoeurve = U_trimmed;
-     
-%     % Change throttle
-    if currentTime > 1 && currentTime < 28       
-        U_manoeurve(1) = 1;
+
+    % Loop through t of inputs
+    if currentTime <= T_filter(end)
+
+        % Determine current position
+        for i = 1:length(T_filter)
+            if currentTime < 1.05*T_filter(i) && currentTime > 0.95*T_filter(i)
+                break
+            end
+        end
+        
+        % Check which inputs have been altered from the trim function
+        updateBool = (any(U_filter(1:4, :), 2) ~= 0);
+        
+        % Change the length of the input
+        U_filter = U_filter(1:4, i);
+
+        % Set input vector
+        U_manoeurve(updateBool) = U_filter(updateBool);
+        return
+    else
+        % Set trim vector
+        U_manoeurve = U_trimmed;
     end
-    
-    % Change elevator deflection
-    if currentTime > 1 && currentTime < 28       
-        U_manoeurve(2) = U_trimmed(2) - deg2rad(2.5);
-    end
-     
-%     % Change aileron deflection
-%     if currentTime > 1 && currentTime < 18       
-%         U_manoeurve(3) = deg2rad(0);
-%     end
-    
-%     % Change rudder deflection
-%     if currentTime > 1 && currentTime < 18       
-%         U_manoeurve(4) = deg2rad(0);
-%     end
 end
