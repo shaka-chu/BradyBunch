@@ -5,7 +5,7 @@
 %               - delta_a = U(3)    (rad)
 %               - delta_r = U(4)    (rad)
 
-function U_turn = steadyTurnEstimate(Params, U_trim, V, phi)
+function [U_turn, ratio] = steadyTurnEstimate(Params, U_trim, V)
 
     % Unpack aircraft characteristics
     g       = Params.Inertial.g;
@@ -17,11 +17,11 @@ function U_turn = steadyTurnEstimate(Params, U_trim, V, phi)
     Cldr    = Params.Aero.Cldr;
     Clda    = Params.Aero.Clda;
 
-%     % Acceleration (g's) - defined by assignment
-%     nz = sqrt(2);
-%     
-%     % Calculate bank angle
-%     phi = acos(1/nz);
+    % Acceleration (g's) - defined by assignment
+    nz = sqrt(2);
+    
+    % Calculate bank angle
+    phi = acos(1/nz);
     
     % Calculate steady heading rate (rad/s)
     psi_dot = (g/V)*tan(phi);
@@ -40,4 +40,8 @@ function U_turn = steadyTurnEstimate(Params, U_trim, V, phi)
     
     % Output controls vector
     U_turn = [U_trim(1); U_trim(2); delta_a; delta_r];
+    
+    % Approximate ratio of aileron to rudder
+    ratio = (Clr*Cndr)/(Cnr*Clda);
+    
 end

@@ -44,14 +44,14 @@ KEAS = convvel(EAS, 'm/s','kts');
 V = sqrt(X(1,:).^2 + X(2,:).^2 + X(3,:).^2);
 nz = V.*X(5,:)/g + 1;
 
-x = 0:30;
+x = 0:length(time)/100;
 y = 3.5*ones(1,length(x));
 
 figure(7)
 plot(time,nz)
 hold on
-plot(x,y,'lineWidth',3)
-xticks([0:1:30])
+plot(x,y,'lineWidth',1)
+xticks([0:2:length(time)/100])
 grid on
 
 % Find last attitude

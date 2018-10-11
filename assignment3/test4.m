@@ -2,14 +2,9 @@
 % Author SID: 460369684
 % Main Script
 
-%% File setup
 clf;
 clf reset;
 close all;
-
-% Add every subfolder to path
-folder = fileparts(which('Main.m')); 
-addpath(genpath(folder));
 
 % Plotting colors
 red     = [0.8471 0.1176 0.1922];
@@ -111,27 +106,15 @@ end
 [V_trimmed, ~, ~] = aeroangles(X_trimmed);
 
 % Call estimation function
-[U_turn, ratio] = steadyTurnEstimate(Params, U_trimmed, V_trimmed);
+U_turn = steadyTurnEstimate(Params, U_trimmed, V_trimmed);
 
 % Print controls to screen
-fprintf('------------------ Turn Control Estimate ------------------');
-fprintf('\n');
-fprintf('Thrust (percent): %s', num2str(U_turn(1)));
-fprintf('\n');
-fprintf('Elevator (rad): %s', num2str(U_turn(2)));
-fprintf('\n');
-fprintf('Aileron (rad): %s', num2str(U_turn(3)));
-fprintf('\n');
-fprintf('Rudder (rad): %s', num2str(U_turn(4)));
-fprintf('\n');
-fprintf('Ratio of Aileron to Rudder: %s', num2str(ratio));
-fprintf('\n');
-fprintf('-----------------------------------------------------------');
-fprintf('\n');
+fpr
+fprintf('Thrust: %s', num2str(U_turn(1)));
 
 %% Run simulation
 % Create time vector
-timeEnd = 240;
+timeEnd = 60;
 dt = 0.01;
 time = 0:dt:timeEnd;
 
@@ -143,8 +126,12 @@ Xdot_trimmed = getstaterates(Params, X_trimmed, U_trimmed);
 disp(Xdot_trimmed)
 
 beta = zeros(1,length(time));
+<<<<<<< HEAD:assignment3/TestControls5.asv
 alpha = zeros(1,length(time));
 [~, alpha(1), beta(1)] = aeroangles(X(:,1));
+=======
+[~, ~, beta(1)] = aeroangles(X(:,1));
+>>>>>>> 83c9924317cd8249aafd4bd6cf3c3603ea4be4cf:assignment3/test4.m
 
 % Loop through time vector
 for i = 2:length(time)
@@ -163,7 +150,9 @@ for i = 2:length(time)
     else
         
         % Determine control setting for manoeurve
-        U_manoeurve = controls5(U_trimmed, time(i), U_filter, T_filter);
+
+        U_manoeurve = controls4(Params, X(:,i-1), U_trimmed, time(i), U_filter, T_linear);
+
         
         % Determine new state
         [X_new] = rungeKutta4(Params,X(:,i-1),U_manoeurve,dt);
@@ -171,23 +160,31 @@ for i = 2:length(time)
         % Save result
         X(:,i) = X_new;
         U(:,i) = U_manoeurve;
+        
+        [~,alpha(i),beta(i)] = aeroangles(X(:,i));
     end
     
+<<<<<<< HEAD:assignment3/TestControls5.asv
     % Get sideslip and airspeed
     [V, alpha(i), beta(i)] = aeroangles(X(:,i));
     
 %     % Analytical estimate of controls required for steady coordinated turn
 %     U_turn(:,i) = steadyTurnEstimate(Params, U_manoeurve, V);
     
+=======
+>>>>>>> 83c9924317cd8249aafd4bd6cf3c3603ea4be4cf:assignment3/test4.m
 end
 
 % % Plot results
-% simulate(X)
-testPlotControls5(X,U,time);
+simulate(X)
 
-figure;
-plot(time,rad2deg(beta));
+plotData(X,U,time)
+
+
+figure
+plot(time, rad2deg(alpha));
 grid on
+<<<<<<< HEAD:assignment3/TestControls5.asv
 xlabel('Time (s)');
 ylabel('Sideslip Angle (deg)');
 % figure;
@@ -195,3 +192,10 @@ ylabel('Sideslip Angle (deg)');
 % grid on
 % xlabel('Time (s)');
 % ylabel('Angle of Attack (deg)');
+=======
+xlabel('Time (s)')
+ylabel('AOA (deg')
+
+manoeurve4(X,time)
+
+>>>>>>> 83c9924317cd8249aafd4bd6cf3c3603ea4be4cf:assignment3/test4.m
