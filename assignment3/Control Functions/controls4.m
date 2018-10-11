@@ -56,11 +56,19 @@ function U_manoeurve = controls4(Params, X, U_trimmed, currentTime, U_filter, T_
     else
         % Set trim vector
         U_manoeurve = U_trimmed;
+   end
+
+
+    % Check limits
+    if U_manoeurve(1) <= Params.ControlLimits.Lower(1)
+        disp('Control Limit Reached (1)')
+    elseif U_manoeurve(2) <= Params.ControlLimits.Lower(2)
+        disp('Control Limit Reached (2)')
+    elseif U_manoeurve(3) <= Params.ControlLimits.Lower(3)
+        disp('Control Limit Reached (3)')
+    elseif U_manoeurve(4) <= Params.ControlLimits.Lower(4)
+        disp('Control Limit Reached (4)')
     end
-
-     
-
-     
-     
+        
 
 end

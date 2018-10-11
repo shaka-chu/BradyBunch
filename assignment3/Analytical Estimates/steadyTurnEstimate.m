@@ -5,7 +5,7 @@
 %               - delta_a = U(3)    (rad)
 %               - delta_r = U(4)    (rad)
 
-function U_turn = steadyTurnEstimate(Params, U_trim, V)
+function [U_turn, ratio] = steadyTurnEstimate(Params, U_trim, V)
 
     % Unpack aircraft characteristics
     g       = Params.Inertial.g;
@@ -40,4 +40,8 @@ function U_turn = steadyTurnEstimate(Params, U_trim, V)
     
     % Output controls vector
     U_turn = [U_trim(1); U_trim(2); delta_a; delta_r];
+    
+    % Approximate ratio of aileron to rudder
+    ratio = (Clr*Cndr)/(Cnr*Clda);
+    
 end

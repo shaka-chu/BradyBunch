@@ -7,6 +7,10 @@ clf;
 clf reset;
 close all;
 
+% Add every subfolder to path
+folder = fileparts(which('Main.m')); 
+addpath(genpath(folder));
+
 % Plotting colors
 red     = [0.8471 0.1176 0.1922];
 blue    = [0.1059 0.3882 0.6157];
@@ -30,7 +34,7 @@ set(0,'defaultLineLineWidth',lw);
 % Choose CG positionn(1 or 2)
 cgPos = 'CG1';
 
-% Choose initial flight condition (3 or 4)
+% Choose initial flight condition (100kts or 180kts)
 flightCond = 'COND180';
 
 % Switch expression
@@ -102,9 +106,32 @@ end
 % Run trim function
 [X_trimmed, U_trimmed] = trim(Params, X_initial);
 
+%% Estimate control inputs required for steady turn at the trim condition
+% Obtain trim airspeed
+[V_trimmed, ~, ~] = aeroangles(X_trimmed);
+
+% Call estimation function
+[U_turn, ratio] = steadyTurnEstimate(Params, U_trimmed, V_trimmed);
+
+% Print controls to screen
+fprintf('------------------ Turn Control Estimate ------------------');
+fprintf('\n');
+fprintf('Thrust (percent): %s', num2str(U_turn(1)));
+fprintf('\n');
+fprintf('Elevator (rad): %s', num2str(U_turn(2)));
+fprintf('\n');
+fprintf('Aileron (rad): %s', num2str(U_turn(3)));
+fprintf('\n');
+fprintf('Rudder (rad): %s', num2str(U_turn(4)));
+fprintf('\n');
+fprintf('Ratio of Aileron to Rudder: %s', num2str(ratio));
+fprintf('\n');
+fprintf('-----------------------------------------------------------');
+fprintf('\n');
+
 %% Run simulation
 % Create time vector
-timeEnd = 30;
+timeEnd = 240;
 dt = 0.01;
 time = 0:dt:timeEnd;
 
