@@ -29,6 +29,7 @@
 % TODO: 
 %   FINISH THIS FUNCTION
 
+
 function U_manoeurve = controls6(U_trimmed, currentTime, U_filter, ...
     T_filter)
 

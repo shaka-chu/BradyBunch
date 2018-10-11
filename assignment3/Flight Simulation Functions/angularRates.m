@@ -48,7 +48,7 @@
 % TODO:
 %   FINISH FUNCTION
 
-function [alpha_dot, beta_dot] = alphabeta_dot(Xdot,X)
+function [alpha_dot, beta_dot] = angularRates(Xdot,X)
 
     % Unpack state vector
     u = X(1);

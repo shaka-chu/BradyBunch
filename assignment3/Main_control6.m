@@ -2,6 +2,10 @@
 % Author SID: 460369684
 % Main Script
 
+% Add every subfolder to path
+folder = fileparts(which('Main.m')); 
+addpath(genpath(folder));
+
 clear;
 clc;
 clf;
