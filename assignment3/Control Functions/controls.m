@@ -29,9 +29,27 @@
 % TODO: 
 %   FINISH THIS FUNCTION
 
-function U_manoeurve = controls(U_trimmed, currentTime, U_filter, ...
-    T_filter)
+function U_manoeurve = controls(varargin)
 
+    % Split up the variable input vector
+    U_trimmed = varargin{1};
+    currentTime = varargin{2};
+    U_filter = varargin{3};
+    T_filter = varargin{4};
+    
+    % The extra input to change from default
+    if length(varargin) > 4
+        
+        % Boolean to ignore user's inputs of zeros, i.e. uses the
+        % user's inputs of zeros in the simulation
+        ignore_zero = varargin{5};
+    else
+        
+        % Default for the ignore_zero boolean
+        ignore_zero = true;
+    end
+    
+    
     % Initialise the input vector
     U_manoeurve = U_trimmed;
 
@@ -45,8 +63,19 @@ function U_manoeurve = controls(U_trimmed, currentTime, U_filter, ...
             end
         end
         
-        % Check which inputs have been altered from the trim function
-        updateBool = (any(U_filter(1:4, :), 2) ~= 0);
+        if ignore_zero
+            
+            % Check which inputs have been altered from the trim
+            % function
+            updateBool = (any(U_filter(1:4, :), 2) ~= 0);
+            
+        else
+            
+            % Check which inputs have been altered from the trim
+            % function but use the trimmed input for user's inputs of
+            % zeros
+            updateBool = (U_filter(1:4, i) ~= 0);
+        end
         
         % Change the length of the input
         U_filter = U_filter(1:4, i);
