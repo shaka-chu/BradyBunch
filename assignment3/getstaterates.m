@@ -57,7 +57,7 @@ function [Xdot, CL, Y] = getstaterates(Params, X, U)
 
     % Errors
     error = 1;
-    tolerance = 1e-3;
+    tolerance = 1e-9;
     
     % Set iteration limit
     iterLim = 100;
@@ -68,7 +68,7 @@ function [Xdot, CL, Y] = getstaterates(Params, X, U)
         
         % Concatenate previous iteration angle of attack/sideslip rates to
         % be passed to 'staterates' function
-        angle_rates = [alpha_dot_old beta_dot_old];
+        angle_rates = [alpha_dot_old, beta_dot_old];
 
         % Estimate state rates using angle of attack and sideslip rates
         [Xdot, CL, Y] = staterates(Params, X, U, angle_rates);

@@ -57,7 +57,6 @@ function [X_trimmed, U_trimmed] = trim(Params, X0)
     % Initialise convergance boolean and tolerance
     converged = false;
     tol = 1e-9;
-    %j = 0;
     iterLim = 500;
     iterCount = 1;
     
