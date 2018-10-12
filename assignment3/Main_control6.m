@@ -133,7 +133,7 @@ for i = 2:length(time)
         
         % Determine control setting for manoeurve
         U_manoeurve = controls6(U_trimmed, time(i), U_filter, ...
-    T_filter);
+    T_filter, dt);
 % [~, CLflight(i), Y(i)] = getstaterates(Params, X(:,i-1), U_manoeurve);
 % [~, Q] = flowproperties(X(:, i-1), aeroangles(X(:, i-1)));
 % L(i) = CLflight(i)*Q*Params.Geo.S;
