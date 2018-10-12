@@ -91,7 +91,7 @@ function testPlotControls5(X,U,time)
     set(gca, 'Color', [1 1 1]);
     set(gca, 'XLimSpec', 'Tight');
     
-%     print(velPlot5,'velPlot5','-depsc'); 
+    print(velPlot5,'forceCalib','-depsc'); 
     
     % Create control figure
     contPlot5 = figure;
@@ -135,7 +135,7 @@ function testPlotControls5(X,U,time)
     set(gca, 'Color', [1 1 1]);
     set(gca, 'XLimSpec', 'Tight');
     
-%     print(contPlot5,'contPlot5','-depsc'); 
+    print(contPlot5,'forceCalib','-depsc'); 
     
     % Create body rates figure
     bodyRate5 = figure;
@@ -169,10 +169,10 @@ function testPlotControls5(X,U,time)
     set(gca, 'Color', [1 1 1]);
     set(gca, 'XLimSpec', 'Tight');
     
-%     print(bodyRate5,'bodyRate5','-depsc'); 
+    print(bodyRate5,'forceCalib','-depsc'); 
     
     % Create position figure
-    pos5 = figure;
+    figure;
     plot(time, X(11,:), time, X(12,:), time, -X(13,:), 'LineWidth',2)
     xlabel('Time (s)')
     ylabel('Position (m)')
@@ -184,23 +184,24 @@ function testPlotControls5(X,U,time)
     set(gca, 'Color', [1 1 1]);
     set(gca, 'XLimSpec', 'Tight');
     
-%     print(pos5,'pos5','-depsc'); 
-    
-    % Create altitude figure
-    alt5 = figure;
+    figure;
     plot(time, -X(13,:), 'LineWidth',2)
     xlabel('Time (s)')
-    ylabel('Altitude (m)')
+    ylabel('Position (m)')
     grid on
+    h = legend('Height');
+    set(h,'Interpreter','latex');
+    set(h,'location','best');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     set(gca, 'XLimSpec', 'Tight');
     
-%     print(alt5,'alt5','-depsc'); 
-
+    
+    
+    
     % Create attitude figure
     euler = rad2deg(quat2euler(X(7:10,:)));
-    attitude5 = figure;
+    figure;
     bankGoal = 45*ones(1,length(time));
     plot(time, euler(1,:), time, euler(2,:), time, euler(3,:), 'LineWidth',2)
     hold on
@@ -208,13 +209,11 @@ function testPlotControls5(X,U,time)
     xlabel('Time (s)')
     ylabel('Attitude (\circ)')
     grid on
-    h = legend('Bank angle, $\theta$','Pitch angle, $\phi$','Yaw angle, $\psi$','Desired bank angle');
+    h = legend('Bank angle, $\theta$','Pitch angle, $\phi$','Yaw angle, $\psi$');
     set(h,'Interpreter','latex');
     set(h,'location','best');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     set(gca, 'XLimSpec', 'Tight');
-    
-%     print(attitude5,'attitude5','-depsc'); 
 
 end
