@@ -1,4 +1,4 @@
-% AERO3560 - Flight Mechanics 1 - Assignment 3 2018
+densi% AERO3560 - Flight Mechanics 1 - Assignment 3 2018
 % Author SID: 460369684
 % Function Name: flowproperties
 %
@@ -54,7 +54,7 @@ function [rho, Q] = flowproperties(X, V)
         % Temperature (K)
         temp = T0 - 0.0065*h;
         
-        % Pressure (kPa)
+        % Pressure (kPa)De
         pressure = P0*(temp/T0)^5.256; 
     
     % Lower stratosphere
