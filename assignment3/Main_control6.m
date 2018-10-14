@@ -152,7 +152,7 @@ end
 
 % Plot results
 % simulate(X)
-plotData(X,U,time)
+plotData(X,U,time, true, '1')
 
 fig = figure;
 % subplot(3, 1, [1, 2])

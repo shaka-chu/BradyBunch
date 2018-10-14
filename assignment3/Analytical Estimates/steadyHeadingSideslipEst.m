@@ -44,9 +44,6 @@ function [U_manoeurve, phi] = steadyHeadingSideslipEst(Params, U_trimmed, CL, be
     Cyb = Params.Aero.Cyb;
     Clb = Params.Aero.Clb;
     Cnb = Params.Aero.Cnb;
-    S = Params.Geo.S;
-    g = Params.Inertial.g;
-    m = Params.Inertial.m;
     control_min = Params.ControlLimits.Lower;
     control_max = Params.ControlLimits.Upper;
 
