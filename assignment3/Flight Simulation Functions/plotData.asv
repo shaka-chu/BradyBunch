@@ -150,8 +150,8 @@ function plotData(varargin)
     
     % Save figure into selected folder
     if toSave
-        print(fig2, [saveLoc filesep 'bodyRatesFigure_' ...
-            controlSuffix], '-depsc')
+        print(fig2, [saveLoc filesep 'bodyRatesFigure_' controlSuffix],...
+            '-depsc')
     end
     
     % Create attitude figure
@@ -168,10 +168,8 @@ function plotData(varargin)
     set(gca, 'Color', [1 1 1]);
     
     % Save figure into selected folder
-    if toSave
-        print(fig3, [saveLoc filesep 'attitudeFigure_' ...
-            controlSuffix], '-depsc')
-    end
+    print(fig3, [saveLoc filesep 'attitudeFigure_' controlSuffix], ...
+        '-depsc')
     
     % Create position figure
     fig4 = figure(4);
@@ -186,10 +184,8 @@ function plotData(varargin)
     set(gca, 'Color', [1 1 1]);
     
     % Save figure into selected folder
-    if toSave
-        print(fig4, [saveLoc filesep 'positionFigure_' ...
-            controlSuffix], '-depsc')
-    end
+    print(fig4, [saveLoc filesep 'positionFigure_' controlSuffix], ...
+        '-depsc')
     
     % Create control figure
     fig5 = figure(5);
@@ -230,8 +226,6 @@ function plotData(varargin)
     set(gca, 'Color', [1 1 1]);
     
     % Save figure into selected folder
-    if toSave
-        print(fig5, [saveLoc filesep 'controlFigure_' ...
-            controlSuffix], '-depsc')
-    end
+    print(fig5, [saveLoc filesep 'controlFigure_' controlSuffix], ...
+        '-depsc')
 end
