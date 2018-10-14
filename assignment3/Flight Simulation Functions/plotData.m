@@ -65,6 +65,7 @@ function plotData(varargin)
         X = varargin{1};
         U = varargin{2};
         time = varargin{3};
+        toSave = false;
     end
     
     
@@ -113,8 +114,10 @@ function plotData(varargin)
     set(gca, 'Color', [1 1 1]);
     
     % Save figure into selected folder
-    print(fig1, [saveLoc filesep 'velocityFigure_' controlSuffix], ...
-        '-depsc')
+    if toSave
+        print(fig1, [saveLoc filesep 'velocityFigure_' ...
+            controlSuffix], '-depsc')
+    end
     
     % Create body rates figure
     fig2 = figure(2);
@@ -146,8 +149,10 @@ function plotData(varargin)
     set(gca, 'Color', [1 1 1]);
     
     % Save figure into selected folder
-    print(fig2, [saveLoc filesep 'bodyRatesFigure_' controlSuffix],...
-        '-depsc')
+    if toSave
+        print(fig2, [saveLoc filesep 'bodyRatesFigure_' ...
+            controlSuffix], '-depsc')
+    end
     
     % Create attitude figure
     euler = rad2deg(quat2euler(X(7:10,:)));
@@ -163,8 +168,10 @@ function plotData(varargin)
     set(gca, 'Color', [1 1 1]);
     
     % Save figure into selected folder
-    print(fig3, [saveLoc filesep 'attitudeFigure_' controlSuffix], ...
-        '-depsc')
+    if toSave
+        print(fig3, [saveLoc filesep 'attitudeFigure_' ...
+            controlSuffix], '-depsc')
+    end
     
     % Create position figure
     fig4 = figure(4);
@@ -179,8 +186,10 @@ function plotData(varargin)
     set(gca, 'Color', [1 1 1]);
     
     % Save figure into selected folder
-    print(fig4, [saveLoc filesep 'positionFigure_' controlSuffix], ...
-        '-depsc')
+    if toSave
+        print(fig4, [saveLoc filesep 'positionFigure_' ...
+            controlSuffix], '-depsc')
+    end
     
     % Create control figure
     fig5 = figure(5);
@@ -221,6 +230,8 @@ function plotData(varargin)
     set(gca, 'Color', [1 1 1]);
     
     % Save figure into selected folder
-    print(fig5, [saveLoc filesep 'controlFigure_' controlSuffix], ...
-        '-depsc')
+    if toSave
+        print(fig5, [saveLoc filesep 'controlFigure_' ...
+            controlSuffix], '-depsc')
+    end
 end
