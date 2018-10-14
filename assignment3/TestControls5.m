@@ -111,7 +111,8 @@ end
 [V_trimmed, ~, ~] = aeroangles(X_trimmed);
 
 % Call estimation function
-[U_turn, ratio] = steadyTurnEstimate(Params, U_trimmed, V_trimmed);
+[U_turn, ratio, BodyRates] = steadyTurnEstimate(Params, U_trimmed, ...
+                             V_trimmed);
 
 % Print controls to screen
 fprintf('------------------ Turn Control Estimate ------------------');
