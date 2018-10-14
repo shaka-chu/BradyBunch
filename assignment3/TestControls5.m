@@ -131,7 +131,7 @@ fprintf('\n');
 
 %% Run simulation
 % Create time vector
-timeEnd = 240;
+timeEnd = 180;
 dt = 0.01;
 time = 0:dt:timeEnd;
 
