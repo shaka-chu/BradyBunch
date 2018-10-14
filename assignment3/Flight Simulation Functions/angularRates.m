@@ -1,6 +1,6 @@
 % AERO3560 - Flight Mechanics 1 - Assignment 3 2018
-% Author SID: 460398189
-% AlphaBeta_dot
+% Author SID: 460306678, 460369684, 460373315, 460369189
+% Function Name: angularRates
 %
 % Function Description:
 %   Estimates the angle of attack and sideslip rates in rad/s
@@ -45,8 +45,7 @@
 %
 % MAT-files required: none
 %
-% TODO:
-%   FINISH FUNCTION
+% TODO: none
 
 function [alpha_dot, beta_dot] = angularRates(Xdot,X)
 
@@ -66,4 +65,3 @@ function [alpha_dot, beta_dot] = angularRates(Xdot,X)
     % Calculate beta_dot
     beta_dot = (v_dot*u - u_dot*v)/(u^2);
 end
-

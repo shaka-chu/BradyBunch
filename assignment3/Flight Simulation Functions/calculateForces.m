@@ -1,5 +1,5 @@
 % AERO3560 - Flight Mechanics 1 - Assignment 3 2018
-% Author SID: 460369684
+% Author SID: 460306678, 460369684, 460373315, 460369189
 % Function Name: calculateForces
 %
 % Function Description:
@@ -27,6 +27,7 @@
 %               - delta_e = U(2)    (rad)
 %               - delta_a = U(3)    (rad)
 %               - delta_r = U(4)    (rad)
+%   angle_rates: attack and sideslip rates in rad/s
 %
 % Outputs:
 %   BodyForces: Struct containing two fields, "Force" and "Moment", for the
@@ -45,8 +46,7 @@
 %
 % MAT-files required: none
 %
-% TODO:
-%   Calculate alpha_dot and beta_dot
+% TODO: none
 
 function [BodyForces, gravForces, thrust, CL] = calculateForces(Params, X, U, angle_rates)
 
