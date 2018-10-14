@@ -1,6 +1,6 @@
 % AERO3560 - Flight Mechanics 1 - Assignment 3 2018
-    % Author SID: 460306678
-% Fu    nction Name: aeroangles
+% Author SID: 460306678, 460369684, 460373315, 460369189
+% Function Name: aeroangles
 %   
 % Function Description:
 %   Converts body velocity vector into flight vector components 

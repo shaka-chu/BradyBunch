@@ -1,5 +1,5 @@
 % AERO3560 - Flight Mechanics 1 - Assignment 3 2018
-% Author SID: 460306678
+% Author SID: 460306678, 460369684, 460373315, 460369189
 % Function Name: plotData
 %
 % Function Description:
@@ -7,40 +7,17 @@
 %   results against time
 %
 % Inputs:
-%   X:      Vector containing the aircraft state. The order is:
-%               - u   = X(1)    (m/s)
-%               - v   = X(2)    (m/s)
-%               - w   = X(3)    (m/s)
-%               - p   = X(4)    (rad/s)
-%               - q   = X(5)    (rad/s)
-%               - r   = X(6)    (rad/s)
-%               - q0  = X(7)    -
-%               - q1  = X(8)    -
-%               - q2  = X(9)    -
-%               - q3  = X(10)   -
-%               - x   = X(11)   (m)
-%               - y   = X(12)   (m)
-%               - z   = X(13)   (m)
-%   U:          Vector containing all aircraft control settings. The order is:
-%                   - delta_t = U(1)    -
-%                   - delta_e = U(2)    (rad)
-%                   - delta_a = U(3)    (rad)
-%                   - delta_r = U(4)    (rad)
-%   Time:       Time simulation vector 
+%   varagin: Variable length input
 %
-% Outputs:
-%   None
+% Outputs: none
 %
-% Other m-files required:
-%   None
+% Other m-files required: none
 %
-% Subfunctions:
-%   None
+% Subfunctions: none
 %
 % MAT-files required: none
 %
-% TODO: 
-%   None
+% TODO: none
 
 function plotData(varargin)
 

@@ -1,9 +1,12 @@
 % AERO3560 - Flight Mechanics 1 - Assignment 3 2018
-% Author SID: 460306678
+% Author SID: 460306678, 460369684, 460373315, 460369189
 % Function Name: simulate
 %
 % Function Description:
-%   Simulates the flight path on aircraft model
+%   Simulates the flight path on aircraft model. Calls 'c130' function
+%   produced by 'C. Green': 
+%   https://au.mathworks.com/matlabcentral/fileexchange/47967-draw-a-3d-...
+%   airplane?focused=6019548&tab=function
 %
 % Inputs:
 %   X:      Vector containing the aircraft state. The order is:
@@ -21,19 +24,15 @@
 %               - y   = X(12)   (m)
 %               - z   = X(13)   (m)
 %
-% Outputs:
-%   None
+% Outputs: none
 %
-% Other m-files required:
-%   None
+% Other m-files required: none
 %
-% Subfunctions:
-%   None
+% Subfunctions: none
 %
 % MAT-files required: none
 %
-% TODO: 
-%   None
+% TODO: none
 
 function simulate(X)
 
@@ -64,6 +63,7 @@ set(gcf, 'Color', [1 1 1]);
 set(gca, 'Color', [1 1 1]);
 hold on
 
+% Set view angle
 view(155,22)
 
 x = X(12,:) + 2500;
@@ -76,6 +76,7 @@ euler = rad2deg(quat2euler(X(7:10,:)));
 figure(6)
 flightpath = animatedline('LineWidth',1.5,'Color','b');
 
+% Plotting frequency
 plotFreq = 100;
 
 % Loop through time vector
@@ -83,7 +84,7 @@ for k = 1:length(x)
     
     % Break if crash
     if z(k) <= 0
-        plot3(x(k),y(k),z(k), 'or', 'MarkerSize', 10, 'MarkerFaceColor', 'r');
+        plot3(x(k),y(k),z(k),'or','MarkerSize',10,'MarkerFaceColor','r');
         delete(plane);
         return
     end
@@ -95,7 +96,8 @@ for k = 1:length(x)
     if mod(k,plotFreq) == 0
                
         % Add aircraft        
-        plane = c130(x(k),y(k),z(k), 'color', 'r', 'scale', 10, 'roll', euler(1,k), 'pitch', euler(2,k), 'yaw', -euler(3,k));
+        plane = c130(x(k),y(k),z(k),'color','r','scale',10,'roll', ...
+            euler(1,k), 'pitch', euler(2,k), 'yaw', -euler(3,k));
                       
         % Pause 
         pause(0.0001)
@@ -107,8 +109,10 @@ for k = 1:length(x)
     end
 end
 
+% Delete aircraft
 delete(plane)
 
-plane = c130(x(k),y(k),z(k), 'color', 'r', 'scale', 10, 'roll', euler(1,k), 'pitch', euler(2,k), 'yaw', -euler(3,k));
+% Permanently plot plane in last simulated position/orientation
+plane = c130(x(k),y(k),z(k),'color','r','scale',10,'roll',euler(1,k), ...
+    'pitch',euler(2,k),'yaw',-euler(3,k));
 end
-

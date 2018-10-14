@@ -1,10 +1,10 @@
 % AERO3560 - Flight Mechanics 1 - Assignment 3 2018
-% Author SID: 460398189, 460369684
+% Author SID: 460306678, 460369684, 460373315, 460369189
 % Function Name: calculateForces
 %
 % Function Description:
-%   Returns all forces acting on the aircraft given its physical
-%   characteristics, present state and control inputs
+%   Iterates on state rates until angle of attack and sideslip rates
+%   converge, giving an accurate estimate of the state
 %
 % Inputs:
 %   Params: Struct containing all characteristics of the aircraft
@@ -29,7 +29,9 @@
 %               - delta_r = U(4)    (rad)
 %
 % Outputs:
-%   Xdot: State rate vector with after iteration of alpha and beta dot
+%   Xdot:   State rate vector with after iteration of alpha and beta dot
+%   CL:     Lift coefficient
+%   Y:      Side force
 % 
 % Other m-files required: none
 %
@@ -41,8 +43,7 @@
 %   staterates.m, calculateForces.m, aeroangles.m, flowproperties.m, 
 %   gravity.m, windforces.m, bodyforces.m, gravForces.m, propforce.m
 %
-% TODO:
-%   CHECK THE HEADER
+% TODO: none
 
 function [Xdot, CL, Y] = getstaterates(Params, X, U)
   
