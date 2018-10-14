@@ -93,20 +93,20 @@ disp(Xdot_trimmed)
 [~, CL] = getstaterates(Params, X_trimmed, U_trimmed);
 [U_manoeurve2, phi] = steadyHeadingSideslipEst(Params, U_trimmed, CL, deg2rad(5));
 
-U_turn = steadyTurnEstimate(Params, U_trimmed, aeroangles(X_trimmed), deg2rad(8.59522));
+% U_turn = steadyTurnEstimate(Params, U_trimmed, aeroangles(X_trimmed), deg2rad(8.59522));
 
 disp('------------------------------------------------------------')
 fprintf('Controls for steady heading sideslip\n')
 disp('------------------------------------------------------------')
-fprintf('Required Aileron Deflection [rad]:\t %6.5e\n', U_manoeurve2(3));
-fprintf('Required Rudder Deflection [rad]:\t %6.5e\n', U_manoeurve2(4));
+fprintf('Required Aileron Deflection [rad]:\t %6.5e\n', rad2deg(U_manoeurve2(3)));
+fprintf('Required Rudder Deflection [rad]:\t %6.5e\n', rad2deg(U_manoeurve2(4)));
 fprintf('Required Bank Angle [deg]:\t\t\t %6.6f\n', rad2deg(phi));
 disp('------------------------------------------------------------')
-fprintf('Controls for bank angle\n')
-disp('------------------------------------------------------------')
-fprintf('Required Aileron Deflection [rad]:\t %6.5e\n', U_turn(3));
-fprintf('Required Rudder Deflection [rad]:\t %6.5e\n', U_turn(4));
-disp('------------------------------------------------------------')
+% fprintf('Controls for bank angle\n')
+% disp('------------------------------------------------------------')
+% fprintf('Required Aileron Deflection [rad]:\t %6.5e\n', U_turn(3));
+% fprintf('Required Rudder Deflection [rad]:\t %6.5e\n', U_turn(4));
+% disp('------------------------------------------------------------')
 
 fprintf('Load the control input from "control6_fc1" into workspace, \nthen press any key to continue\n')
 pause
@@ -132,8 +132,8 @@ for i = 2:length(time)
     else   
         
         % Determine control setting for manoeurve
-        U_manoeurve = controls6(U_trimmed, time(i), U_filter, ...
-    T_filter, dt);
+        U_manoeurve = controls(U_trimmed, time(i), U_filter, ...
+    T_filter);
 % [~, CLflight(i), Y(i)] = getstaterates(Params, X(:,i-1), U_manoeurve);
 % [~, Q] = flowproperties(X(:, i-1), aeroangles(X(:, i-1)));
 % L(i) = CLflight(i)*Q*Params.Geo.S;
@@ -151,19 +151,21 @@ for i = 2:length(time)
 end
 
 % Plot results
-simulate(X)
-plotData(X,U,time)
+% simulate(X)
+plotData(X,U,time, true, '6')
 
 figure
 % subplot(3, 1, [1, 2])
 euler = rad2deg(quat2euler(X(7:10, :)));
-plot(time, euler(1, :))
+plot(time, euler(1, :), 'LineWidth', 2)
 hold on
-plot(time, euler(3, :))
+plot(time, euler(3, :), 'LineWidth', 2)
 plot(time, rad2deg(beta));
 %plot(time, rad2deg(U(3, :)));
-legend('Bank Angle', 'Heading', 'Sideslip', 'Location', 'best')
+h = legend('Bank Angle', 'Heading', 'Sideslip', 'Location', 'best');
+set(h,'Interpreter','latex');
 grid on
+saveas()
 
 xlim([0 60])
 ylim([-20 50])
@@ -178,7 +180,7 @@ ylim([-20 50])
 % grid on
 % ylim([-20 65])
 
-% fprintf('\n\nFinal bank angle (t = 15s) [deg]: \t%6.6f\n', euler(1, time==15))
+fprintf('\n\nFinal bank angle (t = 15s) [deg]: \t%6.6f\n', euler(1, time==12.5))
 % fprintf('\n\nRequired bank angle (t = 30s) [deg]: \t%6.6f\n', rad2deg(-Y(time==30)/L(time==30)))
 % 
 % [X_trimmed2, U_trimmed2] = trim(Params, X(:, time == 46));

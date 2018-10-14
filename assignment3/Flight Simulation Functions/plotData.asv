@@ -146,7 +146,7 @@ function plotData(varargin)
     set(gca, 'Color', [1 1 1]);
     
     % Save figure into selected folder
-    print(fig2, [saveLoc filesep 'bodyRatesFigure_' controlSuffix],...
+    print(fig2, [saveLoc filesep 'bodyRatesFigure_' controlSuffix], ...
         '-depsc')
     
     % Create attitude figure
