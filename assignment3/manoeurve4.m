@@ -2,7 +2,7 @@
 % Author: 460306678
 
 
-function manoeurve4(X,time)
+function nz=manoeurve4(X,time)
 % Initialise Parameters
 % Initialise aircraft parameters
 [Nominal_params, Secondary_params] = initialisation;
@@ -52,6 +52,8 @@ plot(time,nz)
 hold on
 plot(x,y,'lineWidth',1)
 xticks([0:2:length(time)/100])
+xlabel('Time (s)')
+ylabel('N (g)')
 grid on
 
 % Find last attitude
@@ -60,6 +62,8 @@ euler = rad2deg(quat2euler(quaternion));
 disp(euler(2));
 height = abs(X(13,end)) - abs(X(13,1));
 disp(height)
+
+
 
 
 end

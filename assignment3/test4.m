@@ -109,7 +109,6 @@ end
 U_turn = steadyTurnEstimate(Params, U_trimmed, V_trimmed);
 
 % Print controls to screen
-fpr
 fprintf('Thrust: %s', num2str(U_turn(1)));
 
 %% Run simulation
@@ -126,12 +125,10 @@ Xdot_trimmed = getstaterates(Params, X_trimmed, U_trimmed);
 disp(Xdot_trimmed)
 
 beta = zeros(1,length(time));
-<<<<<<< HEAD:assignment3/TestControls5.asv
+
 alpha = zeros(1,length(time));
 [~, alpha(1), beta(1)] = aeroangles(X(:,1));
-=======
-[~, ~, beta(1)] = aeroangles(X(:,1));
->>>>>>> 83c9924317cd8249aafd4bd6cf3c3603ea4be4cf:assignment3/test4.m
+
 
 % Loop through time vector
 for i = 2:length(time)
@@ -164,15 +161,14 @@ for i = 2:length(time)
         [~,alpha(i),beta(i)] = aeroangles(X(:,i));
     end
     
-<<<<<<< HEAD:assignment3/TestControls5.asv
+
     % Get sideslip and airspeed
     [V, alpha(i), beta(i)] = aeroangles(X(:,i));
     
 %     % Analytical estimate of controls required for steady coordinated turn
 %     U_turn(:,i) = steadyTurnEstimate(Params, U_manoeurve, V);
     
-=======
->>>>>>> 83c9924317cd8249aafd4bd6cf3c3603ea4be4cf:assignment3/test4.m
+
 end
 
 % % Plot results
@@ -184,18 +180,27 @@ plotData(X,U,time)
 figure
 plot(time, rad2deg(alpha));
 grid on
-<<<<<<< HEAD:assignment3/TestControls5.asv
+
 xlabel('Time (s)');
 ylabel('Sideslip Angle (deg)');
-% figure;
-% plot(time,rad2deg(alpha));
-% grid on
-% xlabel('Time (s)');
-% ylabel('Angle of Attack (deg)');
-=======
+figure;
+plot(time,rad2deg(alpha));
+grid on
+xlabel('Time (s)');
+ylabel('Angle of Attack (deg)');
+
 xlabel('Time (s)')
-ylabel('AOA (deg')
+ylabel('AOA (deg)')
 
-manoeurve4(X,time)
+nz=manoeurve4(X,time)
+disp('Max loading =')
+disp(max(nz))
+disp('Min loading =')
+disp(min(nz))
+disp('Max Height =')
+disp(max(-X(13,:)))
+disp('Min Height =')
+disp(min(-X(13,:)))
+disp('Max side deviation =')
+disp(max(X(12,:)))
 
->>>>>>> 83c9924317cd8249aafd4bd6cf3c3603ea4be4cf:assignment3/test4.m
