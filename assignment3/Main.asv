@@ -105,30 +105,12 @@ end
 % Create test states
 V_test1 = 120;
 alt_test1 = convlength(5000, 'ft', 'm');
-X_test1 = [V_test1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, -alt_test1]';
+X_test1 = [V_test1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, -alt_test_1];
 
 V_test2 = 70;
-alt_test2 = convlength(5000, 'ft', 'm');
-X_test2 = [V_test2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, -alt_test2]';
-
-% Obtain test trimmed state to verify
-[X_trimmedTest1, U_trimmedTest1] = trim(Params, X_test1);
-[X_trimmedTest2, U_trimmedTest2] = trim(Params, X_test2);
-
-% Verify the state rates are zero
-Xdot_Test1 = getstaterates(Params, X_trimmedTest1, U_trimmedTest1);
-Xdot_Test2 = getstaterates(Params, X_trimmedTest2, U_trimmedTest2);
-
-% Display the test state rates
-disp('==============================================================')
-disp('State rates for test case 1')
-disp('==============================================================')
-disp(Xdot_Test1)
-disp('==============================================================')
-disp('State rates for test case 2')
-disp('==============================================================')
-disp(Xdot_Test2)
-disp('==============================================================')
+alt_test1 = convlength(5000, 'ft', 'm');
+X_test1 = [V_test1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, -alt_test_1];
+[X_trimmedTest, U_trimmedTest] = trim(Params, X_test1);
 
 %% Trim aircraft
 % Run trim function
@@ -194,3 +176,6 @@ plot(time, rad2deg(alpha));
 grid on
 xlabel('Time (s)')
 ylabel('AOA (deg')
+
+
+
