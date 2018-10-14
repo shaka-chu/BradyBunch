@@ -1,5 +1,5 @@
 % AERO3560 - Flight Mechanics 1 - Assignment 3 2018
-% Author SID: 460369684
+% Author SID: 460306678, 460369684, 460373315, 460369189
 % Function Name: windforces
 %
 % Function Description:
@@ -43,7 +43,8 @@
 %
 % TODO: none
 
-function [Cfa_z, Cfa_x, CL] = windforces(Params, alpha, X, U, V, angle_rates)
+function [Cfa_z, Cfa_x, CL] = windforces(Params, alpha, X, U, V, ...
+    angle_rates)
 
     % Extract necessary aircraft parameters
     CLo     = Params.Aero.CLo;          % Non-dimensional
@@ -74,10 +75,7 @@ function [Cfa_z, Cfa_x, CL] = windforces(Params, alpha, X, U, V, angle_rates)
     % Drag coefficient (simple drag model)
     Cd = Cdo + k*CL^2;
     
-    % Aerodynamic force coefficients in x and z directions
-
-%     Cfa_z = CL - Cd*alpha;
-%     Cfa_x = CL*alpha - Cd; 
+    % Aerodynamic force coefficients in x and z directions 
     Cfa_z = CL;
     Cfa_x = Cd;
 

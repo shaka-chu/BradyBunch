@@ -16,8 +16,8 @@
 %               - delta_r = U(4)    (rad)
 %
 % Outputs:
-%   U_turn:     Vector containing estimated control positions for steady
-%               turn. The order is: 
+%   U_turn:     Vector containing estimated control positions for steady turn.
+%               The order is: 
 %                   - delta_t = U(1)    -
 %                   - delta_e = U(2)    (rad)
 %                   - delta_a = U(3)    (rad)

@@ -1,5 +1,5 @@
 % AERO3560 - Flight Mechanics 1 - Assignment 3 2018
-% Author SID: 460306678
+% Author SID: 460306678, 460369684, 460373315, 460369189
 % Function Name: plotData
 %
 % Function Description:
@@ -7,45 +7,48 @@
 %   results against time
 %
 % Inputs:
-%   X:      Vector containing the aircraft state. The order is:
-%               - u   = X(1)    (m/s)
-%               - v   = X(2)    (m/s)
-%               - w   = X(3)    (m/s)
-%               - p   = X(4)    (rad/s)
-%               - q   = X(5)    (rad/s)
-%               - r   = X(6)    (rad/s)
-%               - q0  = X(7)    -
-%               - q1  = X(8)    -
-%               - q2  = X(9)    -
-%               - q3  = X(10)   -
-%               - x   = X(11)   (m)
-%               - y   = X(12)   (m)
-%               - z   = X(13)   (m)
-%   U:          Vector containing all aircraft control settings. The order is:
-%                   - delta_t = U(1)    -
-%                   - delta_e = U(2)    (rad)
-%                   - delta_a = U(3)    (rad)
-%                   - delta_r = U(4)    (rad)
-%   Time:       Time simulation vector 
+%   varagin: Variable length input
 %
-% Outputs:
-%   None
+% Outputs: none
 %
-% Other m-files required:
-%   None
+% Other m-files required: none
 %
-% Subfunctions:
-%   None
+% Subfunctions: none
 %
 % MAT-files required: none
 %
-% TODO: 
-%   None
+% TODO: none
 
-function plotData(X,U,time)
+function plotData(varargin)
+
+    % Check the variable length input
+    if length(varargin) == 5
+        
+        % Extract the inputs
+        X = varargin{1};
+        U = varargin{2};
+        time = varargin{3};
+        toSave = varargin{4};
+        controlSuffix = varargin{5};
+        
+        % Get save directory
+        if toSave
+            currentFolder = pwd;
+            saveLoc = uigetdir(currentFolder, 'Select save folder');
+        end        
+    else
+        
+        % Extract the inputs
+        X = varargin{1};
+        U = varargin{2};
+        time = varargin{3};
+        toSave = false;
+    end
+    
+    
 
     % Create velocity figure
-    figure(1)
+    fig1 = figure(1);
     x0=100;
     y0=100;
     width=550;
@@ -87,8 +90,14 @@ function plotData(X,U,time)
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     
+    % Save figure into selected folder
+    if toSave
+        print(fig1, [saveLoc filesep 'velocityFigure_' ...
+            controlSuffix], '-depsc')
+    end
+    
     % Create body rates figure
-    figure(2)
+    fig2 = figure(2);
     subplot(3,1,1)
     plot(time, rad2deg(X(4,:)), 'LineWidth',2)
     title('p')
@@ -116,9 +125,15 @@ function plotData(X,U,time)
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     
+    % Save figure into selected folder
+    if toSave
+        print(fig2, [saveLoc filesep 'bodyRatesFigure_' ...
+            controlSuffix], '-depsc')
+    end
+    
     % Create attitude figure
     euler = rad2deg(quat2euler(X(7:10,:)));
-    figure(3)
+    fig3 = figure(3);
     plot(time, euler(1,:), time, euler(2,:), time, euler(3,:), 'LineWidth',2)
     xlabel('Time (s)')
     ylabel('Attitude (\circ)')
@@ -129,8 +144,14 @@ function plotData(X,U,time)
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     
+    % Save figure into selected folder
+    if toSave
+        print(fig3, [saveLoc filesep 'attitudeFigure_' ...
+            controlSuffix], '-depsc')
+    end
+    
     % Create position figure
-    figure(4)
+    fig4 = figure(4);
     plot(time, X(11,:), time, X(12,:), time, -X(13,:), 'LineWidth',2)
     xlabel('Time (s)')
     ylabel('Position (m)')
@@ -141,8 +162,14 @@ function plotData(X,U,time)
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     
+    % Save figure into selected folder
+    if toSave
+        print(fig4, [saveLoc filesep 'positionFigure_' ...
+            controlSuffix], '-depsc')
+    end
+    
     % Create control figure
-    figure(5);
+    fig5 = figure(5);
     subplot(2,2,1)
     plot(time, U(1,:), 'LineWidth',2)
     title('Throttle')
@@ -178,5 +205,10 @@ function plotData(X,U,time)
     grid on
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
-
+    
+    % Save figure into selected folder
+    if toSave
+        print(fig5, [saveLoc filesep 'controlFigure_' ...
+            controlSuffix], '-depsc')
+    end
 end

@@ -1,5 +1,5 @@
 % AERO3560 - Flight Mechanics 1 - Assignment 3 2018
-% Author SID: 460369684
+% Author SID: 460306678, 460369684, 460373315, 460369189
 % Function Name: rotate321quat
 %
 % Function Description:
