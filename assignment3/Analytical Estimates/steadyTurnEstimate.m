@@ -29,6 +29,9 @@ function [U_turn, ratio] = steadyTurnEstimate(Params, U_trim, V)
     % Calculate yaw rate (rad/s)
     r = psi_dot*cos(phi);
     
+    % Calculate pitch rate
+    q = psi_dot*sin(phi);
+    
     % Non-dimensionalise yaw rate
     r_hat = (r*c)/(2*V);
     
