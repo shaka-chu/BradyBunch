@@ -49,7 +49,6 @@ function U_manoeurve = controls(varargin)
         ignore_zero = true;
     end
     
-    
     % Initialise the input vector
     U_manoeurve = U_trimmed;
 
@@ -84,6 +83,7 @@ function U_manoeurve = controls(varargin)
         U_manoeurve(updateBool) = U_filter(updateBool);
         return
     else
+        
         % Set trim vector
         U_manoeurve = U_trimmed;
     end

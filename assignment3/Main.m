@@ -5,10 +5,16 @@
 clf;
 clf reset;
 close all;
+clear;
+clc;
 
 % Add every subfolder to path
 folder = fileparts(which('Main.m')); 
 addpath(genpath(folder));
+
+% Run the control GUI
+run Control_GUI_FULL
+clc
 
 % Plotting colors
 red     = [0.8471 0.1176 0.1922];
@@ -34,7 +40,7 @@ set(0,'defaultLineLineWidth',lw);
 cgPos = 'CG1';
 
 % Choose initial flight condition (3 or 4)
-flightCond = 'COND100';
+flightCond = 'COND180';
 
 % Switch expression
 situation = [cgPos, flightCond];
@@ -135,62 +141,69 @@ disp('==============================================================')
 [X_trimmed, U_trimmed] = trim(Params, X_initial);
 
 %% Run simulation
-% Create time vector
-timeEnd = 30;
-dt = 0.01;
-time = 0:dt:timeEnd;
+% For the seven flight cases
+timeEnd = [400 400 400 60 180 90];
 
-% Set initial state
-X(:,1) = X_trimmed;
-U(:,1) = U_trimmed;
-
-Xdot_trimmed = getstaterates(Params, X_trimmed, U_trimmed);
-disp(Xdot_trimmed)
-
-beta = zeros(1,length(time));
-[~, ~, beta(1)] = aeroangles(X(:,1));
-
-% Loop through time vector
-for i = 2:length(time)
+for k = 1:6
     
-    % Run aircraft at trimmed settings for 1 second and then begin
-    % simulation
-    if time(i) <= 1
-        
-        % Determine new state
-        [X_new] = rungeKutta4(Params,X(:,i-1),U_trimmed,dt);
-        
-        % Save result
-        X(:,i) = X_new;
-        U(:,i) = U_trimmed;
+    clear X U time U_filter T_filter
+    clc
+    close all
     
-    else
-        
-        % Determine control setting for manoeurve
+    % Create time vector
+    dt = 0.01;
+    time = 0:dt:timeEnd(k);
 
-        U_manoeurve = controls4(Params, X(:,i-1), U_trimmed, time(i), U_filter, T_linear);
+    % Set initial state
+    X(:,1) = X_trimmed;
+    U(:,1) = U_trimmed;
+    
+    % Load the flight controls .mat file
+    disp('==============================================================')
+    fprintf('Load ''control%d.mat'' to control GUI and into workspace', k)
+    fprintf('\nthen press any key to continue\n')
+    disp('==============================================================')
+    pause
+    clc
 
-        
-        % Determine new state
-        [X_new] = rungeKutta4(Params,X(:,i-1),U_manoeurve,dt);
-        
-        % Save result
-        X(:,i) = X_new;
-        U(:,i) = U_manoeurve;
-        
-        [~,alpha(i),beta(i)] = aeroangles(X(:,i));
+    % Loop through time vector
+    for i = 2:length(time)
+
+        % Run aircraft at trimmed settings for 1 second and then begin
+        % simulation
+        if time(i) <= 1
+
+            % Determine new state
+            [X_new] = rungeKutta4(Params, X(:,i-1), U_trimmed, dt);
+
+            % Save result
+            X(:,i) = X_new;
+            U(:,i) = U_trimmed;
+        else
+
+            % Determine control setting for manoeurve
+            U_manoeurve = controls(U_trimmed, time(i), ...
+                U_filter, T_filter);
+
+            % Determine new state
+            [X_new] = rungeKutta4(Params, X(:,i-1), U_manoeurve, dt);
+
+            % Save result
+            X(:,i) = X_new;
+            U(:,i) = U_manoeurve;
+        end
     end
+
+    % Plot results
+    disp('==============================================================')
+    fprintf('Manoeuvre %d\n', k)
+    disp('==============================================================')
+    fprintf('Press any key for the next manoeuvre\n')
+    disp('==============================================================')
     
+    if k > 3
+        simulate(X)
+    end
+    plotData(X, U, time)
+    pause
 end
-
-% % Plot results
-% simulate(X)
-
-plotData(X,U,time)
-manoeurve4(X,time)
-
-figure
-plot(time, rad2deg(alpha));
-grid on
-xlabel('Time (s)')
-ylabel('AOA (deg')
