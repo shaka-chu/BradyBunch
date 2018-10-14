@@ -131,7 +131,9 @@ fprintf('\n');
 
 %% Run simulation
 % Create time vector
+
 timeEnd = 180;
+
 dt = 0.01;
 time = 0:dt:timeEnd;
 
@@ -185,13 +187,20 @@ end
 % simulate(X)
 testPlotControls5(X,U,time);
 
-figure;
+betaPlot5 = figure;
 plot(time,rad2deg(beta));
 grid on
 xlabel('Time (s)');
 ylabel('Sideslip Angle (deg)');
-% figure;
-% plot(time,rad2deg(alpha));
-% grid on
-% xlabel('Time (s)');
-% ylabel('Angle of Attack (deg)');
+set(gca, 'XLimSpec', 'Tight');
+set(gcf, 'Color', [1 1 1]);
+set(gca, 'Color', [1 1 1]);
+% print(betaPlot5,'betaPlot5','-depsc');
+figure;
+plot(time,rad2deg(alpha));
+grid on
+xlabel('Time (s)');
+ylabel('Angle of Attack (deg)');
+set(gca, 'XLimSpec', 'Tight');
+set(gcf, 'Color', [1 1 1]);
+set(gca, 'Color', [1 1 1]);

@@ -1,4 +1,4 @@
-densi% AERO3560 - Flight Mechanics 1 - Assignment 3 2018
+% AERO3560 - Flight Mechanics 1 - Assignment 3 2018
 % Author SID: 460369684
 % Function Name: flowproperties
 %

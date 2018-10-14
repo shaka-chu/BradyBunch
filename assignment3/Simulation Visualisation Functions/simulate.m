@@ -60,6 +60,8 @@ surf(x,y,z, props);
 axis([-5000 5000 -5000 5000 0 -min(X(13,:))])
 axis equal
 axis off
+set(gcf, 'Color', [1 1 1]);
+set(gca, 'Color', [1 1 1]);
 hold on
 
 view(155,22)
@@ -93,7 +95,7 @@ for k = 1:length(x)
     if mod(k,plotFreq) == 0
                
         % Add aircraft        
-        plane = c130(x(k),y(k),z(k), 'color', 'r', 'scale', 10, 'roll', euler(1,k), 'pitch', euler(2,k), 'yaw', euler(3,k));
+        plane = c130(x(k),y(k),z(k), 'color', 'r', 'scale', 10, 'roll', euler(1,k), 'pitch', euler(2,k), 'yaw', -euler(3,k));
                       
         % Pause 
         pause(0.0001)
@@ -103,6 +105,10 @@ for k = 1:length(x)
             delete(plane)
         end
     end
-end   
+end
+
+delete(plane)
+
+plane = c130(x(k),y(k),z(k), 'color', 'r', 'scale', 10, 'roll', euler(1,k), 'pitch', euler(2,k), 'yaw', -euler(3,k));
 end
 
