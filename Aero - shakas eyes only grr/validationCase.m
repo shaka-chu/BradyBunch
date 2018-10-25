@@ -78,11 +78,10 @@ function validationCase
     Cdv = ((CL^2)/(pi*AR))*(1 + delta);
     
     % Print results to command window
-    fprintf('\n')
-    fprintf('--------------- Validation Case ---------------')
+    fprintf('---------------- Validation Case ---------------')
     fprintf('\n')
     fprintf('Example 3D Lift, CL: %.4g\n',CL)
-    fprintf('Examlpe Induced Drag, CDv: %.4g\n',Cdv)
+    fprintf('Examlpe Induced Drag, CDi: %.4g\n',Cdv)
     fprintf('\n')
 
 end

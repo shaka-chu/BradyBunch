@@ -31,6 +31,7 @@ function bankCondition(nPts, U, Alpha0, A0, WingProps, TailProps, Model)
     effAlpha_t  = BankTail.EffectiveAlpha;
     y_tail = BankTail.SpanPos;
 
+
     % Unpack tailplane coefficient struct
     CL_t   = CtB.CL;
     Cdi_t  = CtB.Cdi;
@@ -45,24 +46,13 @@ function bankCondition(nPts, U, Alpha0, A0, WingProps, TailProps, Model)
     CL_total = CL_w + CL_t_norm;
 
     % Total induced drag during sustained bank
-    Cdi_total = Cdi_w + Cdi_t_norm;
-    
-    % Print results to command window
-    fprintf('------------- Sustained Level Turn -------------')
-    fprintf('\n')
-    fprintf('Sustained Level Turn 3D Lift, CL: %.4g\n',CL_total)
-    fprintf('Examlpe Induced Drag, CDi: %.4g\n',Cdi_total)
-    fprintf('\n')
+    Cdi_total_bank = Cdi_w + Cdi_t_norm;
 
     % Plot downwash angles - BANKED TURN
     figure;
-    plot(y_wing,rad2deg(WingAnglesB.Downwash));
-    hold on
-    plot(y_tail,rad2deg(TailAnglesB.Downwash),'x');
+    plot(y_wing,rad2deg(WingAnglesB.Downwash),'-x');
     xlabel('Spanwise Position (m)')
     ylabel('Downwash Angle (deg)')
-    hleg1 = legend('Produced by Wing','Incident on Tailplane');
-    set(hleg1,'Location','Best');
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);

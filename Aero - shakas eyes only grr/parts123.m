@@ -74,12 +74,12 @@ function parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, ...
 
     % Plot downwash angles - NORMAL LIFTING LINE
     figure;
-    plot(y_wing,rad2deg(alpha_i_w(1,:)),'-x');
+    plot(y_wing,rad2deg(alpha_i_w(1,:)));
     hold on
-    plot(y_tail,rad2deg(alpha_i_t(1,:)),'o');
+    plot(y_tail,rad2deg(alpha_i_t(1,:)),'x');
     xlabel('Spanwise Position (m)')
     ylabel('Downwash Angle (deg)')
-    hleg1 = legend('Produced by Wing','Seen by Tail');
+    hleg1 = legend('Produced by Wing','Incident on Tailplane');
     set(hleg1,'Location','Best');
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
