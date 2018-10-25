@@ -57,16 +57,16 @@ function climbCondition(n, nPts, U, Alpha0, A0, WingProps, TailProps, ...
     fprintf('\n')
     
     % Obtain vectors including left wing properties (flipping)
-    y_wing_plot     = [-fliplr(y_wing(2:end)) y_wing];
-    y_tail_plot     = [-fliplr(y_tail(2:end)) y_tail];
-    wing_downwash   = [fliplr(rad2deg(WingAnglesC.Downwash(2:end))) ...
-                       rad2deg(WingAnglesC.Downwash)];
-    tail_downwash   = [fliplr(rad2deg(TailAnglesC.Downwash(2:end))) ...
-                       rad2deg(TailAnglesC.Downwash)];
-    gamma_w_plot    = [fliplr(gamma_w(2:end)) gamma_w];
-    gamma_t_plot    = [fliplr(gamma_t(2:end)) gamma_t];
-    effAlpha_w_plot = [fliplr(effAlpha_w(2:end)) effAlpha_w];
-    effAlpha_t_plot = [fliplr(effAlpha_t(2:end)) effAlpha_t];
+    y_wing_plot     = [-y_wing fliplr(y_wing)];
+    y_tail_plot     = [-y_tail fliplr(y_tail)];
+    wing_downwash   = [rad2deg(WingAnglesC.Downwash)...
+                        fliplr(rad2deg(WingAnglesC.Downwash))];
+    tail_downwash   = [rad2deg(TailAnglesC.Downwash)...
+                        fliplr(rad2deg(TailAnglesC.Downwash))];
+    gamma_w_plot    = [gamma_w fliplr(gamma_w)];
+    gamma_t_plot    = [gamma_t fliplr(gamma_t)];
+    effAlpha_w_plot = [effAlpha_w fliplr(effAlpha_w)];
+    effAlpha_t_plot = [effAlpha_t fliplr(effAlpha_t)];
     
     % Plot downwash angles - CLIMB
     figure;
