@@ -97,7 +97,8 @@ function Cdmin = dragBuildUp(U, Model)
     Cdmin_f = Rwf_f*Cf_f*FF_f*areaRatio_f;
     
     % Zero-lift drag of canopy
-    Cdmin_canopy = 0.04;
+    S_canopy = 0.5*0.8; % Frontal area of the canopy
+    Cdmin_canopy = 0.1*S_canopy/S_ref;
 
     % Total zero-lift drag
     Cdmin = Cdmin_w + Cdmin_t + Cdmin_f + Cdmin_canopy;
