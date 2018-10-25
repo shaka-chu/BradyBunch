@@ -1,5 +1,5 @@
-function [Cw, WingAngles, WingProps] = liftingLineWing(n, nPts, alpha, ...
-    Alpha0, A0, WingProps)
+function [Cw, WingAngles, WingProps, ClimbWing] = liftingLineWing(n, ...
+    nPts, alpha, Alpha0, A0, WingProps, U)
 
     % Unpack lift curve slopes (rad^-1)
     a0_0012     = A0.naca0012 ;             % NACA 0012
@@ -28,6 +28,9 @@ function [Cw, WingAngles, WingProps] = liftingLineWing(n, nPts, alpha, ...
     % Control points for wing (in polar coordinates) (rad)
     theta_w = deg2rad(linspace(0,90,nPts + 1));
     theta_w = theta_w(2:end);                       % Remove 0 degrees
+    
+    % Cartesian points (used for plotting the chord vs span)
+    y_wing = s*cos(theta_w);
 
     % Twist angle bounds (rad)
     twist_root  = deg2rad(2);
@@ -45,6 +48,7 @@ function [Cw, WingAngles, WingProps] = liftingLineWing(n, nPts, alpha, ...
     Avec            = zeros(nPts,length(alpha));
     CL              = zeros(1,length(alpha));
     Cdi             = zeros(1,length(alpha));
+    effAlpha        = NaN(1,nPts);
     
     % Loop through angles of attack
     for k = 1:length(alpha)
@@ -107,6 +111,10 @@ function [Cw, WingAngles, WingProps] = liftingLineWing(n, nPts, alpha, ...
             % AoA coefficient
             alphaCoefs(i,k) = mu_w*sin(theta_w(i))*(alpha(k) - ...
                                 alpha0 + twist_angle(i));
+                            
+                            
+            % Effective angle of attack (excluding twist)
+            effAlpha(i) = alpha(k);
 
         end
 
@@ -127,6 +135,15 @@ function [Cw, WingAngles, WingProps] = liftingLineWing(n, nPts, alpha, ...
             % Downwash angle at 
             alpha_i(k,z) = num/sin(theta_w(z));
             
+        end
+        
+        % Circulation
+        for z = 1:length(theta_w)
+            sum = 0;
+            for d = 1:length(theta_w)
+                sum = sum + Avec(d,k)*sin(n(d)*theta_w(z));
+            end
+            gamma(k,z) = 4*s*U*sum;
         end
 
         % Extract A1
@@ -158,4 +175,9 @@ function [Cw, WingAngles, WingProps] = liftingLineWing(n, nPts, alpha, ...
     % Store angles (station positions and downwash) in struct
     WingAngles.Stations = theta_w;
     WingAngles.Downwash = alpha_i;
+    
+    % Struct for climb properties (only used for climb)
+    ClimbWing.Gamma             = gamma;
+    ClimbWing.EffectiveAlpha    = effAlpha;
+    ClimbWing.SpanPos           = y_wing;
 end

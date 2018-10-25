@@ -1,5 +1,5 @@
-function [Ct, TailAngles, TailProps, CartStn] = liftingLineTail(n, ...
-    nPts, alpha, Alpha0, A0, WingProps, TailProps, WingAngles)   
+function [Ct, TailAngles, TailProps, ClimbTail] = liftingLineTail(n, ...
+    nPts, U, alpha, Alpha0, A0, WingProps, TailProps, WingAngles)   
 
     % Unpack lift curve slopes (rad^-1)
     a0_0012     = A0.naca0012 ;             % NACA 0012
@@ -87,12 +87,23 @@ function [Ct, TailAngles, TailProps, CartStn] = liftingLineTail(n, ...
             end
 
             % AoA coefficient
-            alphaCoefs(i,k) = mu_t*sin(theta_t(i))*(alpha(k) - alpha0 - alpha_i_t(k,i));    
+            alphaCoefs(i,k) = mu_t*sin(theta_t(i))*(alpha(k) - alpha0 - alpha_i_t(k,i));
+            
+            effAlpha(i) = alpha(k);
         end
 
         % Solve system of equations
         Avec(:,k) = Amat(:,:,k)\alphaCoefs(:,k);
 
+        % Circulation
+        for z = 1:length(theta_t)
+            sum = 0;
+            for d = 1:length(theta_t)
+                sum = sum + Avec(d,k)*sin(n(d)*theta_t(z));
+            end
+            gamma(k,z) = 4*s_t*U*sum;
+        end
+        
         % Extract A1
         A1_t = Avec(1,k);
 
@@ -122,7 +133,12 @@ function [Ct, TailAngles, TailProps, CartStn] = liftingLineTail(n, ...
     TailAngles.Stations = theta_w;
     TailAngles.Downwash = alpha_i_t;
     
-    % Store cartesian station positions
-    CartStn.Wing = y_wing;
-    CartStn.Tail = y_tail;
+%     % Store cartesian station positions
+%     CartStn.Wing = y_wing;
+%     CartStn.Tail = y_tail;
+    
+    % Struct for climb properties (only used for climb)
+    ClimbTail.Gamma             = gamma;
+    ClimbTail.EffectiveAlpha    = effAlpha;
+    ClimbTail.SpanPos           = y_tail;
 end

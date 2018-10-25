@@ -46,10 +46,6 @@ function [Cw, WingAngles, WingProps, BankWing] = liftingLineBankWing( ...
     % Effective angle of attack with aileron deflection (rad)
     alpha_ail_down  = asin((sin(ang_down)/diag_down)*ail_length);
     alpha_ail_up    = -alpha_ail_down;
-       
-%     % Aileron angles (rad)
-%     alpha_ar = deg2rad(25);     % Right aileron
-%     alpha_al = -deg2rad(25);    % Left aileron
     
     % Vector of odd/even numbers (asymmetric loading)
     n = 1:nPts;
@@ -194,9 +190,6 @@ function [Cw, WingAngles, WingProps, BankWing] = liftingLineBankWing( ...
         % AoA coefficient
         alphaCoefs(i,k) = mu_w*sin(theta_w(i))*(aoa - alpha0 + ...
                           twist_angle(i));
-                      
-        
-
     end
 
     % Solve system of equations

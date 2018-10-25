@@ -107,7 +107,6 @@ function [Ct, TailAngles, TailProps, BankTail] = liftingLineTailBank(...
         
         effAlpha(i) = alpha(k);
         
-        zeroLift = alpha0;
     end
 
     % Solve system of equations

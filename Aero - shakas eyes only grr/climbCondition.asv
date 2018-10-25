@@ -1,0 +1,30 @@
+function climbCondition(n, nPts, U, Alpha0, A0, WingProps, TailProps, ...
+    Model)
+
+    % Aircraft climb angle (rad)
+    alpha_climb = deg2rad(8);
+
+    % Lifting line theory applied to main wing during climb
+    [CwC, WingAnglesC, ~, ClimbWing] = liftingLineWing(n, nPts, ...
+                                       alpha_climb, Alpha0, A0, WingProps, U);
+
+    % Stabilator deflection angle during climb (rad)
+    deflec_up_climb = deg2rad(10);
+
+    % Angle of attack of tail during climg (rad)
+    alpha_t_climb = alpha_climb - deflec_up_climb;
+
+    % Lifting line theory applied to tailplane
+    [CtC, TailAnglesC, TailPropsC, ClimbTail] = liftingLineTail(n, nPts, U, ...
+                                                alpha_t_climb, Alpha0, A0, ...
+                                                WingProps, TailProps, ...
+                                                WingAnglesC);
+                                            
+    % Unpack t bank properties struct
+    gamma_t     = BankTail.Gamma;
+    effAlpha_t  = BankTail.EffectiveAlpha;
+    y_tail_bank = BankTail.SpanPos;
+                                            
+    figure;
+    
+end

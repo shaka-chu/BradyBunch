@@ -1,0 +1,38 @@
+function parts123
+
+    % Lifting line theory applied to main wing
+    [Cw, WingAngles, WingProps, Wing] = liftingLineWing(n, nPts, alpha, ...
+                                     Alpha0, A0, WingProps, U);
+
+    % Unpack wing coefficient struct
+    CL_w    = Cw.CL;
+    Cdi_w   = Cw.Cdi;
+
+    % Lifting line theory applied to tailplane
+    [Ct, TailAngles, TailProps, Tail] = liftingLineTail(n, nPts, U, alpha, ...
+                                           Alpha0, A0, WingProps, ...
+                                           TailProps, WingAngles);
+
+    % Unpack tailplane coefficient struct
+    CL_t    = Ct.CL;
+    Cdi_t   = Ct.Cdi;
+
+    % Re-normalise w.r.t wing reference area
+    CL_t_norm   = (CL_t.*(TailProps.TailArea.*Model.DynP'))./...
+                  (WingProps.WingArea.*Model.DynP');
+    Cdi_t_norm  = (Cdi_t.*(TailProps.TailArea.*Model.DynP'))./...
+                  (WingProps.WingArea.*Model.DynP');
+
+    % Total lift
+    CL_total = CL_w + CL_t_norm;
+
+    % Total induced drag
+    Cdi_total = Cdi_w + Cdi_t_norm;
+
+    % Call DCBM function
+    Cdmin = dragBuildUp(U, WingProps, TailProps, FuseProps, AoA);
+
+    % Update to obtain drag of piper warrior model
+    Cd_model = Cdi_total' + Cdmin;
+
+end
