@@ -41,7 +41,7 @@ function parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, ...
     Cd_model = Cdi_total' + Cdmin;
     
     % Plot lift polar comparison between lifting line and experiment
-    liftPolar = figure;
+    figure;
     plot(AoA.Degrees,Model.CL,'--o',AoA.Degrees,CL_total,'--d');
     hleg1 = legend('Experimental Data','Lifting Line Theory');
     xlabel('Angle of Attack (degrees)');
@@ -51,10 +51,9 @@ function parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, ...
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     grid on
-    print(liftPolar,'liftPolar','-depsc');
     
     % Plot drag polar comparison between lifting line and experiment
-    dragPolar = figure;
+    figure;
     plot(Model.CL, Model.Cd, '--o', CL_total, Cdi_total, '--d', ...
         CL_total, Cd_model, '--v');
     hleg1 = legend('Experimental Data','Lifting Line Theory','DCBM');
@@ -65,7 +64,6 @@ function parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, ...
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     grid on
-    print(dragPolar,'dragPolar','-depsc');
     
     % Unpack wing and tailplane downwash angles
     alpha_i_w = WingAngles.Downwash;
@@ -76,7 +74,7 @@ function parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, ...
     y_tail = Tail.SpanPos;
 
     % Plot downwash angles - NORMAL LIFTING LINE
-    liftingDownwash = figure;
+    figure;
     plot(y_wing,rad2deg(alpha_i_w(1,:)));
     hold on
     plot(y_tail,rad2deg(alpha_i_t(1,:)),'x');
@@ -88,14 +86,13 @@ function parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, ...
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     grid on
-    print(liftingDownwash,'liftingDownwash','-depsc');
     
     % Unpack wing and tail chords
     c_w = WingProps.Chord;
     c_t = TailProps.Chord;
     
     % Plot wing chords
-    wingChord = figure;
+    wincChord = figure;
     plot(y_wing,c_w);
     ylim([0 max(c_w)]) 
     xlabel('Spanwise Position (m)')

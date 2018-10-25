@@ -11,6 +11,9 @@ function bankCondition(nPts, U, Alpha0, A0, WingProps, TailProps, Model)
     gamma_w     = BankWing.Gamma;
     effAlpha_w  = BankWing.EffectiveAlpha;
     y_wing      = BankWing.SpanPos;
+    
+    % Calculate lift
+    gamma_w = (1.225*U).*gamma_w;
 
     % Unpack wing coefficient struct
     CL_w   = CwB.CL;
@@ -30,6 +33,9 @@ function bankCondition(nPts, U, Alpha0, A0, WingProps, TailProps, Model)
     gamma_t     = BankTail.Gamma;
     effAlpha_t  = BankTail.EffectiveAlpha;
     y_tail = BankTail.SpanPos;
+    
+    % Calculate lift
+    gamma_t = (1.225*U).*gamma_t;
 
     % Unpack tailplane coefficient struct
     CL_t   = CtB.CL;
@@ -63,7 +69,7 @@ function bankCondition(nPts, U, Alpha0, A0, WingProps, TailProps, Model)
     fprintf('\n')
 
     % Plot downwash angles - BANKED TURN
-    figure;
+    turnDownwash = figure;
     plot(y_wing,rad2deg(WingAnglesB.Downwash));
     hold on
     plot(y_tail,rad2deg(TailAnglesB.Downwash),'x');
@@ -75,9 +81,10 @@ function bankCondition(nPts, U, Alpha0, A0, WingProps, TailProps, Model)
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     grid on
+    print(turnDownwash,'turnDownwash','-depsc');
 
     % Lift distribution over wing with effective angle of attack
-    figure;
+    bankWingLift = figure;
     yyaxis left
     plot(y_wing,gamma_w)
     ylabel('Circulation')
@@ -89,9 +96,10 @@ function bankCondition(nPts, U, Alpha0, A0, WingProps, TailProps, Model)
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
+    print(bankWingLift,'bankWingLift','-depsc');
 
     % Lift distribution over tail with effective angle of attack
-    figure;
+    bankTailLift = figure;
     yyaxis left
     plot(y_tail,gamma_t);
     ylabel('Circulation')
@@ -103,5 +111,6 @@ function bankCondition(nPts, U, Alpha0, A0, WingProps, TailProps, Model)
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
+    print(bankTailLift,'bankTailLift','-depsc');
     
 end
