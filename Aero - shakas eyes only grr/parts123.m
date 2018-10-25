@@ -34,7 +34,7 @@ function parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, ...
     Cdi_total = Cdi_w + Cdi_t_norm;
 
     % Call DCBM function
-    Cdmin = dragBuildUp(U, WingProps, TailProps, FuseProps, AoA);
+    Cdmin = dragBuildUp(U, WingProps, TailProps, FuseProps);
 
     % Update to obtain drag of piper warrior model
     Cd_model = Cdi_total' + Cdmin;

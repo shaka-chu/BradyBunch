@@ -7,9 +7,10 @@ function [Model, AoA, U] = loadExperiment
     SupportData = readtable('supportDrag.xlsx');
     
     % Piper warrior model parameters (m)
-    Model.Semispan          = 39.5/100;
+    Model.SemiSpan          = 39.5/100;
     Model.FuselageWidth     = 11/100;
     Model.WingChord         = 17/100;
+    Model.WingRootChord     = (1.86/1.6)*Model.WingChord;
     Model.TailChord         = 17/100;
     Model.AircraftLength    = 67.5/100;
 
@@ -21,7 +22,7 @@ function [Model, AoA, U] = loadExperiment
     AoA.Radians = deg2rad(ExpData.TrueAi);      % Rad
 
     % Wing area (m^2) (VERY approximate - doesnt account for the taper bit!)
-    Model.WingArea = Model.WingChord*(2*Model.Semispan + Model.FuselageWidth);
+    Model.WingArea = Model.WingChord*(2*Model.SemiSpan + Model.FuselageWidth);
 
     % Support reference area (m^2)
     supportArea = 0.75*0.15;

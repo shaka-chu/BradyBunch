@@ -1,4 +1,4 @@
-function Cdmin = dragBuildUp(U, WingProps, TailProps, FuseProps, AoA)
+function Cdmin = dragBuildUp(U, WingProps, TailProps, FuseProps)
 
     % Unpack wing geometry
     S_ref       = WingProps.WingArea;
@@ -15,17 +15,10 @@ function Cdmin = dragBuildUp(U, WingProps, TailProps, FuseProps, AoA)
     length_f    = FuseProps.Length;
     diameter_f  = FuseProps.Diameter;
     f           = length_f/diameter_f;
-    
-%     % Unpack angle of attack (degrees - used for Xfoil)
-%     alpha = AoA.Degrees;
 
     % Air properties (sea-level ISA)
     rho          = 1.225;           % Density (Kg/m^3)
     mu           = 1.789e-05;       % Viscosity (Pa.s)
-    [~, a, ~, ~] = atmosisa(0);     % Speed of sound (m/s)
-
-    % Mach number
-    M = U/a;
 
     % Reynolds numbers of wing, tailplane and fuselage
     Re.WingRoot   = rho*U*c_root_w/mu;
@@ -46,7 +39,6 @@ function Cdmin = dragBuildUp(U, WingProps, TailProps, FuseProps, AoA)
     % Fuselage plate drag coefficient (assume laminar flow over fuselage)
     Cf_f = 1.328/sqrt(Re.Fuselage);
     
-    %% DCBM
     % Max thickness/chord ratio for NACA 65 series (Airfoiltools)
     tc_max = 0.15;
     
