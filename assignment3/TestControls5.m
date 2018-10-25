@@ -182,7 +182,7 @@ for i = 2:length(time)
 end
 
 % % Plot results
-% simulate(X)
+simulate(X)
 testPlotControls5(X,U,time);
 
 betaPlot5 = figure;
