@@ -36,9 +36,7 @@ function [Ct, TailAngles, TailProps, BankTail] = liftingLineTailBank(...
 
     % Convert wing/tailplane polar coords to spanwise positions
     y_wing      = s_w*cos(theta_w);
-%     y_wing(end) = 0;
     y_tail      = s_t*cos(theta_t);
-%     y_tail(end) = 0;
     
     % Interpolate downwash angles from wing on tailplane
     alpha_i_t = NaN(length(alpha),nPts);
@@ -105,7 +103,7 @@ function [Ct, TailAngles, TailProps, BankTail] = liftingLineTailBank(...
         % AoA coefficient
         alphaCoefs(i,k) = mu_t*sin(theta_t(i))*(alpha(k) - alpha0 - alpha_i_t(k,i));
         
-        effAlpha(i) = alpha(k);
+        effAlpha(i) = alpha(k) - alpha_i_t(k,i);
         
     end
 

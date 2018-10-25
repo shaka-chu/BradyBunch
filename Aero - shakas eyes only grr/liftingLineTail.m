@@ -89,7 +89,7 @@ function [Ct, TailAngles, TailProps, ClimbTail] = liftingLineTail(n, ...
             % AoA coefficient
             alphaCoefs(i,k) = mu_t*sin(theta_t(i))*(alpha(k) - alpha0 - alpha_i_t(k,i));
             
-            effAlpha(i) = alpha(k);
+            effAlpha(i) = alpha(k) - alpha_i_t(k,i);
         end
 
         % Solve system of equations

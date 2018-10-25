@@ -114,7 +114,7 @@ function [Cw, WingAngles, WingProps, ClimbWing] = liftingLineWing(n, ...
                             
                             
             % Effective angle of attack (excluding twist)
-            effAlpha(i) = alpha(k);
+            effAlpha(i) = alpha(k) + twist_angle(i);
 
         end
 

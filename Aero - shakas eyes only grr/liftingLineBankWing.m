@@ -170,26 +170,23 @@ function [Cw, WingAngles, WingProps, BankWing] = liftingLineBankWing( ...
 
             % Set right aileron (+25 degrees) (in rad)
             aoa = alpha_ail_down + alpha;
-            
-            effAlpha(i) = aoa;
 
         % Left aileron
         elseif theta_w(i) >= theta_ail_start_l && theta_w(i) <= theta_ail_end_l
 
             % Set left aileron (-25 degrees) (in rad)
             aoa = alpha_ail_up + alpha;
-            
-            effAlpha(i) = aoa;
 
         % Otherwise, pitch angle
         else
             aoa = alpha;
-            effAlpha(i) = aoa;
         end
 
         % AoA coefficient
         alphaCoefs(i,k) = mu_w*sin(theta_w(i))*(aoa - alpha0 + ...
                           twist_angle(i));
+                      
+        effAlpha(i) = aoa + twist_angle(i);
     end
 
     % Solve system of equations
