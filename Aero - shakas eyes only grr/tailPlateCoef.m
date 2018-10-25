@@ -37,5 +37,8 @@ function Cf_avg = tailPlateCoef(Re, TransPoints)
     
     % Avergage plate coefficient for tailplane
     Cf_avg = 1/2*(Cf_avg_root + Cf_avg_tip);
+    
+    % Last AoA: flow separation so assume 100% turbulent
+    Cf_avg(end+1) = 0.455/(log10(Re_root)^(2.58));
 
 end

@@ -1,24 +1,35 @@
-function Cdmin = dragBuildUp(U, WingProps, TailProps, FuseProps)
+function Cdmin = dragBuildUp(U, Model)
 
     % Unpack wing geometry
-    S_ref       = WingProps.WingArea;
-    c_root_w    = WingProps.RootChord;
-    c_tip_w     = WingProps.TipChord;
-    s_w         = WingProps.SemiSpan;
+    S_ref       = Model.WingArea;
+    c_root_w    = Model.WingRootChord;
+    c_tip_w     = Model.WingChord;
+    s_w         = Model.SemiSpan;
     
     % Unpack tail geometry
-    c_root_t    = TailProps.RootChord;
-    c_tip_t     = TailProps.RootChord;
-    S_t         = TailProps.TailArea;
+    c_root_t    = Model.TailChord;
+    c_tip_t     = Model.TailChord;
+    S_t         = Model.TailArea;
 
     % Unpack fuselage geometry
-    length_f    = FuseProps.Length;
-    diameter_f  = FuseProps.Diameter;
+    length_f    = Model.AircraftLength;
+    diameter_f  = Model.FuselageWidth;
     f           = length_f/diameter_f;
-
+    
+    % Piper warrior model parameters - SOME APPROXIMATIONS (m)
+    Model.SemiSpan          = 39.5/100;
+    Model.TailSemiSpan      = Model.SemiSpan*0.370833333333333;
+    Model.FuseStart         = Model.SemiSpan*0.105924259467567;
+    Model.TaperEnd          = Model.SemiSpan*0.253655793025872;
+    Model.TaperLength       = Model.SemiSpan*0.147731533558305;
+    
     % Air properties (sea-level ISA)
-    rho          = 1.225;           % Density (Kg/m^3)
-    mu           = 1.789e-05;       % Viscosity (Pa.s)
+    rho         = 1.225;            % Density (Kg/m^3)
+    mu          = 1.789e-05;        % Viscosity (Pa.s)
+    [~,a,~,~]   = atmosisa(0);      % Speed of sound (m/s)
+    
+    % Mach number (used for manual Xfoil input)
+    M = U/a;
 
     % Reynolds numbers of wing, tailplane and fuselage
     Re.WingRoot   = rho*U*c_root_w/mu;
@@ -43,11 +54,13 @@ function Cdmin = dragBuildUp(U, WingProps, TailProps, FuseProps)
     tc_max = 0.15;
     
     % Wing wetted area (m^2)
-    S_wet_w = 2*((1.60*0.788) + (1/2)*(0.26*0.788) + (1.60*3.89) + ...
-              (s_w - 0.565)*tc_max*c_tip_w);
+    S_wet_w = 2*((Model.WingRootChord*Model.TaperLength) + ...
+              (1/2)*(Model.WingRootChord - Model.WingChord)*...
+              Model.TaperLength + Model.WingChord*(Model.SemiSpan - ...
+              Model.TaperEnd) + (s_w - Model.FuseStart)*tc_max*c_tip_w);
           
     % Tailplane wetted area (m^2)
-    S_wet_t = S_t - 2*0.1689*c_root_t;
+    S_wet_t = S_t - 2*Model.FuseStartTail*c_root_t;
     
     % Ratio of fuselage wetted area to reference area based off Beech
     % Sierra (similar dimensions and shape) 

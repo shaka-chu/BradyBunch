@@ -1,6 +1,6 @@
 function [WingProps, TailProps, FuseProps] = aircraftProps
 
-    % Wing geometry
+    % Wing geometry (real aircraft)
     WingProps.Span      = convlength(35,'ft','m');
     WingProps.SemiSpan  = WingProps.Span/2;
     WingProps.TaperEnd  = 1.353;

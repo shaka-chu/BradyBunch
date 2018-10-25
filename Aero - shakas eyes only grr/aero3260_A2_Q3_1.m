@@ -53,8 +53,7 @@ n = 2*(1:nPts) - 1;
 
 %% Question 3
 % Call function for parts 1, 2 and 3 of Q3
-parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, Model, ...
-    FuseProps)
+parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, Model)
 
 % Call function for climb
 climbCondition(n, nPts, U, Alpha0, A0, WingProps, TailProps, Model)

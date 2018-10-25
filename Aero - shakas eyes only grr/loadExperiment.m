@@ -6,13 +6,25 @@ function [Model, AoA, U] = loadExperiment
     % Load piper warrior model support drag
     SupportData = readtable('supportDrag.xlsx');
     
-    % Piper warrior model parameters (m)
+    % Piper warrior model parameters - SOME APPROXIMATIONS (m)
     Model.SemiSpan          = 39.5/100;
     Model.FuselageWidth     = 11/100;
     Model.WingChord         = 17/100;
     Model.WingRootChord     = (1.86/1.6)*Model.WingChord;
-    Model.TailChord         = 17/100;
+    Model.TailChord         = 8/100;
+    Model.TailSemiSpan      = Model.SemiSpan*0.370833333333333;
     Model.AircraftLength    = 67.5/100;
+    Model.FuseStart         = Model.SemiSpan*0.105924259467567;
+    Model.TaperEnd          = Model.SemiSpan*0.253655793025872;
+    Model.TaperLength       = Model.SemiSpan*0.147731533558305;
+    Model.WingArea          = 2*((Model.WingRootChord*Model.FuseStart) ...
+                              + (Model.WingChord*Model.TaperLength) + ...
+                              (1/2)*(Model.WingRootChord - ...
+                              Model.WingChord)*Model.TaperLength + ...
+                              Model.WingChord*(Model.SemiSpan - ...
+                              Model.TaperEnd));
+    Model.TailArea          = 2*Model.TailSemiSpan*Model.TailChord;
+    Model.FuseStartTail     = Model.SemiSpan*0.0316647919010124;
 
     % Mean tunnel velocity (m/s)
     U = mean(ExpData.V);
@@ -21,8 +33,9 @@ function [Model, AoA, U] = loadExperiment
     AoA.Degrees = ExpData.TrueAi;               % Deg
     AoA.Radians = deg2rad(ExpData.TrueAi);      % Rad
 
-    % Wing area (m^2) (VERY approximate - doesnt account for the taper bit!)
-    Model.WingArea = Model.WingChord*(2*Model.SemiSpan + Model.FuselageWidth);
+    % Wing area (m^2)
+    Model.WingArea = Model.WingChord*(2*Model.SemiSpan + ...
+                     Model.FuselageWidth);
 
     % Support reference area (m^2)
     supportArea = 0.75*0.15;
