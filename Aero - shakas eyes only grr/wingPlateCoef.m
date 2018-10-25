@@ -10,12 +10,6 @@ function Cf_avg = wingPlateCoef(Re, TransPoints)
     Re_root = Re.WingRoot;
     Re_tip  = Re.WingTip;
     
-%     % Obtain x_tr/c for wing upper and lower surfaces at root and tip
-%     xtrc_upper_root  = PolarRoot.Top_xtr;
-%     xtrc_lower_root  = PolarRoot.Bot_xtr;
-%     xtrc_upper_tip   = PolarTip.Top_xtr;
-%     xtrc_lower_tip   = PolarTip.Bot_xtr;
-    
     % Obtain x0/c for wing upper and lower surfaces at root and tip
     x0c_upper_root   = 36.9.*(xtrc_upper_root.^(0.625)).* ...
                        (1/Re_root)^(0.275);

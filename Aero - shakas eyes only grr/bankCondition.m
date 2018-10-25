@@ -47,11 +47,19 @@ function bankCondition(nPts, U, Alpha0, A0, WingProps, TailProps, Model)
     % Total induced drag during sustained bank
     Cdi_total = Cdi_w + Cdi_t_norm;
     
+    % Call DCBM function
+    mode    = 2;
+    Cdmin   = dragBuildUp(U, Model, mode);
+
+    % Update to obtain drag of piper warrior model
+    Cd_model = Cdi_total' + Cdmin;
+    
     % Print results to command window
     fprintf('------------- Sustained Level Turn -------------')
     fprintf('\n')
     fprintf('Sustained Level Turn 3D Lift, CL: %.4g\n',CL_total)
-    fprintf('Examlpe Induced Drag, CDi: %.4g\n',Cdi_total)
+    fprintf('Lifting Line Induced Drag, CDi: %.4g\n',Cdi_total)
+    fprintf('DCBM Drag, CD: %.4g\n',Cd_model)
     fprintf('\n')
 
     % Plot downwash angles - BANKED TURN
