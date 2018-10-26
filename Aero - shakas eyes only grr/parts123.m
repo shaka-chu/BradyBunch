@@ -68,10 +68,12 @@ function parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, ...
     dragPolar = figure;
     plot(Model.CL, Model.Cd, '--o', CL_total, Cdi_total, '--d', ...
          CL_total, Cd_model, '--v', CL_total, Cd_aircraft, '--s');
-    hleg2 = legend('Experimental Data','Lifting Line Theory', ...
-            'DCBM','Complete Aircraft Estimate', 'Actual Drag');
+    hold on
+    plot(0, CD0_actual, 'x', 'LineWidth', 2);
     xlabel('Lift Coefficient','FontSize',18);
     ylabel('Drag Coefficient','FontSize',18);
+    hleg2 = legend('Experimental Data','Lifting Line Theory', ...
+        'DCBM','Complete Aircraft Estimate', 'Actual Drag');
     set(hleg2,'Location','Best');
     hleg2.FontSize = 18;
     set(gca, 'XLimSpec', 'Tight');

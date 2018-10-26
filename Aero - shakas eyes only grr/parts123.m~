@@ -36,34 +36,57 @@ function parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, ...
     % Call DCBM function
     mode    = 1;
     Cdmin   = dragBuildUp(U, Model, mode);
-
+    
+    % Call miscellaneous component drag function
+    Dq_misc = miscComponentDrag;
+    Cd_misc = Dq_misc/WingProps.WingArea;
+    
     % Update to obtain drag of piper warrior model
     Cd_model = Cdi_total' + Cdmin;
     
+    % Include miscellaneous component drag
+    Cd_aircraft = Cd_misc + Cd_model;
+    
+    % Call actual drag back calculation function
+    [CD0_actual, CLmax_actual] = actualDrag;
+    
     % Plot lift polar comparison between lifting line and experiment
-    figure;
+    liftPolar = figure;
     plot(AoA.Degrees,Model.CL,'--o',AoA.Degrees,CL_total,'--d');
     hleg1 = legend('Experimental Data','Lifting Line Theory');
-    xlabel('Angle of Attack (degrees)');
-    ylabel('Lift Coefficient');
+    xlabel('Angle of Attack (degrees)','FontSize',18);
+    ylabel('Lift Coefficient','FontSize',18);
     set(hleg1,'Location','Best');
+    hleg1.FontSize = 18;
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     grid on
+    print(liftPolar,'liftPolar','-depsc');
     
     % Plot drag polar comparison between lifting line and experiment
-    figure;
+    dragPolar = figure;
     plot(Model.CL, Model.Cd, '--o', CL_total, Cdi_total, '--d', ...
-        CL_total, Cd_model, '--v');
-    hleg1 = legend('Experimental Data','Lifting Line Theory','DCBM');
+         CL_total, Cd_model, '--v', CL_total, Cd_aircraft, '--s');
+    hold on
+    plot(0, CD0_actual, 'x', 'LineWidth', 2);
+    hleg2 = legend('Experimental Data','Lifting Line Theory', ...
+        'DCBM','Complete Aircraft Estimate', 'Actual Drag');
+    xlabel('Lift Coefficient','FontSize',18);
+    ylabel('Drag Coefficient','FontSize',18);
+    set(hleg2,'Location','Best');
+    hleg2.FontSize = 18;
+    
+    
     xlabel('Lift Coefficient');
     ylabel('Drag Coefficient');
     set(hleg1,'Location','Best');
+>>>>>>> 350512e70d99bf4e98662c6fc281055fe9b46bf6
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     grid on
+    print(dragPolar,'dragPolar','-depsc');
     
     % Unpack wing and tailplane downwash angles
     alpha_i_w = WingAngles.Downwash;
@@ -74,29 +97,31 @@ function parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, ...
     y_tail = Tail.SpanPos;
 
     % Plot downwash angles - NORMAL LIFTING LINE
-    figure;
+    liftingDownwash = figure;
     plot(y_wing,rad2deg(alpha_i_w(1,:)));
     hold on
     plot(y_tail,rad2deg(alpha_i_t(1,:)),'x');
-    xlabel('Spanwise Position (m)')
-    ylabel('Downwash Angle (deg)')
-    hleg1 = legend('Produced by Wing','Incident on Tailplane');
-    set(hleg1,'Location','Best');
+    xlabel('Spanwise Position (m)','FontSize',18)
+    ylabel('Downwash Angle (deg)','FontSize',18)
+    hleg3 = legend('Produced by Wing','Incident on Tailplane');
+    set(hleg3,'Location','Best');
+    hleg3.FontSize = 18;
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     grid on
+    print(liftingDownwash,'liftingDownwash','-depsc');
     
     % Unpack wing and tail chords
     c_w = WingProps.Chord;
     c_t = TailProps.Chord;
     
     % Plot wing chords
-    wincChord = figure;
+    wingChord = figure;
     plot(y_wing,c_w);
     ylim([0 max(c_w)]) 
-    xlabel('Spanwise Position (m)')
-    ylabel('Wing Chord (m)')
+    xlabel('Spanwise Position (m)','FontSize',18)
+    ylabel('Wing Chord (m)','FontSize',18)
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
@@ -108,8 +133,8 @@ function parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, ...
     tailChord = figure;
     plot(y_tail,c_t);
     ylim([0 max(c_t)])
-    xlabel('Spanwise Position (m)')
-    ylabel('Tailplane Chord (m)')
+    xlabel('Spanwise Position (m)','FontSize',18)
+    ylabel('Tailplane Chord (m)','FontSize',18)
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
