@@ -5,14 +5,13 @@ function [CD0_actual, CLmax_actual] = actualDrag
 
     % Piper Warrior II Parameters
     MTOW = 2440;            % Maximum gross weight  [lbs]
-    WS = 14.4;              % Wing loading, W/S     [lbs/sq.ft]
     Pmax = 160/1.341e-3;    % Maximum power         [W]
-    AR = 7.24;              % Aspect ratio       
+    AR = 7.2;               % Aspect ratio       
     dia = 74;               % Propeller diameter    [in]
     RPS = 2700/60;          % Propeller rotations per second
 
     % Wing area
-    S = convlength(sqrt(MTOW/WS), 'ft', 'm')^2;
+    S = convlength(sqrt(170), 'ft', 'm')^2;
 
     % Aircraft weight force
     W = convmass(MTOW, 'lbm', 'kg')*g;
@@ -25,7 +24,7 @@ function [CD0_actual, CLmax_actual] = actualDrag
     Vfc = convvel(79, 'kts', 'm/s');
 
     % Best rate of climb in m/s
-    RCmax = convvel(640, 'ft/min', 'm/s');
+    RCmax = convvel(644, 'ft/min', 'm/s');
 
     % Propeller efficiency
     J = convvel(Vfc, 'mph', 'm/s')/RPS/convlength(dia, 'in', 'm');
@@ -40,7 +39,7 @@ function [CD0_actual, CLmax_actual] = actualDrag
     CD0_actual = CD - k*CL^2;
 
     % Stall speed in m/s
-    Vstall = convvel(50, 'kts', 'm/s');
+    Vstall = convvel(56, 'kts', 'm/s');
 
     % Back calculate CLmax from performance data, stall speed
     CLmax_actual = 2*W/1.225/Vstall^2/S;

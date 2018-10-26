@@ -39,7 +39,7 @@ function Dq_misc = miscComponentDrag
     % Drag coefficient of the propeller, (w.r.t. developed blade area)
     % Sensenich 74DM6-0-58 Propeller
     propellerBladeAngle = ...
-        mean(deg2rad([33.55 27.70 22.50 18.45 15.5 14]));
+        mean(deg2rad([33.55 28.3 23.1 19.04 16.1 14.6]));
     propellerDia = convlength(74, 'in', 'm');
     propellerMaxChord = convlength(5.5, 'in', 'm');
     S_propeller = propellerDia*propellerMaxChord/2;

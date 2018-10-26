@@ -55,6 +55,10 @@ function climbCondition(n, nPts, U, Alpha0, A0, WingProps, TailProps, ...
     % Total induced drag during sustained bank
     Cdi_total = Cdi_w + Cdi_t_norm;
     
+    % Call miscellaneous component drag function
+    Dq_misc = miscComponentDrag;
+    Cd_misc = Dq_misc/WingProps.WingArea;
+    
     % Call DCBM function
     mode    = 2;
     Cdmin   = dragBuildUp(U, Model, mode);
@@ -62,12 +66,15 @@ function climbCondition(n, nPts, U, Alpha0, A0, WingProps, TailProps, ...
     % Update to obtain drag of piper warrior model
     Cd_model = Cdi_total' + Cdmin;
     
+    % Include miscellaneous component drag
+    Cd_aircraft = Cd_misc + Cd_model;
+    
     % Print results to command window
     fprintf('--------------------- Climb --------------------')
     fprintf('\n')
     fprintf('Sustained Level Turn 3D Lift, CL: %.4g\n',CL_total)
     fprintf('Lifting Line Induced Drag, CDi: %.4g\n',Cdi_total)
-    fprintf('DCBM Drag, CD: %.4g\n',Cd_model)
+    fprintf('DCBM Drag, CD: %.4g\n',Cd_aircraft)
     fprintf('\n')
     
     % Obtain vectors including left wing properties (flipping)
