@@ -63,5 +63,3 @@ function [Model, AoA, U] = loadExperiment
     Model.DynP = ExpData.DynP;
 
 end
-
-
