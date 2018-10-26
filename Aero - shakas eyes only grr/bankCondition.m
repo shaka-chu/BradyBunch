@@ -56,16 +56,23 @@ function bankCondition(nPts, U, Alpha0, A0, WingProps, TailProps, Model)
     % Call DCBM function
     mode    = 2;
     Cdmin   = dragBuildUp(U, Model, mode);
+    
+    % Call miscellaneous component drag function
+    Dq_misc = miscComponentDrag;
+    Cd_misc = Dq_misc/WingProps.WingArea;
 
     % Update to obtain drag of piper warrior model
     Cd_model = Cdi_total' + Cdmin;
+    
+    % Include miscellaneous component drag
+    Cd_aircraft = Cd_misc + Cd_model;
     
     % Print results to command window
     fprintf('------------- Sustained Level Turn -------------')
     fprintf('\n')
     fprintf('Sustained Level Turn 3D Lift, CL: %.4g\n',CL_total)
     fprintf('Lifting Line Induced Drag, CDi: %.4g\n',Cdi_total)
-    fprintf('DCBM Drag, CD: %.4g\n',Cd_model)
+    fprintf('DCBM Drag, CD: %.4g\n',Cd_aircraft)
     fprintf('\n')
 
     % Plot downwash angles - BANKED TURN
