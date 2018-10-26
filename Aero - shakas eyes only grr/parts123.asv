@@ -46,8 +46,7 @@ function parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, ...
     % Include miscellaneous component drag
     Cd_aircraft = Cd_misc + Cd_model;
     
-    % Call actual drag back calculation function
-    [CD0_actual, CLmax_actual] = actualDrag;
+    % C
     
     % Plot lift polar comparison between lifting line and experiment
     figure;
@@ -65,10 +64,9 @@ function parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, ...
     figure;
     plot(Model.CL, Model.Cd, '--o', CL_total, Cdi_total, '--d', ...
         CL_total, Cd_model, '--v', CL_total, Cd_aircraft, '--s');
-    hold on
-    plot(0, CD0_actual, 'x', 'LineWidth', 2);
+    plot(
     hleg1 = legend('Experimental Data','Lifting Line Theory', ...
-        'DCBM','Complete Aircraft Estimate', 'Actual Drag');
+        'DCBM','Complete Aircraft Estimate');
     xlabel('Lift Coefficient');
     ylabel('Drag Coefficient');
     set(hleg1,'Location','Best');
