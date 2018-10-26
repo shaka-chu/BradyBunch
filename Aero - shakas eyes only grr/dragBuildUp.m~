@@ -134,19 +134,18 @@ function Cdmin = dragBuildUp(U, Model, mode)
     % Total zero-lift drag
     Cdmin = Cdmin_w + Cdmin_t + Cdmin_f + Cdmin_canopy;
     
-%     % Add rudder if turn
-%     if mode == 3
-%         
-%         % Rudder Cd for 5 degree deflection
-%         Cd_rudder = 0.02;
-%         
-%         % Re-dimensionalise for wing
-%         Cd_rudder = Cd_rudder*S_t/S_ref;
-%         
-%         % Add to parasitic drag
-%         Cdmin = Cdmin + Cd_rudder;
-%         
-%     end
+    % Add rudder if turn
+    if mode == 3
+        
+        % Rudder Cd
+        Cd_rudder = 0.02;
+        
+        % Re-dimensionalise for wing
+        Cd_rudder = Cd_rudder*S_t/S_ref;
+        
+        Cdmin 
+        
+    end
     
 %     thingo = figure;
 %     plot(Rwf(:,1),Rwf(:,2));
