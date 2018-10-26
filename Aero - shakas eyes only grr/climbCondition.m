@@ -16,6 +16,9 @@ function climbCondition(n, nPts, U, Alpha0, A0, WingProps, TailProps, ...
     gamma_w     = ClimbWing.Gamma;
     effAlpha_w  = ClimbWing.EffectiveAlpha;
     y_wing      = ClimbWing.SpanPos;
+    
+    % Calculate lift
+    gamma_w = (1.225*U).*gamma_w;
 
     % Stabilator deflection angle during climb (rad)
     deflec_up_climb = deg2rad(10);
@@ -32,6 +35,9 @@ function climbCondition(n, nPts, U, Alpha0, A0, WingProps, TailProps, ...
     gamma_t     = ClimbTail.Gamma;
     effAlpha_t  = ClimbTail.EffectiveAlpha;
     y_tail      = ClimbTail.SpanPos;
+    
+    % Calculate lift
+    gamma_t = (1.225*U).*gamma_t;
                                             
     % Unpack tailplane coefficient struct
     CL_t   = CtC.CL;
@@ -49,11 +55,19 @@ function climbCondition(n, nPts, U, Alpha0, A0, WingProps, TailProps, ...
     % Total induced drag during sustained bank
     Cdi_total = Cdi_w + Cdi_t_norm;
     
+    % Call DCBM function
+    mode    = 2;
+    Cdmin   = dragBuildUp(U, Model, mode);
+
+    % Update to obtain drag of piper warrior model
+    Cd_model = Cdi_total' + Cdmin;
+    
     % Print results to command window
     fprintf('--------------------- Climb --------------------')
     fprintf('\n')
     fprintf('Sustained Level Turn 3D Lift, CL: %.4g\n',CL_total)
-    fprintf('Examlpe Induced Drag, CDi: %.4g\n',Cdi_total)
+    fprintf('Lifting Line Induced Drag, CDi: %.4g\n',Cdi_total)
+    fprintf('DCBM Drag, CD: %.4g\n',Cd_model)
     fprintf('\n')
     
     % Obtain vectors including left wing properties (flipping)
@@ -69,7 +83,7 @@ function climbCondition(n, nPts, U, Alpha0, A0, WingProps, TailProps, ...
     effAlpha_t_plot = [effAlpha_t fliplr(effAlpha_t)];
     
     % Plot downwash angles - CLIMB
-    figure;
+    climbDownwash = figure;
     plot(y_wing_plot,wing_downwash);
     hold on
     plot(y_tail_plot,tail_downwash,'x');
@@ -81,9 +95,10 @@ function climbCondition(n, nPts, U, Alpha0, A0, WingProps, TailProps, ...
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     grid on
+    print(climbDownwash,'climbDownwash','-depsc');
                                             
     % Lift distribution over wing with effective angle of attack
-    figure;
+    climbWingLift = figure;
     yyaxis left
     plot(y_wing_plot,gamma_w_plot)
     ylabel('Circulation')
@@ -95,9 +110,10 @@ function climbCondition(n, nPts, U, Alpha0, A0, WingProps, TailProps, ...
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
+    print(climbWingLift,'climbWingLift','-depsc');
 
     % Lift distribution over tail with effective angle of attack
-    figure;
+    climbTailLift = figure;
     yyaxis left
     plot(y_tail_plot,gamma_t_plot);
     ylabel('Circulation')
@@ -109,5 +125,6 @@ function climbCondition(n, nPts, U, Alpha0, A0, WingProps, TailProps, ...
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
+    print(climbTailLift,'climbTailLift','-depsc');
     
 end

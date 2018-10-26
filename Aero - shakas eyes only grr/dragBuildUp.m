@@ -1,4 +1,4 @@
-function Cdmin = dragBuildUp(U, Model)
+function Cdmin = dragBuildUp(U, Model, mode)
 
     % Unpack wing geometry
     S_ref       = Model.WingArea;
@@ -38,14 +38,46 @@ function Cdmin = dragBuildUp(U, Model)
     Re.TailTip    = rho*U*c_tip_t/mu;
     Re.Fuselage   = rho*U*length_f/mu;
     
-    % Load Xfoil simulation data for transition points
-    TransPoints = transitionPoints;
+    % Parts 1,2,3
+    if mode == 1
+        
+        % Load Xfoil simulation data for transition points
+        TransPoints = transitionPoints;
 
-    % Wing plate friction coefficient
-    Cf_avg_w = wingPlateCoef(Re, TransPoints);
+        % Wing plate friction coefficient
+        Cf_avg_w = wingPlateCoef(Re, TransPoints);
+
+        % Tail plate friction coefficient
+        Cf_avg_t = tailPlateCoef(Re, TransPoints);
     
-    % Tail plate friction coefficient
-    Cf_avg_t = tailPlateCoef(Re, TransPoints);
+    % Part 4 climb
+    elseif mode == 2
+        
+        % Load Xfoil simulation data for transition points
+        TransPoints = transitionPointsClimb;
+        
+        % Wing plate friction coefficient
+        Cf_avg_w = wingPlateCoef(Re, TransPoints);
+        
+        % Tail plate friction coefficient
+        Cf_avg_t = tailPlateCoefPt4(Re, TransPoints);
+        
+    % Part 4 turn    
+    elseif mode == 3
+        
+        % Load Xfoil simulation data for transition points
+        TransPoints = transitionPointsBank;
+        
+        % Wing plate friction coefficient
+        Cf_avg_w = wingPlateCoef(Re, TransPoints);
+        
+        % Tail plate friction coefficient
+        Cf_avg_t = tailPlateCoefPt4(Re, TransPoints);
+        
+        
+    else 
+        error('Mode must be 1, 2 or 3!');
+    end
     
     % Fuselage plate drag coefficient (assume laminar flow over fuselage)
     Cf_f = 1.328/sqrt(Re.Fuselage);
