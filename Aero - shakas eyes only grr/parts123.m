@@ -44,9 +44,10 @@ function parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, ...
     liftPolar = figure;
     plot(AoA.Degrees,Model.CL,'--o',AoA.Degrees,CL_total,'--d');
     hleg1 = legend('Experimental Data','Lifting Line Theory');
-    xlabel('Angle of Attack (degrees)');
-    ylabel('Lift Coefficient');
+    xlabel('Angle of Attack (degrees)','FontSize',18);
+    ylabel('Lift Coefficient','FontSize',18);
     set(hleg1,'Location','Best');
+    hleg1.FontSize = 18;
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
@@ -57,10 +58,11 @@ function parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, ...
     dragPolar = figure;
     plot(Model.CL, Model.Cd, '--o', CL_total, Cdi_total, '--d', ...
         CL_total, Cd_model, '--v');
-    hleg1 = legend('Experimental Data','Lifting Line Theory','DCBM');
-    xlabel('Lift Coefficient');
-    ylabel('Drag Coefficient');
-    set(hleg1,'Location','Best');
+    hleg2 = legend('Experimental Data','Lifting Line Theory','DCBM');
+    xlabel('Lift Coefficient','FontSize',18);
+    ylabel('Drag Coefficient','FontSize',18);
+    set(hleg2,'Location','Best');
+    hleg2.FontSize = 18;
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
@@ -80,10 +82,11 @@ function parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, ...
     plot(y_wing,rad2deg(alpha_i_w(1,:)));
     hold on
     plot(y_tail,rad2deg(alpha_i_t(1,:)),'x');
-    xlabel('Spanwise Position (m)')
-    ylabel('Downwash Angle (deg)')
-    hleg1 = legend('Produced by Wing','Incident on Tailplane');
-    set(hleg1,'Location','Best');
+    xlabel('Spanwise Position (m)','FontSize',18)
+    ylabel('Downwash Angle (deg)','FontSize',18)
+    hleg3 = legend('Produced by Wing','Incident on Tailplane');
+    set(hleg3,'Location','Best');
+    hleg3.FontSize = 18;
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
@@ -98,8 +101,8 @@ function parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, ...
     wingChord = figure;
     plot(y_wing,c_w);
     ylim([0 max(c_w)]) 
-    xlabel('Spanwise Position (m)')
-    ylabel('Wing Chord (m)')
+    xlabel('Spanwise Position (m)','FontSize',18)
+    ylabel('Wing Chord (m)','FontSize',18)
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
@@ -111,8 +114,8 @@ function parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, ...
     tailChord = figure;
     plot(y_tail,c_t);
     ylim([0 max(c_t)])
-    xlabel('Spanwise Position (m)')
-    ylabel('Tailplane Chord (m)')
+    xlabel('Spanwise Position (m)','FontSize',18)
+    ylabel('Tailplane Chord (m)','FontSize',18)
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);

@@ -73,10 +73,11 @@ function bankCondition(nPts, U, Alpha0, A0, WingProps, TailProps, Model)
     plot(y_wing,rad2deg(WingAnglesB.Downwash));
     hold on
     plot(y_tail,rad2deg(TailAnglesB.Downwash),'x');
-    xlabel('Spanwise Position (m)')
-    ylabel('Downwash Angle (deg)')
+    xlabel('Spanwise Position (m)','FontSize',18)
+    ylabel('Downwash Angle (deg)','FontSize',18)
     hleg1 = legend('Produced by Wing','Incident on Tailplane');
     set(hleg1,'Location','Best');
+    hleg1.FontSize = 18;
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
@@ -87,11 +88,11 @@ function bankCondition(nPts, U, Alpha0, A0, WingProps, TailProps, Model)
     bankWingLift = figure;
     yyaxis left
     plot(y_wing,gamma_w)
-    ylabel('Circulation')
-    xlabel('Spanwise Position (m)');
+    ylabel('Lift (N)','FontSize',18)
+    xlabel('Spanwise Position (m)','FontSize',18);
     yyaxis right
     plot(y_wing,rad2deg(effAlpha_w));
-    ylabel('Local Angle of Attack (deg)');
+    ylabel('Local Angle of Attack (deg)','FontSize',18);
     grid on
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
@@ -102,11 +103,11 @@ function bankCondition(nPts, U, Alpha0, A0, WingProps, TailProps, Model)
     bankTailLift = figure;
     yyaxis left
     plot(y_tail,gamma_t);
-    ylabel('Circulation')
-    xlabel('Spanwise Position (m)');
+    ylabel('Lift (N)','FontSize',18)
+    xlabel('Spanwise Position (m)','FontSize',18);
     yyaxis right
     plot(y_tail,rad2deg(effAlpha_t));
-    ylabel('Local Angle of Attack (deg)');
+    ylabel('Local Angle of Attack (deg)','FontSize',18);
     grid on
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
