@@ -34,51 +34,46 @@ function parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, ...
     Cdi_total = Cdi_w + Cdi_t_norm;
 
     % Call DCBM function
-    mode    = 1;
-    Cdmin   = dragBuildUp(U, Model, mode);
+    Cdmin = dragBuildUp(U, Model);
     
     % Call miscellaneous component drag function
     Dq_misc = miscComponentDrag;
     Cd_misc = Dq_misc/WingProps.WingArea;
-    
+
     % Update to obtain drag of piper warrior model
     Cd_model = Cdi_total' + Cdmin;
     
     % Include miscellaneous component drag
     Cd_aircraft = Cd_misc + Cd_model;
     
-    % Call actual drag back calculation function
-    [CD0_actual, CLmax_actual] = actualDrag;
+    % C
     
     % Plot lift polar comparison between lifting line and experiment
-    liftPolar = figure;
+    figure;
     plot(AoA.Degrees,Model.CL,'--o',AoA.Degrees,CL_total,'--d');
     hleg1 = legend('Experimental Data','Lifting Line Theory');
-    xlabel('Angle of Attack (degrees)','FontSize',18);
-    ylabel('Lift Coefficient','FontSize',18);
+    xlabel('Angle of Attack (degrees)');
+    ylabel('Lift Coefficient');
     set(hleg1,'Location','Best');
-    hleg1.FontSize = 18;
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     grid on
-    print(liftPolar,'liftPolar','-depsc');
     
     % Plot drag polar comparison between lifting line and experiment
-    dragPolar = figure;
+    figure;
     plot(Model.CL, Model.Cd, '--o', CL_total, Cdi_total, '--d', ...
-         CL_total, Cd_model, '--v', CL_total, Cd_aircraft, '--s');
-    hleg2 = legend('Experimental Data','Lifting Line Theory', ...
-            'DCBM','Complete Aircraft Estimate', 'Actual Drag');
-    xlabel('Lift Coefficient','FontSize',18);
-    ylabel('Drag Coefficient','FontSize',18);
-    set(hleg2,'Location','Best');
-    hleg2.FontSize = 18;
+        CL_total, Cd_model, '--v', CL_total, Cd_aircraft, '--s');
+    plot(
+    hleg1 = legend('Experimental Data','Lifting Line Theory', ...
+        'DCBM','Complete Aircraft Estimate');
+    xlabel('Lift Coefficient');
+    ylabel('Drag Coefficient');
+    set(hleg1,'Location','Best');
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     grid on
-    print(dragPolar,'dragPolar','-depsc');
     
     % Unpack wing and tailplane downwash angles
     alpha_i_w = WingAngles.Downwash;
@@ -89,49 +84,45 @@ function parts123(n, nPts, U, AoA, Alpha0, A0, WingProps, TailProps, ...
     y_tail = Tail.SpanPos;
 
     % Plot downwash angles - NORMAL LIFTING LINE
-    liftingDownwash = figure;
+    figure;
     plot(y_wing,rad2deg(alpha_i_w(1,:)));
     hold on
     plot(y_tail,rad2deg(alpha_i_t(1,:)),'x');
-    xlabel('Spanwise Position (m)','FontSize',18)
-    ylabel('Downwash Angle (deg)','FontSize',18)
-    hleg3 = legend('Produced by Wing','Incident on Tailplane');
-    set(hleg3,'Location','Best');
-    hleg3.FontSize = 18;
+    xlabel('Spanwise Position (m)')
+    ylabel('Downwash Angle (deg)')
+    hleg1 = legend('Produced by Wing','Incident on Tailplane');
+    set(hleg1,'Location','Best');
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     grid on
-    print(liftingDownwash,'liftingDownwash','-depsc');
     
     % Unpack wing and tail chords
     c_w = WingProps.Chord;
     c_t = TailProps.Chord;
     
     % Plot wing chords
-    wingChord = figure;
+    figure;
     plot(y_wing,c_w);
     ylim([0 max(c_w)]) 
-    xlabel('Spanwise Position (m)','FontSize',18)
-    ylabel('Wing Chord (m)','FontSize',18)
+    xlabel('Spanwise Position (m)')
+    ylabel('Wing Chord (m)')
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     daspect([1 1 1]);
     grid on
-    print(wingChord,'wingChord','-depsc');
     
     % Plot tailplane chords
-    tailChord = figure;
+    figure;
     plot(y_tail,c_t);
     ylim([0 max(c_t)])
-    xlabel('Spanwise Position (m)','FontSize',18)
-    ylabel('Tailplane Chord (m)','FontSize',18)
+    xlabel('Spanwise Position (m)')
+    ylabel('Tailplane Chord (m)')
     set(gca, 'XLimSpec', 'Tight');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     daspect([1 1 1]);
     grid on
-    print(tailChord,'tailChord','-depsc');
     
 end
