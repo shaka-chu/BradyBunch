@@ -54,7 +54,7 @@ function bankCondition(nPts, U, Alpha0, A0, WingProps, TailProps, Model)
     Cdi_total = Cdi_w + Cdi_t_norm;
     
     % Call DCBM function
-    mode    = 2;
+    mode    = 3;
     Cdmin   = dragBuildUp(U, Model, mode);
     
     % Call miscellaneous component drag function

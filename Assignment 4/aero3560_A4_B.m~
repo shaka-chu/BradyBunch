@@ -118,16 +118,10 @@ B11 = Yda;
 B12 = Ydr;
 B21 = (Lda + A1*Nda)/(1 - A1*B1);
 B22 = (Ldr + A1*Ndr)/(1 - A1*B1);
-B31 = (Nda + B1*Lda)/(1 - A1*B1);
-B32 = (Ndr + B1*Ldr)/(1 - A1*B1);
-B41 = 0;
-B42 = 0;
-B51 = 0;
-B52 = 0;
+B31 = ;
+B32 = ;
+B41 = ;
+B42
     
 % Calculate lateral B matrix
-Blat = [B11 B12;
-        B21 B22;
-        B31 B32;
-        B41 B42;
-        B51 B52];
+Blat = [
