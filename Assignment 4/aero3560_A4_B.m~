@@ -7,43 +7,13 @@ close all;
 
 % Flight condition
 airspeed    = 'cruise';
+% airspeed    = 'approach';
 cgPos       = '2';
+cgPos       = '1';
 flightCond  = [airspeed cgPos];
 
-
-switch flightCond
-    case 'approach1'
-        
-        % Load .mat file for CG2 at 220 kts
-        load A_lon_90Kn_500ft_CG1.mat
-
-        % Load aircraft properties
-        Params = aero3560_LoadFlightDataPC9_CG1;
-        
-        
-    case 'approach2'
-        
-        
-    case 'cruise1'
-        
-        % Load .mat file for CG2 at 220 kts
-        load A_lon_220Kn_500ft_CG1.mat
-
-        % Load aircraft properties
-        Params = aero3560_LoadFlightDataPC9_CG1;
-        
-    case 'cruise2'
-        
-        % Load .mat file for CG2 at 220 kts
-        load A_lon_220Kn_500ft_CG2.mat
-
-        % Load aircraft properties
-        Params = aero3560_LoadFlightDataPC9_CG2;
-        
-end
-
-
-
+% Obtain longitudinal-directional state space model and aircraft properties
+[Alon, Blon, Params] = longitudinalStateSpace(flightCond) ;
 
 % Flight speed
 V = convvel(220,'kts','m/s');
@@ -58,3 +28,8 @@ theta = 0;
 % Obtain lateral-directional state space model
 [Alat, Blat] = lateralStateSpace(Params, V, theta, h);
 
+% Do you want to print the eigen analysis to the command window?
+printAnalysis = true;
+
+% Eigen analysis
+eigenAnalysis(Alon, Blon, Alat, Blat, printAnalysis)

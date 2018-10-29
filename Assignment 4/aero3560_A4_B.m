@@ -7,7 +7,9 @@ close all;
 
 % Flight condition
 airspeed    = 'cruise';
+% airspeed    = 'approach';
 cgPos       = '2';
+% cgPos       = '1';
 flightCond  = [airspeed cgPos];
 
 % Obtain longitudinal-directional state space model and aircraft properties
@@ -26,3 +28,8 @@ theta = 0;
 % Obtain lateral-directional state space model
 [Alat, Blat] = lateralStateSpace(Params, V, theta, h);
 
+% Do you want to print the eigen analysis to the command window?
+printAnalysis = true;
+
+% Eigen analysis
+eigenAnalysis(Alon, Alat, printAnalysis)
