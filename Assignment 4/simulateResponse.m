@@ -49,7 +49,7 @@ function [X] = simulateResponse(X0,time,control, A_lat, A_long, B_lat, B_long)
         X_long = X_long + Long_dot*dt;
 
         % Store full state
-        X(:,i) = [X_lat;X_long];
+        X(:,i) = [X_long;X_lat];
 
     end
 

@@ -33,10 +33,10 @@ dt = 0.01;
 time = 0:dt:t_end;
 
 % Create state vector X = [u w q theta z v p r phi psi]'
-X = [X(1) X(3) X(5) X(8) X(12) X(2) X(4) X(7) X(9)]';
+X = [V 0 0 theta -h 0 0 0 0 0]';
 
 % Calculate time histories
-[X_elevator,X_aileron, X_rudder] = deflections(X,time, Alat,A_lon5 ,Blat, B_lon5);
+[X_elevator,X_aileron, X_rudder] = deflections(X,time, Alat,Alon ,Blat, Blon);
 
 
 
