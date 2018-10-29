@@ -28,12 +28,12 @@ for i = 2:length(time)
     end
     
     % Break state into lateral and longitudinal components
-    X_lat = [];
-    X_long = [];
+    X_lat = X(1:5,i-1);
+    X_long = X(1:6,i-1);
     
     % Break control into lateral and longitudinal components
-    U_lat = [];
-    U_long = [];
+    U_lat = U(3:4,i-1);
+    U_long = U(1:2,i-1);
     
     % Find lateral rates of change
     Lat_dot = A_lat*X_lat + B_lat*U_lat;
@@ -48,6 +48,6 @@ for i = 2:length(time)
     X_long = X_long + Long_dot*dt;
     
     % Store full state
-    X(:,i) = [];
+    X(:,i) = [X_lat;X_long];
     
 end
