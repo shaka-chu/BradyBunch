@@ -24,7 +24,6 @@ function [X_hist] = simulateResponse(X,time,control)
     X = zeros(n,length(time));
     U = zeros(m,length(time));
     
-<<<<<<< HEAD
     % Break state into lateral and longitudinal components
     X_lat = X(1:5,i-1);
     X_long = X(1:6,i-1);

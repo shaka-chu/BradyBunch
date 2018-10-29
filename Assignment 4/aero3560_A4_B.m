@@ -21,4 +21,5 @@ h               = convlength(500,'ft','m');
 % Pitch angle at steady level flight (radians)
 theta = 0;
 
-[Alat, Blat] = lateralStateSpace(Params, X)
+% Obtain lateral-directional state space model
+[Alat, Blat] = lateralStateSpace(Params, V, theta, h);
