@@ -48,6 +48,6 @@ for i = 2:length(time)
     X_long = X_long + Long_dot*dt;
     
     % Store full state
-    X(:,i) = [X_lat;X_long];
+    X(:,i) = [X_lat; X_long];
     
 end
