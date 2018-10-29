@@ -61,8 +61,8 @@ function [X_hist] = simulateResponse(X,time,control)
         end
 
         % Break state into lateral and longitudinal components
-        X_lat = X(1:5,i-1);
-        X_long = X(1:6,i-1);
+        X_long = X(1:5,i-1);
+        X_lat = X(1:6,i-1);
 
         % Break control into lateral and longitudinal components
         U_lat = U(3:4,i-1);
@@ -77,7 +77,7 @@ function [X_hist] = simulateResponse(X,time,control)
         % Apply lateral Euler integration
         X_lat = X_lat + Lat_dot*dt;
 
-        % Apply longitudinal Euler integration
+        % Apply longitudinal Euler integrationgit
         X_long = X_long + Long_dot*dt;
 
         % Store full state
