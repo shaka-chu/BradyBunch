@@ -5,11 +5,13 @@ clf;
 clf reset;
 close all;
 
-% Load .mat file for CG2 at 220 kts
-load A_lon_220Kn_500ft_CG2.mat
+% Flight condition
+airspeed    = 'cruise';
+cgPos       = '2';
+flightCond  = [airspeed cgPos];
 
-% Load aircraft properties
-Params = aero3560_LoadFlightDataPC9_CG2;
+% Obtain longitudinal-directional state space model and aircraft properties
+[Alon, Blon, Params] = longitudinalStateSpace(flightCond) ;
 
 % Flight speed
 V = convvel(220,'kts','m/s');
@@ -23,3 +25,4 @@ theta = 0;
 
 % Obtain lateral-directional state space model
 [Alat, Blat] = lateralStateSpace(Params, V, theta, h);
+
