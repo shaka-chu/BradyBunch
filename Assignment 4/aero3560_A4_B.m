@@ -28,12 +28,12 @@ theta = 0;
 
 
 % Create time vector for simulation
-t_end = 60;
+t_end = 300;
 dt = 0.01;
 time = 0:dt:t_end;
 
 % Create state vector X = [u w q theta z v p r phi psi]'
-X = [V 0 0 theta -h 0 0 0 0 0]';
+X = [0 0 0 0 0 0 0 0 0 0]';
 
 % Calculate time histories
 [X_elevator,X_aileron, X_rudder] = deflections(X,time, Alat,Alon ,Blat, Blon);

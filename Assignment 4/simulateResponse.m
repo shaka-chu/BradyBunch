@@ -5,11 +5,11 @@ function [X] = simulateResponse(X0,time,control, A_lat, A_long, B_lat, B_long)
     
     % Initialise control
     if control == 1
-        Udeflect = [0.5; deg2rad(5); 0 ; 0];
+        Udeflect = [0; deg2rad(5); 0 ; 0];
     elseif control == 2
-        Udeflect = [0.5; 0; deg2rad(5); 0];
+        Udeflect = [0; 0; deg2rad(5); 0];
     elseif control == 3
-        Udeflect = [0.5; 0 ; 0 ; deg2rad(5)];
+        Udeflect = [0; 0 ; 0 ; deg2rad(5)];
     end
     
     % Initialise
@@ -25,7 +25,7 @@ function [X] = simulateResponse(X0,time,control, A_lat, A_long, B_lat, B_long)
         if time(i) >= 1 && time(i) < 1 + 0.5
             U = Udeflect;
         else
-            U = [0.5; 0 ; 0 ; 0];
+            U = [0; 0 ; 0 ; 0];
         end
 
         % Break state into lateral and longitudinal components
