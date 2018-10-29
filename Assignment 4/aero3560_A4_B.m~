@@ -50,14 +50,14 @@ Clr = Params.Aero.Clr;
 % Calculate aerodynamic derivatives for A matrix
 Q   = (1/2)*rho*V^2;
 Yv  = (1/m)*Q*S*(V*Cyb);
-Yp  = (1/m/2/V)*Q*S*b*(Cyp);
-Yr  = (1/m/2/V)*Q*S*b*(Cyr);
+Yp  = (1/m)*Q*S*(Cyp);
+Yr  = (1/m)*Q*S*(Cyr);
 Lv  = (1/Ixx)*Q*S*b*(V*Clb);
-Lp  = (1/Ixx/2/V)*Q*S*b^2*(Clp);
-Lr  = (1/Ixx/2/V)*Q*S*b^2*(Clr);
-Nv  = (1/Izz)*Q*S*b*Cnb;
-Np  = (1/Izz/2/V)*Q*S*b^2*(Cnp);
-Nr  = (1/Izz/2/V)*Q*S*b^2*(Cnr);
+Lp  = (1/Ixx)*Q*S*b*(Clp);
+Lr  = (1/Ixx)*Q*S*b*(Clr);
+Nv  = (1/Izz)*Q*S*b*(V*Cnb);
+Np  = (1/Izz)*Q*S*b*(Cnp);
+Nr  = (1/Izz)*Q*S*b*(Cnr);
 NTv = 0;
 A1  = Ixz/Ixx;
 B1  = Ixz/Izz;
@@ -118,16 +118,10 @@ B11 = Yda;
 B12 = Ydr;
 B21 = (Lda + A1*Nda)/(1 - A1*B1);
 B22 = (Ldr + A1*Ndr)/(1 - A1*B1);
-B31 = (Nda + B1*Lda)/(1 - A1*B1);
-B32 = (Ndr + B1*Ldr)/(1 - A1*B1);
-B41 = 0;
-B42 = 0;
-B51 = 0;
-B52 = 0;
+B31 = ;
+B32 = ;
+B41 = ;
+B42
     
 % Calculate lateral B matrix
-Blat = [B11 B12;
-        B21 B22;
-        B31 B32;
-        B41 B42;
-        B51 B52];
+Blat = [
