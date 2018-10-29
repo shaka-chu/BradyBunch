@@ -36,16 +36,22 @@ b   = Params.Geo.b;
 Cyb = Params.Aero.Cyb;
 Cyp = Params.Aero.Cyp;
 Cyr = Params.Aero.Cyr;
+Cyda = Params.Aero.Cyda;
+Cydr = Params.Aero.Cydr;
 
 % N Moment Coefficients
 Cnb = Params.Aero.Cnb;
 Cnp = Params.Aero.Cnp;
 Cnr = Params.Aero.Cnr;
+Cnda = Params.Aero.Cnda;
+Cndr = Params.Aero.Cndr;
 
 % L Moment Coefficients
 Clb = Params.Aero.Clb;
 Clp = Params.Aero.Clp;
 Clr = Params.Aero.Clr;
+Clda = Params.Aero.Clda;
+Cldr = Params.Aero.Cldr;
 
 % Calculate aerodynamic derivatives for A matrix
 Q   = (1/2)*rho*V^2;
@@ -94,16 +100,7 @@ Alat = [A11 A12 A13 A14 A15;
         A21 A22 A23 A24 A25;
         A31 A32 A33 A34 A35;
         A41 A42 A43 A44 A45;
-        A51 A52 A53 A54 A55];
-    
-    
-    
-    
-    
-    
-    
-    
-    
+        A51 A52 A53 A54 A55];  
     
 % Calculate aerodynamic derivatives for B matrix
 Yda = (Q*S*Cyda)/m;
