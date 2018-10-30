@@ -10,9 +10,9 @@ plotSettings
 
 % Flight condition
 airspeed    = 'cruise';
-% airspeed    = 'approach';
-cgPos       = '2';
-% cgPos       = '1';
+%airspeed    = 'approach';
+%cgPos       = '2';
+cgPos       = '1';
 flightCond  = [airspeed cgPos];
 
 % Obtain longitudinal-directional state space model and aircraft properties
@@ -46,7 +46,7 @@ time = 0:dt:t_end;
 X = [0 0 0 0 0 0 0 0 0 0]';
 
 % Calculate time histories
-[X_elevator,X_aileron, X_rudder] = deflections(X,time, Alat,Alon ,Blat, Blon);
+[X_elevator,X_aileron, X_rudder] = deflections(X,time, Alat,Alon,Blat, Blon);
 
 % Do you want to plot the results?
 plotResults = true;

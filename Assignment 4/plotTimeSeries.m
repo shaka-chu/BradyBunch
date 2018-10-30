@@ -21,5 +21,7 @@ function plotTimeSeries(X_elevator, X_aileron, X_rudder, time, plotResults)
         
         % Plot results
         plotData(X_elevatorPlot, time)
+        plotData(X_aileronPlot, time)
+        plotData(X_rudderPlot, time)
     end
 end
