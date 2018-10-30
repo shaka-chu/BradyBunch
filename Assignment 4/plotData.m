@@ -54,10 +54,8 @@ function plotData(varargin)
         plotU = true;
     end
     
-    
-
     % Create velocity figure
-    fig1 = figure(1);
+    fig1 = figure;
     x0=100;
     y0=100;
     width=550;
@@ -106,7 +104,7 @@ function plotData(varargin)
     end
     
     % Create body rates figure
-    fig2 = figure(2);
+    fig2 = figure;
     subplot(3,1,1)
     plot(time, rad2deg(X(4,:)), 'LineWidth',2)
     title('p')
@@ -142,7 +140,7 @@ function plotData(varargin)
     
     % Create attitude figure
     euler = rad2deg(quat2euler(X(7:10,:)));
-    fig3 = figure(3);
+    fig3 = figure;
     plot(time, euler(1,:), time, euler(2,:), time, euler(3,:), 'LineWidth',2)
     xlabel('Time (s)')
     ylabel('Attitude (\circ)')
@@ -160,7 +158,7 @@ function plotData(varargin)
     end
     
     % Create position figure
-    fig4 = figure(4);
+    fig4 = figure;
     if plotU
         
         plot(time, X(11,:), time, X(12,:), time, -X(13,:), 'LineWidth',2)
@@ -189,7 +187,7 @@ function plotData(varargin)
     
     % Create control figure
     if plotU
-        fig5 = figure(5);
+        fig5 = figure;
         subplot(2,2,1)
         plot(time, U(1,:), 'LineWidth',2)
         title('Throttle')

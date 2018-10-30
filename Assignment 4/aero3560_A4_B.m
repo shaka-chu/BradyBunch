@@ -9,17 +9,17 @@ close all;
 plotSettings
 
 % Flight condition
-airspeed    = 'cruise';
-% airspeed    = 'approach';
-cgPos       = '2';
-% cgPos       = '1';
+% airspeed    = 'cruise';
+airspeed    = 'approach';
+%cgPos       = '2';
+cgPos       = '1';
 flightCond  = [airspeed cgPos];
 
 % Obtain longitudinal-directional state space model and aircraft properties
 [Alon, Blon, Params] = longitudinalStateSpace(flightCond) ;
 
 % Flight speed
-V = convvel(220,'kts','m/s');
+V = convvel(90,'kts','m/s');
 
 % Density at flight speed
 h               = convlength(500,'ft','m');
@@ -55,5 +55,7 @@ X = [0 0 0 0 0 0 0 0 0 0]';
 % Do you want to plot the results?
 plotResults = false;
 
-% Results plotting (timeseries)
-plotTimeSeries(X_elevator, X_aileron, X_rudder, time, plotResults);
+% % Results plotting (timeseries)
+plotTimeSeries(V, X_elevator, time, 300, plotResults);
+plotTimeSeries(V, X_aileron, time, 150, plotResults);
+plotTimeSeries(V, X_rudder, time, 150, plotResults);
