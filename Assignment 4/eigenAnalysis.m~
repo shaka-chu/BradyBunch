@@ -1,5 +1,4 @@
-function EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, ...
-    plsPlotEigenVecs)
+function EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis)
 
     % Obtain eigenvectors for longitudinal state space
     [Ulon, eigMatLon] = eig(Alon);
@@ -7,17 +6,14 @@ function EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, ...
     % Longitudinal eigenvalues corresponding to eigenvector matrix cols
     eigValsVecLon = diag(eigMatLon);
     
+    % Obtain eigenvectors for longitudinal state space
+    [Ulat, eigMatLat] = eig(Alat);
+    
     % Number of longitudinal states
     [rowsLon, ~] = size(Alon);
     
-    % Obtain eigenvectors for lateral state space
-    [Ulat, eigMatLat] = eig(Alat([1:4],[1:4]));
-    
     % Lateral eigenvalues corresponding to eigenvector matrix cols
     eigValsVecLat = diag(eigMatLat);
-    
-    % Number of lateral states
-    [rowsLat, ~] = size(Alat([1:4],[1:4]));
     
     
     
@@ -57,6 +53,8 @@ function EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, ...
     shrtVecInd = find(eigValsVecLon == EigAnalysis.ShortPeriod.Pole);
     attiVecInd = find(eigValsVecLon == EigAnalysis.AttitudeConDi.Pole);
     
+    [logic, location] = ismembertol(real(EigAnalysis.DutchRoll.Pole),real(eigValsVecLat),0.5)
+    
     % Eigenvectors for longitudinal modes
     eigenVecPhugoid     = Ulon(:,phugVecInd(1));
     eigenVecShort       = Ulon(:,shrtVecInd(1));
@@ -91,12 +89,9 @@ function EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, ...
     EigAnalysis.Roll.Pole           = polesLat(rollInd);
     
     % Find indexes of eigenvectors for longitudinal modes mode
-    [~, dtchVecInd] = ismembertol(real(EigAnalysis.DutchRoll.Pole), ...
-        real(eigValsVecLat), 0.1);
-    [~, sprlVecInd] = ismembertol(real(EigAnalysis.Spiral.Pole), ...
-        real(eigValsVecLat), 0.1);
-    [~, rollVecInd] = ismembertol(real(EigAnalysis.Roll.Pole), ...
-        real(eigValsVecLat), 0.1);
+    dtchVecInd = find(eigValsVecLat == EigAnalysis.DutchRoll.Pole);
+    sprlVecInd = find(eigValsVecLat == EigAnalysis.Spiral.Pole);
+    rollVecInd = find(eigValsVecLat == EigAnalysis.Roll.Pole);
     
     % Eigenvectors for longitudinal modes
     eigenVecDutchRoll   = Ulat(:,dtchVecInd(1));
@@ -107,11 +102,6 @@ function EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, ...
     EigAnalysis.DutchRoll.Eigenvector   = eigenVecDutchRoll;
     EigAnalysis.Spiral.Eigenvector      = eigenVecSpiral;
     EigAnalysis.Roll.Eigenvector        = eigenVecRoll;
-    
-    % Plot eigenvectors
-    if plsPlotEigenVecs
-        plotEigenvectors(EigAnalysis, rowsLon, rowsLat);
-    end
  
     % Pring analysis to screen if desired
     if printAnalysis

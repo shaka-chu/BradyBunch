@@ -34,8 +34,11 @@ theta = 0;
 % Do you want to print the eigen analysis to the command window?
 printAnalysis = true;
 
+% Do you want to plot the eigenvectors?
+plsPlotEigenVecs = true;
+
 % Eigen analysis
-EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis);
+EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, plsPlotEigenVecs);
 
 % Create time vector for simulation
 t_end = 300;
@@ -46,10 +49,11 @@ time = 0:dt:t_end;
 X = [0 0 0 0 0 0 0 0 0 0]';
 
 % Calculate time histories
-[X_elevator,X_aileron, X_rudder] = deflections(X,time, Alat,Alon ,Blat, Blon);
+[X_elevator,X_aileron, X_rudder] = deflections(X, time, Alat, Alon , ...
+    Blat, Blon);
 
 % Do you want to plot the results?
-plotResults = true;
+plotResults = false;
 
 % Results plotting (timeseries)
 plotTimeSeries(X_elevator, X_aileron, X_rudder, time, plotResults);
