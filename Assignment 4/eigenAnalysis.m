@@ -11,32 +11,19 @@ function EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, ...
     [rowsLon, ~] = size(Alon);
     
     % Obtain eigenvectors for lateral state space
-    [Ulat, eigMatLat] = eig(Alat([1:4],[1:4]));
+    [Ulat, eigMatLat] = eig(Alat(1:4,1:4));
     
     % Lateral eigenvalues corresponding to eigenvector matrix cols
     eigValsVecLat = diag(eigMatLat);
     
     % Number of lateral states
-    [rowsLat, ~] = size(Alat([1:4],[1:4]));
-    
-    
-    
-
-    
-%     figure;
-%     hold on
-%     axis([-1 1 -1 1]);
-%     daspect([1 1 1])
-%     for i = 1:rowsLon
-%         
-%         arrow3([0 0], [real(Ulon(i,1)) imag(Ulon(i,1))], 'k', 0.9, 0.9)
-%     end
+    [rowsLat, ~] = size(Alat(1:4,1:4));
     
     % Obtain frequency, damping and poles of longitudinal state space
     [wnLon, dampLon, polesLon] = damp(Alon);
     
     % Obtain frequency, damping and poles of longitudinal state space
-    [wnLat, dampLat, polesLat] = damp(Alat([1:4],[1:4]));
+    [wnLat, dampLat, polesLat] = damp(Alat(1:4,1:4));
     
     % Longitudinal-directional data in order of frequency
     [maxFreqLon, maxIndLon] = maxk(wnLon, rowsLon);
@@ -92,11 +79,11 @@ function EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, ...
     
     % Find indexes of eigenvectors for longitudinal modes mode
     [~, dtchVecInd] = ismembertol(real(EigAnalysis.DutchRoll.Pole), ...
-        real(eigValsVecLat), 0.1);
+        real(eigValsVecLat), 0.01);
     [~, sprlVecInd] = ismembertol(real(EigAnalysis.Spiral.Pole), ...
-        real(eigValsVecLat), 0.1);
+        real(eigValsVecLat), 0.01);
     [~, rollVecInd] = ismembertol(real(EigAnalysis.Roll.Pole), ...
-        real(eigValsVecLat), 0.1);
+        real(eigValsVecLat), 0.01);
     
     % Eigenvectors for longitudinal modes
     eigenVecDutchRoll   = Ulat(:,dtchVecInd(1));
@@ -128,6 +115,6 @@ function EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, ...
         fprintf('----------------\n\n');
         fprintf('                  Lateral-Directional Eigen Analysis');
         fprintf('\n\n');
-        damp(Alat)
+        damp(Alat(1:4,1:4))
     end
 end

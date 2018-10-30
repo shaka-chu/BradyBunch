@@ -32,7 +32,7 @@ theta = 0;
 [Alat, Blat] = lateralStateSpace(Params, V, theta, h);
 
 % Do you want to print the eigen analysis to the command window?
-printAnalysis = true;
+printAnalysis = false;
 
 % Do you want to plot the eigenvectors?
 plsPlotEigenVecs = true;

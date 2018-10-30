@@ -7,6 +7,37 @@ function plotEigenvectors(EigAnalysis, rowsLon, rowsLat)
     dtchVec = EigAnalysis.DutchRoll.Eigenvector;
     sprlVec = EigAnalysis.Spiral.Eigenvector;
     rollVec = EigAnalysis.Roll.Eigenvector;
+    
+    
+    stateLon    = {'u','w','q','\theta','z_{e}'};
+    statesLat   = {}
+    dx = 0;
+    dy = 0.02;
+    text(real()+dx, yTaps_upper(2:end)+dy, thing2);
+
+    
+    
+    
+%     % Plot tube number positions with labels
+% scatter(xc_upper,yTaps_upper,'MarkerEdgeColor','k','MarkerFaceColor','k')
+% tubeNums_upper = [15:26]';
+% thing = num2str(tubeNums_upper);
+% thing2 = cellstr(thing);
+% dx = 0;
+% dy = 0.02;
+% text(xc_upper(2:end)+dx, yTaps_upper(2:end)+dy, thing2);
+% text(xc_upper(1)-0.015, yTaps_upper(1)+dy, '14');
+% scatter(xc_lower,yTaps_lower,'MarkerEdgeColor','k','MarkerFaceColor','k')
+% tubeNums_lower = [12:-1:1]';
+% thing = num2str(tubeNums_lower);
+% thing2 = cellstr(thing);
+% dx = 0;
+% dy = 0.02;
+% text(xc_lower(2:end)+dx, yTaps_lower(2:end)-dy, thing2);
+% text(xc_lower(1)-0.015, yTaps_lower(1)-dy, '13');
+% set(gcf, 'Color', [1 1 1]);
+% set(gca, 'Color', [1 1 1]);
+% grid on
 
     % Plot phugoid eigenvector
     phugEigVec = figure;
@@ -59,7 +90,7 @@ function plotEigenvectors(EigAnalysis, rowsLon, rowsLat)
     xlabel('Re')
     ylabel('Im')
     grid on
-    for i = 1:rowsLon
+    for i = 1:rowsLat
         arrow3([0 0], [real(dtchVec(i,1)) imag(dtchVec(i,1))], 'k', ...
             0.9, 0.9)
     end
@@ -73,11 +104,22 @@ function plotEigenvectors(EigAnalysis, rowsLon, rowsLat)
     xlabel('Re')
     ylabel('Im')
     grid on
-    for i = 1:rowsLon
+    for i = 1:rowsLat
         arrow3([0 0], [real(sprlVec(i,1)) imag(sprlVec(i,1))], 'k', ...
             0.9, 0.9)
     end
-
-
-
+    
+    % Plot roll mode eigenvector
+    rollEigVec = figure;
+    hold on
+    axis([-1 1 -1 1]);
+    daspect([1 1 1]);
+    title('Roll Mode Eigenvectors');
+    xlabel('Re')
+    ylabel('Im')
+    grid on
+    for i = 1:rowsLat
+        arrow3([0 0], [real(rollVec(i,1)) imag(rollVec(i,1))], 'k', ...
+            0.9, 0.9)
+    end
 end
