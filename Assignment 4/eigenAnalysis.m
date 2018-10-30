@@ -29,12 +29,12 @@ function EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, ...
     [maxFreqLon, maxIndLon] = maxk(wnLon, rowsLon);
     
     % Store longitudinal-directional eigen analysis in struct
-    EigAnalysis.Phugoid.Wn              = maxFreqLon(1);
-    EigAnalysis.Phugoid.Damping         = dampLon(maxIndLon(1));
-    EigAnalysis.Phugoid.Pole            = polesLon(maxIndLon(1));
-    EigAnalysis.ShortPeriod.Wn          = maxFreqLon(3);
-    EigAnalysis.ShortPeriod.Wn          = dampLon(maxIndLon(3));
-    EigAnalysis.ShortPeriod.Pole        = polesLon(maxIndLon(3));
+    EigAnalysis.ShortPeriod.Wn          = maxFreqLon(1);
+    EigAnalysis.ShortPeriod.Damping     = dampLon(maxIndLon(1));
+    EigAnalysis.ShortPeriod.Pole        = polesLon(maxIndLon(1));
+    EigAnalysis.Phugoid.Wn              = maxFreqLon(3);
+    EigAnalysis.Phugoid.Damping         = dampLon(maxIndLon(3));
+    EigAnalysis.Phugoid.Pole            = polesLon(maxIndLon(3));
     EigAnalysis.AttitudeConDi.Wn        = maxFreqLon(5);
     EigAnalysis.AttitudeConDi.Damping   = dampLon(maxIndLon(5));
     EigAnalysis.AttitudeConDi.Pole      = polesLon(maxIndLon(5));

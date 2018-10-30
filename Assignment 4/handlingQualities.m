@@ -1,7 +1,7 @@
 % AERO3560 Assignment 4
 % Author: 460306678
 
-function [] = handlingQualities(Params, V, h)
+function [] = handlingQualities(Params, V, h, EigAnalysis)
 
     % Unpack intertial data
     g   = Params.Inertial.g;
@@ -44,12 +44,14 @@ function [] = handlingQualities(Params, V, h)
     Cdo     = Params.Aero.Cdo;          % Non-dimensional
     k       = Params.Aero.k;            % Non-dimensional
     c       = Params.Geo.c;             % m
-        % M Moment Coefficients
+    
+    % M Moment Coefficients
     Cmo = Params.Aero.Cmo;
     Cma = Params.Aero.Cma;
     Cmq = Params.Aero.Cmq;
     Cmad = Params.Aero.Cmad;
     Cmde = Params.Aero.Cmde;
+    
     % Density (kg/m^3)
     [~, ~, ~, rho] = atmosisa(h);
     
@@ -57,5 +59,9 @@ function [] = handlingQualities(Params, V, h)
     Q = (1/2)*rho*V^2;    
 
     % Determing loading per angle of attack
-    nzOvera =(CLa - (CLde/Cmde)*Cma)/((m*g/(Q*S)) - (g*c/(2*V^2))*(CLq - (CLde/Cmde)*Cmq))
+    nz_alpha =(CLa - (CLde/Cmde)*Cma)/((m*g/(Q*S)) - (g*c/(2*V^2))*(CLq - (CLde/Cmde)*Cmq));
+    
+    % Eye plots
+    eyePlots(EigAnalysis, nz_alpha);
+
 end

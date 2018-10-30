@@ -25,6 +25,7 @@ function plotEigenvectors(EigAnalysis, rowsLon, rowsLat)
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     grid on
+    gridxy(0,0)
     for i = 1:rowsLon
         arrow3([0 0], [real(phugVec(i,1)) imag(phugVec(i,1))], 'k', ...
             0.9, 0.9);
@@ -43,6 +44,7 @@ function plotEigenvectors(EigAnalysis, rowsLon, rowsLat)
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     grid on
+    gridxy(0,0)
     for i = 1:rowsLon
         arrow3([0 0], [real(shrtVec(i,1)) imag(shrtVec(i,1))], 'k', ...
             0.9, 0.9);
@@ -61,6 +63,7 @@ function plotEigenvectors(EigAnalysis, rowsLon, rowsLat)
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     grid on
+    gridxy(0,0)
     for i = 1:rowsLon
         arrow3([0 0], [real(attiVec(i,1)) imag(attiVec(i,1))], 'k', ...
             0.9, 0.9);
@@ -79,6 +82,7 @@ function plotEigenvectors(EigAnalysis, rowsLon, rowsLat)
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     grid on
+    gridxy(0,0)
     for i = 1:rowsLat
         arrow3([0 0], [real(dtchVec(i,1)) imag(dtchVec(i,1))], 'k', ...
             0.9, 0.9);
@@ -97,6 +101,7 @@ function plotEigenvectors(EigAnalysis, rowsLon, rowsLat)
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     grid on
+    gridxy(0,0)
     for i = 1:rowsLat
         arrow3([0 0], [real(sprlVec(i,1)) imag(sprlVec(i,1))], 'k', ...
             0.9, 0.9);
@@ -115,6 +120,7 @@ function plotEigenvectors(EigAnalysis, rowsLon, rowsLat)
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
     grid on
+    gridxy(0,0)
     for i = 1:rowsLat
         arrow3([0 0], [real(rollVec(i,1)) imag(rollVec(i,1))], 'k', ...
             0.9, 0.9);

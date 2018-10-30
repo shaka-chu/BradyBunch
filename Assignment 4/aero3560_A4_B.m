@@ -32,7 +32,7 @@ theta = 0;
 [Alat, Blat] = lateralStateSpace(Params, V, theta, h);
 
 % Do you want to print the eigen analysis to the command window?
-printAnalysis = false;
+printAnalysis = true;
 
 % Do you want to plot the eigenvectors?
 plsPlotEigenVecs = true;
@@ -59,3 +59,6 @@ plotResults = false;
 plotTimeSeries(V, X_elevator, time, 300, plotResults);
 plotTimeSeries(V, X_aileron, time, 150, plotResults);
 plotTimeSeries(V, X_rudder, time, 150, plotResults);
+
+% Handling qualities
+handlingQualities(Params, V, h, EigAnalysis)
