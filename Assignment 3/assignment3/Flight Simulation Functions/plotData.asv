@@ -175,8 +175,11 @@ function plotData(varargin)
     else
         plot(time, -X(13,:), 'LineWidth',2)
         xlabel('Time (s)')
-        ylabel('Height (m)')
+        ylabel('Position (m)')
         grid on
+        h = legend('X-position', 'Y-position','Height');
+        set(h,'Interpreter','latex');
+        set(h,'location','best');
         set(gcf, 'Color', [1 1 1]);
         set(gca, 'Color', [1 1 1]);
     end
