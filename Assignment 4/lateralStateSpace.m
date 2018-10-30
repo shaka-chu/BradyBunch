@@ -40,15 +40,15 @@ function [Alat, Blat] = lateralStateSpace(Params, V, theta, h)
 
     % Calculate aerodynamic derivatives for A matrix
     Q   = (1/2)*rho*V^2;
-    Yv  = (1/(m*V))*Q*S*(Cyb);
-    Yp  = (1/m/2/V)*Q*S*b*(Cyp);
-    Yr  = (1/m/2/V)*Q*S*b*(Cyr);
-    Lv  = (1/(Ixx*V))*Q*S*b*(Clb);
-    Lp  = (1/Ixx/2/V)*Q*S*b^2*(Clp);
-    Lr  = (1/Ixx/2/V)*Q*S*b^2*(Clr);
-    Nv  = (1/(Izz*V))*Q*S*b*(V*Cnb);
-    Np  = (1/Izz/2/V)*Q*S*b^2*(Cnp);
-    Nr  = (1/Izz/2/V)*Q*S*b^2*(Cnr);
+    Yv  = Q*S*Cyb/(m*V);
+    Yp  = Q*S*b*Cyp/(2*m*V);
+    Yr  = Q*S*b*Cyr/(2*m*V);
+    Lv  = Q*S*b*Clb/(Ixx*V);
+    Lp  = Q*S*b^2*Clp/(Ixx*2*V);
+    Lr  = Q*S*b^2*Clr/(Ixx*2*V);
+    Nv  = Q*S*b*Cnb/(Izz*V);
+    Np  = Q*S*b^2*Cnp/(Izz*2*V);
+    Nr  = Q*S*b^2*Cnr/(Izz*2*V);
     NTv = 0;
     A1  = Ixz/Ixx;
     B1  = Ixz/Izz;
