@@ -35,13 +35,17 @@ theta = 0;
 printAnalysis = true;
 
 % Do you want to plot the eigenvectors?
-plsPlotEigenVecs = true;
+plsPlotEigenVecs = false;
+
+% Do you want to plot root locus?
+plsPlotRootLocus = false;
 
 % Eigen analysis
-EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, plsPlotEigenVecs);
+EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, ...
+    plsPlotEigenVecs, plsPlotRootLocus);
 
 % Create time vector for simulation
-t_end = 300;
+t_end = 40;
 dt = 0.01;
 time = 0:dt:t_end;
 
@@ -61,4 +65,5 @@ plotTimeSeries(V, X_aileron, time, 150, plotResults);
 plotTimeSeries(V, X_rudder, time, 150, plotResults);
 
 % Handling qualities
-handlingQualities(Params, V, h, EigAnalysis)
+handlingQualities(Params, V, h, EigAnalysis);
+

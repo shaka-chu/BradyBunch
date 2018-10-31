@@ -1,5 +1,5 @@
 function EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, ...
-    plsPlotEigenVecs)
+    plsPlotEigenVecs, plsPlotRootLocus)
 
     % Obtain eigenvectors for longitudinal state space
     [Ulon, eigMatLon] = eig(Alon);
@@ -98,6 +98,11 @@ function EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, ...
     % Plot eigenvectors
     if plsPlotEigenVecs
         plotEigenvectors(EigAnalysis, rowsLon, rowsLat);
+    end
+    
+    % Plot root locus
+    if plsPlotRootLocus
+        plotRootLocus(EigAnalysis);
     end
  
     % Pring analysis to screen if desired
