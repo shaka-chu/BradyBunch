@@ -41,9 +41,7 @@ function eyePlots(EigAnalysis, nz_alpha)
     plot(horizVec, minFreq_lvl1*oneVec, horizVec, maxFreq_lvl1*oneVec, ...
         horizVec, minFreq_lvl23*oneVec, horizVec, maxFreq_lvl23*oneVec);
     plot(EigAnalysis.ShortPeriod.Damping, EigAnalysis.ShortPeriod.Wn, 'x')
-    
-    disp('aaa')
-    
+
 
     
     % Attempt at ellipse plotting
