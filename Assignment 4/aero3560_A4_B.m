@@ -9,10 +9,10 @@ close all;
 plotSettings
 
 % Flight condition
-% airspeed    = 'cruise';
-airspeed    = 'approach';
-%cgPos       = '2';
-cgPos       = '1';
+airspeed    = 'cruise';
+% airspeed    = 'approach';
+cgPos       = '2';
+% cgPos       = '1';
 flightCond  = [airspeed cgPos];
 
 % Obtain longitudinal-directional state space model and aircraft properties
@@ -45,7 +45,7 @@ EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, ...
     plsPlotEigenVecs, plsPlotRootLocus);
 
 % Create time vector for simulation
-t_end = 40;
+t_end = 100;
 dt = 0.01;
 time = 0:dt:t_end;
 
@@ -57,13 +57,12 @@ X = [0 0 0 0 0 0 0 0 0 0]';
     Blat, Blon);
 
 % Do you want to plot the results?
-plotResults = false;
+plotResults = true;
 
-% % Results plotting (timeseries)
+% Results plotting (timeseries)
 plotTimeSeries(V, X_elevator, time, 300, plotResults);
-plotTimeSeries(V, X_aileron, time, 150, plotResults);
-plotTimeSeries(V, X_rudder, time, 150, plotResults);
+% plotTimeSeries(V, X_aileron, time, 150, plotResults);
+% plotTimeSeries(V, X_rudder, time, 150, plotResults);
 
-% Handling qualities
-handlingQualities(Params, V, h, EigAnalysis);
-
+% % Handling qualities
+% handlingQualities(Params, V, h, EigAnalysis);

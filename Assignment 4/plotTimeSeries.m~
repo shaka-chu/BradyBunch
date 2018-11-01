@@ -16,7 +16,7 @@ function [fig1, fig2, fig3, fig4] = plotTimeSeries(V, X, time, tlim, plotResults
         set(gcf, 'Color', [1 1 1]);
         set(gca, 'Color', [1 1 1]);
         grid on
-        print(fig1, 'cruise2_tSeries_elevator_alphaBeta', '-depsc') 
+        print(fig1, 'cruise2_tSeries_ai_alphaBeta', '-depsc') 
         
         % Plot body rates
         fig2 = figure;

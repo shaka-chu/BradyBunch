@@ -15,7 +15,7 @@ function plotRootLocus(EigAnalysis)
     
 
     % Plot longitudinal-directional root locus
-    figure;
+    rootLocusLon = figure;
     hold on
     p1 = plot(real(phugEigVal), imag(phugEigVal), 'o', 'Color', ...
         magenta, 'MarkerSize', 10);
@@ -32,10 +32,10 @@ function plotRootLocus(EigAnalysis)
     set(hleg1, 'Location', 'Best');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
-    
+    print(rootLocusLon, 'cruise2_rootLocus_lon', '-depsc')    
     
     % Plot lateral-directional root locus
-    figure;
+    rootLocsLat = figure;
     hold on
     p4 = plot(real(dtchEigVal), imag(dtchEigVal), 'o', 'Color', ...
         magenta, 'MarkerSize', 10);
@@ -52,6 +52,6 @@ function plotRootLocus(EigAnalysis)
     set(hleg2, 'Location', 'Best');
     set(gcf, 'Color', [1 1 1]);
     set(gca, 'Color', [1 1 1]);
-    
+    print(rootLocsLat, 'cruise2_rootLocus_lat', '-depsc')    
 
 end
