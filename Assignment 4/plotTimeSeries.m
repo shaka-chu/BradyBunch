@@ -12,8 +12,11 @@ function [fig1, fig2, fig3, fig4] = plotTimeSeries(V, X, time, tlim, plotResults
         leg = legend('\alpha', '\beta', 'Location', 'best');
         xlabel('Time (sec)')
         ylabel('Aerodynamic Angles (deg)')
-        xlim([time(1) tlim])
+        set(gca, 'XLimSpec', 'Tight');
+        set(gcf, 'Color', [1 1 1]);
+        set(gca, 'Color', [1 1 1]);
         grid on
+        print(fig1, 'cruise2_tSeries_elevator_alphaBeta', '-depsc') 
         
         % Plot body rates
         fig2 = figure;
@@ -24,20 +27,26 @@ function [fig1, fig2, fig3, fig4] = plotTimeSeries(V, X, time, tlim, plotResults
         leg = legend('p', 'q', 'r', 'Location', 'best');
         xlabel('Time (sec)')
         ylabel('Body Axes Rotation Rates (deg/s)')
-        xlim([time(1) tlim])
+        set(gca, 'XLimSpec', 'Tight');
+        set(gcf, 'Color', [1 1 1]);
+        set(gca, 'Color', [1 1 1]);
         grid on
+        print(fig2, 'cruise2_tSeries_elevator_rotRates', '-depsc') 
         
         % Plot body angles 
         fig3 = figure;
         plot(time, rad2deg(X(9, :)));
         hold on
-        plot(time, rad2deg(X(10, :)));
         plot(time, rad2deg(X(4, :)));
+        plot(time, rad2deg(X(10, :)));
         leg = legend('\phi', '\theta', '\psi', 'Location', 'best');
         xlabel('Time (sec)')
         ylabel('Body Axes Attitude Angles (deg)')
-        xlim([time(1) tlim])
+        set(gca, 'XLimSpec', 'Tight');
+        set(gcf, 'Color', [1 1 1]);
+        set(gca, 'Color', [1 1 1]);
         grid on
+        print(fig3, 'cruise2_tSeries_elevator_attitudes', '-depsc') 
         
         % Plot body velocity 
         fig4 = figure;
@@ -48,6 +57,19 @@ function [fig1, fig2, fig3, fig4] = plotTimeSeries(V, X, time, tlim, plotResults
         leg = legend('u', 'v', 'w', 'Location', 'best');
         xlabel('Time (sec)')
         ylabel('Body Axes Velocities (m/s)')
+        set(gcf, 'Color', [1 1 1]);
+        set(gca, 'Color', [1 1 1]);
+        set(gca, 'XLimSpec', 'Tight');
+        grid on
+        print(fig4, 'cruise2_tSeries_elevator_velocities', '-depsc') 
+        
+        fig5 = figure;
+        plot(time, X(5, :));
+        xlabel('Time (sec)');
+        ylabel('Earth Axis Altitude Position, z_e (m)')
+        set(gcf, 'Color', [1 1 1]);
+        set(gca, 'Color', [1 1 1]);
+        set(gca, 'XLimSpec', 'Tight');
         grid on
     end
         
