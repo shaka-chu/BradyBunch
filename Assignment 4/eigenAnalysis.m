@@ -1,5 +1,5 @@
 function EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, ...
-    plsPlotEigenVecs)
+    plsPlotEigenVecs, plsPlotRootLocus)
 
     % Obtain eigenvectors for longitudinal state space
     [Ulon, eigMatLon] = eig(Alon);
@@ -71,7 +71,7 @@ function EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, ...
     EigAnalysis.DutchRoll.Damping   = dampLat(dutchInd(1));
     EigAnalysis.DutchRoll.Pole      = polesLat(dutchInd(1));
     EigAnalysis.Spiral.Wn           = wnLat(spiralInd);
-    EigAnalysis.Spiral.Wn           = dampLat(spiralInd);
+    EigAnalysis.Spiral.Damping           = dampLat(spiralInd);
     EigAnalysis.Spiral.Pole         = polesLat(spiralInd);
     EigAnalysis.Roll.Wn             = wnLat(rollInd);
     EigAnalysis.Roll.Damping        = dampLat(rollInd);
@@ -98,6 +98,11 @@ function EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, ...
     % Plot eigenvectors
     if plsPlotEigenVecs
         plotEigenvectors(EigAnalysis, rowsLon, rowsLat);
+    end
+    
+    % Plot root locus
+    if plsPlotRootLocus
+        plotRootLocus(EigAnalysis);
     end
  
     % Pring analysis to screen if desired

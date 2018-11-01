@@ -18,5 +18,14 @@ function plotSettings
     set(groot,'defaultAxesColorOrder',[black;blue;red;green;yellow;cyan;...
         purple;orange]);
     set(0,'defaultLineLineWidth',lw);
+    
+    % Font
+    set(0, 'defaultAxesFontName','Latin Modern Math')
+    set(0,'defaultTextFontName', 'Latin Modern Math')
+    set(0, 'defaultAxesFontSize', 18)
+    %set(0, 'defaultAxesFontWeight', 'bold')
+    set(0, 'defaultTextInterpreter','tex')
+    position = [10, 50, 1280, 720];
+%     set(0, 'DefaultFigurePosition', position);
 
 end
