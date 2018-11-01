@@ -11,7 +11,7 @@ plotSettings
 % Flight condition
 % airspeed    = 'cruise';
 airspeed    = 'approach';
-%cgPos       = '2';
+% cgPos       = '2';
 cgPos       = '1';
 flightCond  = [airspeed cgPos];
 
