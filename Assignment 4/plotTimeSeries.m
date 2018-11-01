@@ -62,6 +62,15 @@ function [fig1, fig2, fig3, fig4] = plotTimeSeries(V, X, time, tlim, plotResults
         set(gca, 'XLimSpec', 'Tight');
         grid on
         print(fig4, 'cruise2_tSeries_elevator_velocities', '-depsc') 
+        
+        fig5 = figure;
+        plot(time, X(5, :));
+        xlabel('Time (sec)');
+        ylabel('Earth Axis Altitude Position, z_e (m)')
+        set(gcf, 'Color', [1 1 1]);
+        set(gca, 'Color', [1 1 1]);
+        set(gca, 'XLimSpec', 'Tight');
+        grid on
     end
         
 end
