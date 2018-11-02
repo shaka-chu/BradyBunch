@@ -38,10 +38,10 @@ rollEigVal_a2 = approach2.EigAnalysis.Roll.Pole;
 
 figure;
 hold on
-p1 = plot(real(shrtEigVal_c1), imag(shrtEigVal_c1),'+m', 'MarkerSize', 10);
-p2 = plot(real(shrtEigVal_c2), imag(shrtEigVal_c2),'+g', 'MarkerSize', 10);
-p3 = plot(real(shrtEigVal_a1), imag(shrtEigVal_a1),'+r', 'MarkerSize', 10);
-p4 = plot(real(shrtEigVal_a2), imag(shrtEigVal_a2),'+b', 'MarkerSize', 10);
+p1 = plot([real(shrtEigVal_c1),real(shrtEigVal_c1)], [imag(shrtEigVal_c1),-imag(shrtEigVal_c1)],'+m', 'MarkerSize', 10);
+p2 = plot([real(shrtEigVal_c2),real(shrtEigVal_c2)], [imag(shrtEigVal_c2),-imag(shrtEigVal_c2)],'+g', 'MarkerSize', 10);
+p3 = plot([real(shrtEigVal_a1),real(shrtEigVal_a1)], [imag(shrtEigVal_a1),-imag(shrtEigVal_a1)],'+r', 'MarkerSize', 10);
+p4 = plot([real(shrtEigVal_a2),real(shrtEigVal_a2)], [imag(shrtEigVal_a2),-imag(shrtEigVal_a2)],'+b', 'MarkerSize', 10);
 xlabel('Re');
 ylabel('Im');
 set(gcf, 'Color', [1 1 1]);
@@ -55,14 +55,14 @@ set(hleg1, 'Location', 'Best');
     
 figure;
 hold on
-p5 = plot(real(phugEigVal_c1), imag(phugEigVal_c1),'om', 'MarkerSize', 10);
-p6 = plot(real(attiEigVal_c1), imag(attiEigVal_c1),'*m', 'MarkerSize', 10);
-p7 = plot(real(phugEigVal_c2), imag(phugEigVal_c2),'og', 'MarkerSize', 10);
-p8 = plot(real(attiEigVal_c2), imag(attiEigVal_c2),'*g', 'MarkerSize', 10);
-p9 = plot(real(phugEigVal_a1), imag(phugEigVal_a1),'or', 'MarkerSize', 10);
-p10 = plot(real(attiEigVal_a1), imag(attiEigVal_a1),'*r', 'MarkerSize', 10);
-p11 = plot(real(phugEigVal_a2), imag(phugEigVal_a2),'ob', 'MarkerSize', 10);
-p12 = plot(real(attiEigVal_a2), imag(attiEigVal_a2),'*b', 'MarkerSize', 10);
+p5 = plot([real(phugEigVal_c1),real(phugEigVal_c1)], [imag(phugEigVal_c1),-imag(phugEigVal_c1)],'om', 'MarkerSize', 10);
+p6 = plot([real(attiEigVal_c1),real(attiEigVal_c1)], [imag(attiEigVal_c1),-imag(attiEigVal_c1)],'*m', 'MarkerSize', 10);
+p7 = plot([real(phugEigVal_c2),real(phugEigVal_c2)], [imag(phugEigVal_c2),-imag(phugEigVal_c2)],'og', 'MarkerSize', 10);
+p8 = plot([real(attiEigVal_c2),real(attiEigVal_c2)], [imag(attiEigVal_c2),-imag(attiEigVal_c2)],'*g', 'MarkerSize', 10);
+p9 = plot([real(phugEigVal_a1),real(phugEigVal_a1)], [imag(phugEigVal_a1),-imag(phugEigVal_a1)],'or', 'MarkerSize', 10);
+p10 = plot([real(attiEigVal_a1),real(attiEigVal_a1)],[imag(attiEigVal_a1),-imag(attiEigVal_a1)],'*r', 'MarkerSize', 10);
+p11 = plot([real(phugEigVal_a2),real(phugEigVal_a2)], [imag(phugEigVal_a2),-imag(phugEigVal_a2)],'ob', 'MarkerSize', 10);
+p12 = plot([real(attiEigVal_a2),real(attiEigVal_a2)], [imag(attiEigVal_a2),-imag(attiEigVal_a2)],'*b', 'MarkerSize', 10);
 xlabel('Re');
 ylabel('Im');
 set(gcf, 'Color', [1 1 1]);
@@ -70,18 +70,20 @@ set(gca, 'Color', [1 1 1]);
 grid on
 gridxy(0,0);
 hleg2 = legend([p5, p6, p7, p8, p9, p10, p11, p12], ...
-    'PM (cg:1, 220kts)', 'Attitude Con/Di (cg:1, 220kts)', ...
-    'PM (cg:2, 220kts)', 'Attitude Cone/Di (cg:2, 220kts)', ...
-    'PM (cg:1, 90kts)', 'Attitude Con/Di (cg:1, 90kts)', ...
-    'PM (cg:2, 90kts)', 'Attitude Con/Di (cg:2, 90kts)');
+    'PM (cg:1, 220kts)', 'Altitude Con/Di (cg:1, 220kts)', ...
+    'PM (cg:2, 220kts)', 'Altitude Cone/Di (cg:2, 220kts)', ...
+    'PM (cg:1, 90kts)', 'Altitude Con/Di (cg:1, 90kts)', ...
+    'PM (cg:2, 90kts)', 'Altitude Con/Di (cg:2, 90kts)');
 set(hleg2, 'Location', 'Best');
+
+
 
 figure;
 hold on
-p13 = plot(real(rollEigVal_c1), imag(rollEigVal_c1), 'pm', 'MarkerSize', 10);
-p14 = plot(real(rollEigVal_c2), imag(rollEigVal_c2), 'pg', 'MarkerSize', 10);
-p15 = plot(real(rollEigVal_a1), imag(rollEigVal_a1), 'pr', 'MarkerSize', 10);
-p16 = plot(real(rollEigVal_a2), imag(rollEigVal_a2), 'pb', 'MarkerSize', 10);
+p13 = plot([real(rollEigVal_c1),real(rollEigVal_c1)], [imag(rollEigVal_c1),-imag(rollEigVal_c1)], 'pm', 'MarkerSize', 10);
+p14 = plot([real(rollEigVal_c2),real(rollEigVal_c2)], [imag(rollEigVal_c2),-imag(rollEigVal_c2)], 'pg', 'MarkerSize', 10);
+p15 = plot([real(rollEigVal_a1),real(rollEigVal_a1)], [imag(rollEigVal_a1),-imag(rollEigVal_a1)], 'pr', 'MarkerSize', 10);
+p16 = plot([real(rollEigVal_a2),real(rollEigVal_a2)], [imag(rollEigVal_a2),-imag(rollEigVal_a2)], 'pb', 'MarkerSize', 10);
 xlabel('Re');
 ylabel('Im');
 set(gcf, 'Color', [1 1 1]);
@@ -96,14 +98,14 @@ set(hleg3, 'Location', 'Best');
 
 figure;
 hold on
-p17 = plot(real(dtchEigVal_c1), imag(dtchEigVal_c1), '^m', 'MarkerSize', 10);
-p18 = plot(real(sprlEigVal_c1), imag(sprlEigVal_c1), 'xm', 'MarkerSize', 10);
-p19 = plot(real(dtchEigVal_c2), imag(dtchEigVal_c2), '^g', 'MarkerSize', 10);
-p20 = plot(real(sprlEigVal_c2), imag(sprlEigVal_c2), 'xg', 'MarkerSize', 10);
-p21 = plot(real(dtchEigVal_a1), imag(dtchEigVal_a1), '^r', 'MarkerSize', 10);
-p22 = plot(real(sprlEigVal_a1), imag(sprlEigVal_a1), 'xr', 'MarkerSize', 10);
-p23 = plot(real(dtchEigVal_a2), imag(dtchEigVal_a2), '^b', 'MarkerSize', 10);
-p24 = plot(real(sprlEigVal_a2), imag(sprlEigVal_a2), 'xb', 'MarkerSize', 10);
+p17 = plot([real(dtchEigVal_c1),real(dtchEigVal_c1)], [imag(dtchEigVal_c1),-imag(dtchEigVal_c1)], '^m', 'MarkerSize', 10);
+p18 = plot([real(sprlEigVal_c1),real(sprlEigVal_c1)], [imag(sprlEigVal_c1),-imag(sprlEigVal_c1)], 'xm', 'MarkerSize', 10);
+p19 = plot([real(dtchEigVal_c2),real(dtchEigVal_c2)], [imag(dtchEigVal_c2),-imag(dtchEigVal_c2)], '^g', 'MarkerSize', 10);
+p20 = plot([real(sprlEigVal_c2),real(sprlEigVal_c2)], [imag(sprlEigVal_c2),-imag(sprlEigVal_c2)], 'xg', 'MarkerSize', 10);
+p21 = plot([real(dtchEigVal_a1),real(dtchEigVal_a1)], [imag(dtchEigVal_a1),-imag(dtchEigVal_a1)], '^r', 'MarkerSize', 10);
+p22 = plot([real(sprlEigVal_a1),real(sprlEigVal_a1)], [imag(sprlEigVal_a1),-imag(sprlEigVal_a1)], 'xr', 'MarkerSize', 10);
+p23 = plot([real(dtchEigVal_a2),real(dtchEigVal_a2)], [imag(dtchEigVal_a2),-imag(dtchEigVal_a2)], '^b', 'MarkerSize', 10);
+p24 = plot([real(sprlEigVal_a2),real(sprlEigVal_a2)], [imag(sprlEigVal_a2),-imag(sprlEigVal_a2)], 'xb', 'MarkerSize', 10);
 xlabel('Re');
 ylabel('Im');
 set(gcf, 'Color', [1 1 1]);

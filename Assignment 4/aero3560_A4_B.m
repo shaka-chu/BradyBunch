@@ -11,19 +11,15 @@ plotSettings
 % Flight condition
 % airspeed    = 'cruise';
 airspeed    = 'approach';
-cgPos       = '2';
-% cgPos       = '1';
+% cgPos       = '2';
+cgPos       = '1';
 flightCond  = [airspeed cgPos];
 
 % Obtain longitudinal-directional state space model and aircraft properties
 [Alon, Blon, Params] = longitudinalStateSpace(flightCond) ;
 
 % Flight speed
-if airspeed == 'approach'
-    V = convvel(90,'kts','m/s');
-elseif airspeed == 'cruise'
-    V = convvel(220,'kts','m/s');
-end
+V = convvel(90,'kts','m/s');
 
 
 % Density at flight speed
@@ -50,11 +46,7 @@ EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, ...
     plsPlotEigenVecs, plsPlotRootLocus);
 
 % Create time vector for simulation
-<<<<<<< HEAD
-t_end = 400;
-=======
-t_end = 1000;
->>>>>>> a34e8f38d96043ae7f561ca1d65fbd526d0b1105
+t_end = 30;
 dt = 0.01;
 time = 0:dt:t_end;
 
@@ -66,12 +58,12 @@ X = [0 0 0 0 0 0 0 0 0 0]';
     Blat, Blon);
 
 % Do you want to plot the results?
-plotResults = false;
+plotResults = true;
 
 % Results plotting (timeseries)
-plotTimeSeries(V, X_elevator, time, 300, plotResults);
+% plotTimeSeries(V, X_elevator, time, 300, plotResults);
 % plotTimeSeries(V, X_aileron, time, 150, plotResults);
-% plotTimeSeries(V, X_rudder, time, 150, plotResults);
+plotTimeSeries(V, X_rudder, time, 150, plotResults);
 
 % Handling qualities
 handlingQualities(Params, V, h, EigAnalysis)
