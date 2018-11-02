@@ -62,6 +62,7 @@ function [] = handlingQualities(Params, V, h, EigAnalysis)
     nz_alpha =(CLa - (CLde/Cmde)*Cma)/((m*g/(Q*S)) - (g*c/(2*V^2))*(CLq - (CLde/Cmde)*Cmq));
     
     % Eye plots
-    eyePlots(EigAnalysis, nz_alpha);
+%     eyePlots(EigAnalysis, nz_alpha);
+    combinedHandlingPlots(nz_alpha)
 
 end

@@ -48,7 +48,7 @@ EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, ...
     plsPlotEigenVecs, plsPlotRootLocus);
 
 % Create time vector for simulation
-t_end = 100;
+t_end = 1000;
 dt = 0.01;
 time = 0:dt:t_end;
 
@@ -60,7 +60,7 @@ X = [0 0 0 0 0 0 0 0 0 0]';
     Blat, Blon);
 
 % Do you want to plot the results?
-plotResults = true;
+plotResults = false;
 
 % Results plotting (timeseries)
 plotTimeSeries(V, X_elevator, time, 300, plotResults);
@@ -68,4 +68,4 @@ plotTimeSeries(V, X_elevator, time, 300, plotResults);
 % plotTimeSeries(V, X_rudder, time, 150, plotResults);
 
 % Handling qualities
-% handlingQualities(Params, V, h, EigAnalysis)
+handlingQualities(Params, V, h, EigAnalysis)

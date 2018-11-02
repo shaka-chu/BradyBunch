@@ -63,6 +63,7 @@ function [fig1, fig2, fig3, fig4] = plotTimeSeries(V, X, time, tlim, plotResults
         grid on
         print(fig4, 'cruise2_tSeries_elevator_velocities', '-depsc') 
         
+        % Plot altitude
         fig5 = figure;
         plot(time, X(5, :));
         xlabel('Time (sec)');
@@ -71,6 +72,7 @@ function [fig1, fig2, fig3, fig4] = plotTimeSeries(V, X, time, tlim, plotResults
         set(gca, 'Color', [1 1 1]);
         set(gca, 'XLimSpec', 'Tight');
         grid on
+        print(fig4, 'cruise2_tSeries_elevator_altitude', '-depsc') 
     end
         
 end
