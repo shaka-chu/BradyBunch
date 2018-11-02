@@ -72,7 +72,11 @@ function [fig1, fig2, fig3, fig4] = plotTimeSeries(V, X, time, tlim, plotResults
         set(gca, 'Color', [1 1 1]);
         set(gca, 'XLimSpec', 'Tight');
         grid on
+<<<<<<< HEAD
         print(fig5, 'approach2_tSeries_elevator_altitude', '-depsc')
+=======
+        print(fig4, 'cruise2_tSeries_elevator_altitude', '-depsc') 
+>>>>>>> a34e8f38d96043ae7f561ca1d65fbd526d0b1105
     end
         
 end
