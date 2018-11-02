@@ -9,8 +9,8 @@ close all;
 plotSettings
 
 % Flight condition
-airspeed    = 'cruise';
-% airspeed    = 'approach';
+% airspeed    = 'cruise';
+airspeed    = 'approach';
 cgPos       = '2';
 % cgPos       = '1';
 flightCond  = [airspeed cgPos];
@@ -19,7 +19,12 @@ flightCond  = [airspeed cgPos];
 [Alon, Blon, Params] = longitudinalStateSpace(flightCond) ;
 
 % Flight speed
-V = convvel(90,'kts','m/s');
+if airspeed == 'approach'
+    V = convvel(90,'kts','m/s');
+elseif airspeed == 'cruise'
+    V = convvel(220,'kts','m/s');
+end
+
 
 % Density at flight speed
 h               = convlength(500,'ft','m');
@@ -45,7 +50,7 @@ EigAnalysis = eigenAnalysis(Alon, Alat, printAnalysis, ...
     plsPlotEigenVecs, plsPlotRootLocus);
 
 % Create time vector for simulation
-t_end = 100;
+t_end = 400;
 dt = 0.01;
 time = 0:dt:t_end;
 
